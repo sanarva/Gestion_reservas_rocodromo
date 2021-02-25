@@ -1,0 +1,71 @@
+
+/* Fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Montserrat:ital,wght@0,400;0,500;1,400&display=swap');
+
+/* 
+Fuentes utilizadas
+    font-family: 'Lilita One', cursive;
+    font-family: 'Montserrat', sans-serif;
+*/
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+h1 {
+    font-family: 'Lilita One', cursive;  
+    padding-bottom: 2rem;
+}
+
+.cursorHand {
+    cursor: pointer;
+}
+
+.iconEye {
+     
+    color: red;
+}
+
+.closeSession{
+    padding: 2rem;
+    color: tomato;
+    text-align: right;
+    cursor: pointer;
+}
+
+.divOptions{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+
+
+.itemOption {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 1rem;
+    width: 200px;
+    height: 200px;
+    background-color: grey;
+    border-radius: 10px;
+    cursor: pointer;    
+}
+
+.itemOption:hover{
+   text-decoration: none;
+   transform: translateY(-3px);
+   box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+}
+
+.itemOptionText {
+    font-family: 'Lilita One', cursive; 
+    font-size: 1.5rem;
+    color: white;
+    text-align: center;
+    padding:1.5rem;
+    
+}
