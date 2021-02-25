@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <title>Acceder</title>
+    <title>Recuperar contraseña</title>
 
     <!-- Estilos para la aplicación -->
     <!-- Estilos de Bootstrap 4-->
@@ -17,41 +17,55 @@
     <link rel="stylesheet" href="../styles/main.css"> 
 </head>
 
-<body>
+<body >
     <div class="container">
+
         <p class= "closeSession"><i class="fas fa-sign-out-alt fa-lg "></i> Cerrar sesión</p> 
-        <h1 class="text-center">ROCÓDROMO CAN MERCADER</h1>
+
+        <h1 class="text-center">RECUPERAR CONTRASEÑA</h1>
+
+        <div class="row ">
+            <div class="col-lg-1"></div>
+            <p class="col-lg-10 text-justify">¿Has olvidado tu contraseña? No te preocupes, escribe tu correo electrónico para que podamos enviarte una nueva.</p>
+        </div>
+        
         <form>
             <div class="form-group row">
-                <div class="col-lg-1 "></div>
-                <label for="inputUser" class="col-lg-3 col-form-label"><i class="fas fa-user-check"></i> Usuario</label>
-                <div class="col-lg-7">
-                    <input type="text" class="form-control" id="inputUser" placeholder="Introduce tu usuario">
+                <div class="col-lg-1"></div>
+                <label for="inputUser" class="col-lg-2 col-form-label"><i class="fas fa-user-check"></i> Usuario</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="inputUser" placeholder="Introduce tu email">
                     <div class="invalid-feedback" id="errorEmail"></div>
                 </div>
             </div>
 
             <div class="form-group row">
-                <div class="col-lg-1 "></div>
-                <label for="inputPassword" class="col-lg-3 col-form-label"><i class="fas fa-lock"></i> Contraseña</label>
-                <div class="col-lg-7 input-group">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Introduce tu contraseña">
-                    <div class="input-group-prepend">
-                        <i class="fas fa-eye cursorHand input-group-text"></i> 
-                    </div>
-                    <div class="invalid-feedback" id="errorPassword"></div>
-                </div>
-            </div>
-
-           
-            <div class="form-group row">
                 <div class="col-lg-1"></div>
                 <div class="col-lg-8">
-                    <button type="submit" class="btn btn-primary">Acceder</button>
-                    <a class= "small" href="recoveryPsw.html"> He olvidado mi contraseña <i class="far fa-grin-beam-sweat"></i></a>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Enviar contraseña</button>
                 </div>
             </div>
         </form>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> <i class="far fa-check-circle text-success"></i> Contraseña enviada</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body ">
+                      Te hemos enviado una nueva contraseña a tu email con las instrucciones. Si no las has recibido, revisa la carpeta de spam.</i>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
 
     </div>
     <!-- Scripts para Bootstrap 4-->
