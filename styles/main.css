@@ -11,7 +11,8 @@
 
 h1 {
     font-family: 'Lilita One', cursive;  
-    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    text-align: center; /*Ojo porque en modo movil parece que no funciona*/    
 }
 
 
