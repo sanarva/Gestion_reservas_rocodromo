@@ -11,23 +11,34 @@
 
 h1 {
     font-family: 'Lilita One', cursive;  
-    margin-bottom: 2rem;
-    text-align: center; /*Ojo porque en modo movil parece que no funciona*/    
+    padding-bottom: 4rem;
+    text-align: center; /*Ojo porque en modo movil parece que no funciona cuando hay tablas*/    
 }
 
+h2 {
+    font-family: 'Lilita One', cursive;  
+    padding-bottom: 1rem;
+    text-align: center; /*Ojo porque en modo movil parece que no funciona cuando hay tablas*/    
+}
 
+ 
 .cursorHand {
     cursor: pointer;
 }
 
 
 .closeSession{
-    padding: 2rem;
-    color: tomato;
+    padding-top: 1rem;
+    padding-right: 2rem;
+    color: #DC3545;
     text-align: right;
-    cursor: pointer;
+    font-weight:500;
 }
 
+
+.closeSession :hover{
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
 
 .divOptions{
     display: flex;
@@ -66,12 +77,37 @@ h1 {
 }
 
 
-
-
-
-
 .filterLayoutItems {
     display: inline-block;
     margin-bottom: 1rem;
     margin-right: 2rem;   
 }
+
+
+.dialogError{
+    border: 1px solid #DC3545;
+    border-radius: 5px;
+    padding-top: 1rem; 
+    padding-bottom: 1rem;
+    color:#DC3545;
+}
+
+
+/*Clase usada para mostrar el icono del ojo dentro del campo contraseña*/
+.passwordIcon {
+    float: right;
+    position: relative;
+    margin: -25px 10px 0 0;
+    cursor: pointer;
+}
+
+
+/*Clase usada para que el icono de cerrar aparezca rojo en los mensajes de error*/
+.colorXErrorIcon {
+    color:#DC3545;
+}
+.colorXErrorIcon:hover {
+    color:#DC3545;
+}
+
+ 
