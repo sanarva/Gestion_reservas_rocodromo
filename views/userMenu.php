@@ -17,12 +17,14 @@
     <link rel="stylesheet" href="../styles/main.css"> 
 </head>
 
-<body >
-    <div class="container">
+<body>
 
-        <p class= "closeSession"><i class="fas fa-sign-out-alt fa-lg "></i> Cerrar sesión</p> 
-        
-        <h1>MENÚ</h1>
+    <header>
+        <?php include("../php/header.php")?>
+    <header>
+
+    <div class="container">        
+        <h2>MENÚ</h2>
         
         <div class="divOptions">
             <!-- Items comunes para usuarios genéricos y administradores -->    
@@ -32,10 +34,12 @@
             <a href="modifyPsw.html" class="itemOption"><p class="itemOptionText">CAMBIAR CONTRASEÑA<i class="fas fa-unlock-alt d-block"></i></p></a>  
             <a href="http://www.escolamuntanya.org/rocodrom-usuaris" target="blank" class="itemOption"><p class="itemOptionText">NORMATIVA ROCÓDROMO<i class="fas fa-book-reader d-block"></i></p></a>
             <!-- Items específicos para usuarios usuarios administradores --> 
+            <?php if ((isset($_SESSION['sessionUserType'])) && $_SESSION['sessionUserType']=="A") { ?>
             <a href="usersList.html" class="itemOption"><p class="itemOptionText">GESTIONAR USUARIOS<i class="fas fa-users-cog d-block"></i></p></a>
             <a href="reservationList.html" class="itemOption"><p class="itemOptionText">LISTADO RESERVAS<i class="fas fa-clipboard-list d-block"></i></p></a>
             <a href="zoneManagement.html" class="itemOption"><p class="itemOptionText">CONFIGURAR ZONAS<i class="fas fa-map-signs d-block"></i></p></a>
             <a href="timetableManagement.html" class="itemOption"><p class="itemOptionText">CONFIGURAR HORARIOS<i class="fas fa-clock d-block"></i></p></a> 
+            <?php } ?>
         </div>  
        
     </div>
