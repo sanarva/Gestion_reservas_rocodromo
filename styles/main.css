@@ -27,18 +27,21 @@ h2 {
 }
 
 
-.closeSession{
+.closeSession, .goMenu{
     padding-top: 1rem;
-    padding-right: 2rem;
     color: #DC3545;
-    text-align: right;
     font-weight:500;
 }
-
-
+/*De momento esto no funcina...comprobar qué pasa*/
 .closeSession :hover{
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+
+
+.goMenu{
+    color: #006BDE; 
+} 
+
 
 .divOptions{
     display: flex;
@@ -84,6 +87,7 @@ h2 {
 }
 
 
+/*Clase usada para los mensajes de error*/
 .dialogError{
     border: 1px solid #DC3545;
     border-radius: 5px;
@@ -92,6 +96,33 @@ h2 {
     color:#DC3545;
 }
 
+/*Clase usada para que el icono de cerrar aparezca rojo en los mensajes de error*/
+.colorXErrorIcon {
+    color:#DC3545;
+}
+
+.colorXErrorIcon:hover {
+    color:#DC3545;
+}
+
+
+/*Clase usada para los mensajes de OK*/
+.dialogCorrect{
+    border: 1px solid #3D9900;
+    border-radius: 5px;
+    padding-top: 1rem; 
+    padding-bottom: 1rem;
+    color:#3D9900;
+}
+
+/*Clase usada para que el icono de cerrar aparezca verde en los mensajes de ok*/
+.colorXOkIcon {
+    color:#3D9900;
+}
+
+.colorXOkIcon:hover {
+    color:#3D9900;
+}
 
 /*Clase usada para mostrar el icono del ojo dentro del campo contraseña*/
 .passwordIcon {
@@ -102,12 +133,5 @@ h2 {
 }
 
 
-/*Clase usada para que el icono de cerrar aparezca rojo en los mensajes de error*/
-.colorXErrorIcon {
-    color:#DC3545;
-}
-.colorXErrorIcon:hover {
-    color:#DC3545;
-}
 
  

@@ -24,7 +24,7 @@
     <header>
 
     <div class="container">
-        <form method="post" action="#" id="loginForm" name="loginForm" onsubmit="return login()">
+        <form method="post" action="#" autocomplete="off" id="loginForm" name="loginForm" onsubmit="return login()">
             <!-- Campo para introducir el usuario, que será el email -->
             <div class="form-group row">
                 <div class="col-lg-1 "></div>
@@ -43,28 +43,17 @@
                 <div class="col-lg-7">
                     <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Introduce tu contraseña">
                     <!-- Icono para mostrar/ocultar la contraseña -->
-                    <i class="fas fa-eye passwordIcon" id="eyeIcon" onclick="showHidePassword()"></i> 
+                    <i class="fas fa-eye passwordIcon" id="eyeIcon" onclick="showHidePassword('userPassword')"></i> 
                     <!-- Mensaje de error por formato incorrecto en la contraseña -->
                     <div class="invalid-feedback" id="errorPassword"></div> 
                 </div>
             </div>
 
-            <?php if (isset($_SESSION['sessionUserNotFound'])) { ?>
-            <!-- Mensaje de error cuando el usuario o la contraseña no existen en la BBDD -->
-            <div class="form-group row">
-                <div class="col-lg-1"></div>
-                <div class="col-lg-10  alert  dialogError" id="errorLogIn">
-                    <i class="fas fa-exclamation-triangle"></i> El usuario o la contraseña no son correctos.
-                    <button 
-                        type="button" 
-                        class="close colorXErrorIcon" 
-                        data-dismiss="alert" 
-                        aria-label="Close"><span aria-hidden="true">&times;</span>
-                    </button>
-                </div>  
-            </div>
-            <!-- Session_unset() es una función que limpia los datos de la sesión-->    
-            <?php session_unset(); } ?>
+            <?php 
+                if (isset($_SESSION['successFlag']) && $_SESSION["successFlag"] == "N") { 
+                    include "../php/message.php";
+                } 
+            ?>
 
             <!--Botón para acceder a la aplicación en caso de que no haya ningún error -->
             <div class="form-group row">

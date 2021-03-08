@@ -1,3 +1,16 @@
+<?php
+//Datos para la sesión
+session_start();
+$invisibleClass = "";
+
+//En la pantalla de inicio de sesión, no mostraremos los botones de "Volver al menú" ni "Cerrar sesión"
+if (isset($_SESSION["sessionIdUser"])){
+    $invisibleClass = "";
+} else {
+    $invisibleClass = "invisible";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,14 +20,20 @@
 </head>
 
 <body>
-    <?php include("../php/database.php");?>      
+    
     <div class="container-fluid header">
-        <div>
-            <a class="text-decoration-none" href="index.php"><p href="index.php" class= "closeSession">
-                <i class="fas fa-sign-out-alt fa-lg "></i> Cerrar sesión</p> </a>
+        <div class=" d-flex justify-content-between">
+            <a class="text-decoration-none <?=$invisibleClass?>" href="userMenu.php"><p href="userMenu.php" class= "goMenu">
+                <i class="fas fa-arrow-circle-left fa-lg"></i> Volver al menú </p> 
+            </a>
+            <a class="text-decoration-none <?=$invisibleClass?>" href="../php/logout.php"><p href="../php/logout.php" class= "closeSession">
+                <i class="fas fa-sign-out-alt fa-lg "></i> Cerrar sesión</p> 
+            </a>
         </div>
+
         <h1>ROCÓDROMO CAN MERCADER</h1>
     </div>
+
 </body>
 
 </html>
