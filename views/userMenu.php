@@ -31,7 +31,7 @@
             <a class="itemOption itemOption1"><p class="itemOptionText">CREAR NUEVA RESERVA<i class="fas fa-plus-circle d-block"></i></p></a>
             <a class="itemOption itemOption2"><p class="itemOptionText">MODIFICAR RESERVA<i class="fas fa-pen-square d-block"></i></p></a>
             <a class="itemOption itemOption3"><p class="itemOptionText">CANCELAR RESERVA<i class="fas fa-times-circle d-block"></i></p></a>
-            <a href="modifyPsw.html" class="itemOption"><p class="itemOptionText">CAMBIAR CONTRASEÑA<i class="fas fa-unlock-alt d-block"></i></p></a>  
+            <a href="modifyPsw.php" class="itemOption"><p class="itemOptionText">CAMBIAR CONTRASEÑA<i class="fas fa-unlock-alt d-block"></i></p></a>  
             <a href="http://www.escolamuntanya.org/rocodrom-usuaris" target="blank" class="itemOption"><p class="itemOptionText">NORMATIVA ROCÓDROMO<i class="fas fa-book-reader d-block"></i></p></a>
             <!-- Items específicos para usuarios usuarios administradores --> 
             <?php if ((isset($_SESSION['sessionUserType'])) && $_SESSION['sessionUserType']=="A") { ?>
