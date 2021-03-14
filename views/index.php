@@ -66,7 +66,7 @@
 
         <!-- Gestión de errores y mensajes-->
         <?php 
-            if (isset($_SESSION['successFlag']) && $_SESSION["successFlag"] == "N") {
+            if (isset($_SESSION['successFlag'])) {
                 include "../php/message.php";
             } 
         ?>   
