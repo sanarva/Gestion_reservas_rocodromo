@@ -19,7 +19,6 @@
 
 <body>
     <header>
-        <!-- En header.php, además del encabezado, también se incluyen las variables globales-->
         <?php include("../php/header.php")?>
     <header>
 

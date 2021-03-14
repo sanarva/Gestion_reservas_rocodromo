@@ -130,6 +130,47 @@ function validateFormatPassword(password) {
 }
 
 
+//Función usada para hacer las validaciones del formulario de login antes de hacer la petición al servidor
+function login(){
+    //Inicializamos los errores
+    totalErrors = 0;
+    //Validamos el formato del email 
+    validateEmail();
+
+    //Recuperamos el valor de la contraseña y validamos su formato
+    let password = document.getElementById("userPassword");
+    let errorPassword = document.getElementById("errorPassword");
+    validatePassword(password, errorPassword);
+
+    if (totalErrors > 0) {
+        return false;
+    } else {
+        loginForm.action="../php/login.php";
+    }
+}
+
+
+//Función usada para dar de alta zonas
+function createZone(zoneName){
+    //Inicializamos los errores
+    totalErrors = 0;
+    //Accedemos a la base de datos para comprobar si ya existe una zona con ese nombre 
+    llamarA="../php/crudZones.php";
+
+    //Recuperamos el valor de la contraseña y validamos su formato
+    let password = document.getElementById("userPassword");
+    let errorPassword = document.getElementById("errorPassword");
+    validatePassword(password, errorPassword);
+
+    if (totalErrors > 0) {
+        return false;
+    } else {
+        loginForm.action="../php/login.php";
+    }
+}
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////
 //Si el formulario existe, al retirar el foco quitaremos la clase "is-invalid".    //
 /////////////////////////////////////////////////////////////////////////////////////

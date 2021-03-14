@@ -124,6 +124,26 @@ h2 {
     color:#3D9900;
 }
 
+
+/*Clase usada para los mensajes de warning*/
+.dialogWarning{
+    border: 1px solid #F0AD4E;
+    border-radius: 5px;
+    padding-top: 1rem; 
+    padding-bottom: 1rem;
+    color:#F0AD4E;
+}
+
+/*Clase usada para que el icono de cerrar aparezca en amarillo en los mensajes de warning*/
+.colorXWarningIcon {
+    color:#F0AD4E;
+}
+
+.colorXWarningIcon:hover {
+    color:#F0AD4E;
+}
+
+
 /*Clase usada para mostrar el icono del ojo dentro del campo contraseña*/
 .passwordIcon {
     float: right;

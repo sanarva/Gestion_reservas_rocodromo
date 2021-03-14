@@ -1,6 +1,7 @@
 <?php  
 $path = "../views/index.php";
 
+define('HOMEDIR',__DIR__);
 // Requerimos la conexión a la base de datos que está en el fichero database.php
 require "database.php";
 
