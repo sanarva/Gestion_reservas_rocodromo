@@ -47,11 +47,8 @@ try {
     header("Location: ../views/modifyPsw.php");
 
     //Cerramos el cursor para no utilizar recursos
-    $result->closeCursor();
+    $query->closeCursor();
 }
-
-
-
 
 ?>
 
