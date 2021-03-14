@@ -49,12 +49,6 @@
                 </div>
             </div>
 
-            <?php 
-                if (isset($_SESSION['successFlag']) && $_SESSION["successFlag"] == "N") { 
-                    include "../php/message.php";
-                } 
-            ?>
-
             <!--Botón para acceder a la aplicación en caso de que no haya ningún error -->
             <div class="form-group row">
                 <div class="col-lg-1"></div>
@@ -69,7 +63,14 @@
                 </div>
             </div>
         </form>
-        
+
+        <!-- Gestión de errores y mensajes-->
+        <?php 
+            if (isset($_SESSION['successFlag']) && $_SESSION["successFlag"] == "N") {
+                include "../php/message.php";
+            } 
+        ?>   
+
     </div>
     <!-- Scripts para Bootstrap 4-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

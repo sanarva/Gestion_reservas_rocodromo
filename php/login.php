@@ -42,7 +42,5 @@ try {
     //Limpiamos la memoria 
     $conn = null;
 
-    //Cerramos el cursor para no utilizar recursos
-    $result->closeCursor();
 }
 ?>
