@@ -1,12 +1,11 @@
 <?php 
 //Datos para la sesión
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 //Declaro la variable donde se redirigirá la página
 $path;
-
-//Inicializo el flag para saber si todo ha ido ok
-$_SESSION['successFlag'] = " ";
 
 //Declaro la variable global conn para la conexión a la BBDD
 $conn = "";
@@ -25,7 +24,7 @@ try {
     //Gestión de errores 
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $conn->exec("SET CHARACTER SET utf8");
+    $conn->exec("SET CHARACTER SET UTF8");
 
 } catch(PDOException $e){
     

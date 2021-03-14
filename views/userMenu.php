@@ -28,7 +28,7 @@
         
         <div class="divOptions">
             <!-- Items comunes para usuarios genéricos y administradores -->    
-            <a class="itemOption itemOption1"><p class="itemOptionText">CREAR NUEVA RESERVA<i class="fas fa-plus-circle d-block"></i></p></a>
+            <a href="reservation.html" class="itemOption itemOption1"><p class="itemOptionText">CREAR NUEVA RESERVA<i class="fas fa-plus-circle d-block"></i></p></a>
             <a class="itemOption itemOption2"><p class="itemOptionText">MODIFICAR RESERVA<i class="fas fa-pen-square d-block"></i></p></a>
             <a class="itemOption itemOption3"><p class="itemOptionText">CANCELAR RESERVA<i class="fas fa-times-circle d-block"></i></p></a>
             <a href="modifyPsw.php" class="itemOption"><p class="itemOptionText">CAMBIAR CONTRASEÑA<i class="fas fa-unlock-alt d-block"></i></p></a>  
@@ -37,7 +37,7 @@
             <?php if ((isset($_SESSION['sessionUserType'])) && $_SESSION['sessionUserType']=="A") { ?>
             <a href="usersList.html" class="itemOption"><p class="itemOptionText">GESTIONAR USUARIOS<i class="fas fa-users-cog d-block"></i></p></a>
             <a href="reservationList.html" class="itemOption"><p class="itemOptionText">LISTADO RESERVAS<i class="fas fa-clipboard-list d-block"></i></p></a>
-            <a href="zoneManagement.html" class="itemOption"><p class="itemOptionText">CONFIGURAR ZONAS<i class="fas fa-map-signs d-block"></i></p></a>
+            <a href="zonesList.php" class="itemOption"><p class="itemOptionText">CONFIGURAR ZONAS<i class="fas fa-map-signs d-block"></i></p></a>
             <a href="timetableManagement.html" class="itemOption"><p class="itemOptionText">CONFIGURAR HORARIOS<i class="fas fa-clock d-block"></i></p></a> 
             <?php } ?>
         </div>  

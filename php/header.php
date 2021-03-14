@@ -1,14 +1,16 @@
 <?php
-//Datos para la sesión
-session_start();
+//Datos para la sesión. Solo la inicio si no está ya iniciada
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 $invisibleClass = "";
 
 //En la pantalla de inicio de sesión, no mostraremos los botones de "Volver al menú" ni "Cerrar sesión"
-if (isset($_SESSION["sessionIdUser"])){
-    $invisibleClass = "";
-} else {
+if (!isset($_SESSION["sessionIdUser"])){
     $invisibleClass = "invisible";
-}
+}    
+
 ?>
 
 <!DOCTYPE html>

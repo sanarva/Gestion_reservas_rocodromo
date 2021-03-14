@@ -13,8 +13,8 @@ $userConfirmNewPassword = $_POST["userConfirmNewPassword"];
 try {
     // user_Status = 1 significa que el usuario está activo
     $sql = "UPDATE users 
-               SET user_password     = :userNewPassword, 
-                   user_modification = :userModification
+               SET user_password     = :userNewPassword 
+                 , user_modification = :userModification
              WHERE user_email = :useremail 
                AND user_password = :userpassword 
                AND user_status = '1'";
@@ -31,7 +31,7 @@ try {
         $_SESSION['message'] = "Acabas de cambiar tu contraseña. Recuerda apuntarla bien, no la vayas a olvidar."  ;
     } else {
         $_SESSION['successFlag'] = "N";
-        $_SESSION['message'] = "La contraseña que has escrito no es correcta o coincide con la contraseña actual." . $query->errorInfo() ;
+        $_SESSION['message'] = "La contraseña que has escrito no es correcta o coincide con la contraseña actual." ;
     } 
 
 } catch(PDOException $e){
