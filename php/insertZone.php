@@ -1,5 +1,5 @@
 <?php  
-$path = "../views/zone.php";
+$path = "../views/zone.php?Id= &zoneName=&maxUserNumber=&zoneStatus=";
 
 // Incluímos la conexión a la base de datos que está en el fichero database.php
 require "database.php";
@@ -19,7 +19,7 @@ try {
     if (($query->rowCount() > 0 )) {
         $_SESSION['successFlag'] = "N";
         $_SESSION['message'] = "No se puede crear la zona $zoneName porque ya existe una zona con ese nombre. Por favor, modifica la existente." ; 
-   
+
     } else {
         try {
             $sql = "INSERT 
@@ -54,14 +54,14 @@ try {
         
             
         } catch(PDOException $e){
-            $_SESSION['successFlag'] = "N";
+            $_SESSION['successFlag'] = "C";
             $queryError = $e->getMessage();  
             $_SESSION['message'] = "Se ha detectado un problema al crear la zona $zoneName. </br> Descripción del error: " . $queryError ; 
         }
     }
 
 } catch(PDOException $e){
-    $_SESSION['successFlag'] = "N";
+    $_SESSION['successFlag'] = "C";
     $queryError = $e->getMessage();  
     $_SESSION['message'] = "Se ha detectado un problema en la creación de la zona, al buscar zonas con el mismo nombre. </br> Descripción del error: " . $queryError ;  
      
@@ -69,7 +69,7 @@ try {
     //Limpiamos la memoria 
     $conn = null;
 
-    header("Location: ../views/zonesList.php");
+    header("Location: ../views/zone.php?Id= &zoneName=&maxUserNumber=&zoneStatus=");
     
 }
 

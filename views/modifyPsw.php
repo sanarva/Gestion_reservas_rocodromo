@@ -84,14 +84,6 @@
 
             <?php 
                 if (isset($_SESSION['successFlag'])) {
-                    if ($_SESSION['successFlag']  == "N") { 
-                        $message = "La contraseña introducida no es correcta.";    
-                    }
-                    
-                    if ($_SESSION['successFlag'] == "Y") { 
-                        $message = "Tu contraseña ha sido cambiada correctamente.";    
-                    }
-
                     include "../php/message.php";
                 } 
             ?>

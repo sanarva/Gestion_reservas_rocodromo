@@ -1,5 +1,5 @@
 <?php  
-$path = "../views/zone.php";
+$path = "../views/zonesList.php";
 
 // Incluímos la conexión a la base de datos que está en el fichero database.php
 require "database.php";

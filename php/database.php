@@ -29,7 +29,7 @@ try {
 } catch(PDOException $e){
     
     //La función getMessage() muestra el mensaje por pantalla
-    $_SESSION["successFlag"] = 'N';
+    $_SESSION["successFlag"] = 'C';
     $conexionErrorMessage = $e->getMessage();  
     $_SESSION["message"] = "No se ha podido realizar la operación. Inténtalo más tarde y si el problema continúa, ponte en contacto con los responsables del roco. 
     </br> Error al conectar con la BBDD. </br> Descripción del error: " . $conexionErrorMessage;

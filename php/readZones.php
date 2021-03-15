@@ -1,6 +1,6 @@
 <?php  
 
-$path = "../views/zoneList.php";
+$path = "../views/userMenu.php";
 
 // Incluímos la conexión a la base de datos que está en el fichero database.php
 require "database.php";
@@ -17,21 +17,19 @@ try {
     //Si no existen zonas, mostramos un aviso
     if ($zones == [] ){
         $_SESSION['successFlag'] = "W";
-        $_SESSION['message'] = "Todavía no se ha creado ninguna zona."  ;
+        $_SESSION['message'] = "Todavía no se ha creado ninguna zona.";
     }
 
 } catch(PDOException $e){
-    $_SESSION['successFlag'] = "N";
+    $_SESSION['successFlag'] = "C";
     $queryError = $e->getMessage();  
     $_SESSION['message'] = "Se ha detectado un problema a la hora de mostrar las zonas. </br> Descripción del error: " . $queryError ; 
 
 } finally { 
     //Limpiamos la memoria 
     $conn = null;
-
 }
 
 
- 
 ?>
 
