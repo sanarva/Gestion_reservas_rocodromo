@@ -38,7 +38,7 @@
             <a href="usersList.html" class="itemOption"><p class="itemOptionText">GESTIONAR USUARIOS<i class="fas fa-users-cog d-block"></i></p></a>
             <a href="reservationList.html" class="itemOption"><p class="itemOptionText">LISTADO RESERVAS<i class="fas fa-clipboard-list d-block"></i></p></a>
             <a href="zonesList.php" class="itemOption"><p class="itemOptionText">CONFIGURAR ZONAS<i class="fas fa-map-signs d-block"></i></p></a>
-            <a href="timetableManagement.html" class="itemOption"><p class="itemOptionText">CONFIGURAR HORARIOS<i class="fas fa-clock d-block"></i></p></a> 
+            <a href="timetableList.php" class="itemOption"><p class="itemOptionText">CONFIGURAR HORARIOS<i class="fas fa-clock d-block"></i></p></a> 
             <?php } ?>
         </div>  
        
