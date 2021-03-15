@@ -25,7 +25,7 @@
   <h2>GESTIÓN DE ZONAS</h2>
 
   <div class="container">      
-    <table class="table  mt-5">  
+    <table class="table">  
       <thead>
         <tr>
           <th>ZONA</th>
