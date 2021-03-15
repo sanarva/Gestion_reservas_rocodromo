@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Montserrat:ital,wght@0,400;0,500;1,400&display=swap');
 
 
+
 * {
     font-family: 'Montserrat', sans-serif;
 }
@@ -87,61 +88,45 @@ h2 {
 }
 
 
-/*Clase usada para los mensajes de error*/
-.dialogError{
-    border: 1px solid #DC3545;
-    border-radius: 5px;
-    padding-top: 1rem; 
-    padding-bottom: 1rem;
-    color:#DC3545;
+/*Clase usada para oscurecer la pantalla al dar un mensaje modal*/
+.customModalMessage{
+    width: 100%;
+    height: 100vh;
+    background:rgba(0,0,0,0.6);
+    position:absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
 }
 
-/*Clase usada para que el icono de cerrar aparezca rojo en los mensajes de error*/
-.colorXErrorIcon {
-    color:#DC3545;
+.modalIcon{ 
+    font-size: 1.5rem;
+    margin-right: 1.1rem; 
 }
 
-.colorXErrorIcon:hover {
+/*Clase usada para los mensajes de Error*/
+.modalIconError{
     color:#DC3545;
 }
 
 
 /*Clase usada para los mensajes de OK*/
-.dialogCorrect{
-    border: 1px solid #3D9900;
-    border-radius: 5px;
-    padding-top: 1rem; 
-    padding-bottom: 1rem;
+.modalIconCorrect{
     color:#3D9900;
 }
 
-/*Clase usada para que el icono de cerrar aparezca verde en los mensajes de ok*/
-.colorXOkIcon {
-    color:#3D9900;
-}
-
-.colorXOkIcon:hover {
-    color:#3D9900;
-}
 
 
 /*Clase usada para los mensajes de warning*/
-.dialogWarning{
-    border: 1px solid #F0AD4E;
-    border-radius: 5px;
-    padding-top: 1rem; 
-    padding-bottom: 1rem;
+.modalIconWarning{
     color:#F0AD4E;
 }
 
-/*Clase usada para que el icono de cerrar aparezca en amarillo en los mensajes de warning*/
-.colorXWarningIcon {
-    color:#F0AD4E;
-}
 
-.colorXWarningIcon:hover {
-    color:#F0AD4E;
-}
+.modal-footer{
+    display: flex;
+    justify-content: center;
+}  
 
 
 /*Clase usada para mostrar el icono del ojo dentro del campo contraseña*/
@@ -153,5 +138,8 @@ h2 {
 }
 
 
-
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
  

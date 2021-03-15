@@ -12,6 +12,9 @@ let loginForm = document.getElementById("loginForm");
 //Variable necesaria para determinar si existe o no formulario de cambio de contraseña
 let modifyPasswordForm = document.getElementById("modifyPasswordForm");
 
+//Variable necesaria para determinar si existe o no formulario de zonas 
+let zoneForm = document.getElementById("zoneForm");
+
 //Mostrar/ocultar contraseña
 function showHidePassword(field) {
     let psw = document.getElementById(field);
@@ -86,7 +89,7 @@ function modifyPassword(){
 }
 
 
-//Recupararmos el campo de email y lo validamos
+//Recuperamos el campo de email y lo validamos
 function validateEmail() {
    let email = document.getElementById("userEmail");
    let errorEmail = document.getElementById("errorEmail");
@@ -130,46 +133,38 @@ function validateFormatPassword(password) {
 }
 
 
-//Función usada para hacer las validaciones del formulario de login antes de hacer la petición al servidor
-function login(){
+//Función usada para hacer las validaciones del formulario de zonas antes de hacer la petición al servidor
+function validateZoneForm(btnClicked){
     //Inicializamos los errores
     totalErrors = 0;
-    //Validamos el formato del email 
-    validateEmail();
 
-    //Recuperamos el valor de la contraseña y validamos su formato
-    let password = document.getElementById("userPassword");
-    let errorPassword = document.getElementById("errorPassword");
-    validatePassword(password, errorPassword);
+    let action = document.getElementById(btnClicked).formAction;
 
+    //Recuperamos el valor del nombre de la zona y validamos su formato
+    let zoneName = document.getElementById("zoneName");
+    let errorZoneName = document.getElementById("errorZoneName");
+    if (zoneName.value == "") {
+        zoneName.classList.add("is-invalid");
+        errorZoneName.textContent = "Por favor, escribe el nombre de la zona (máx. 30 letras)";
+        totalErrors++;
+    }
+
+    //Recuperamos el valor del número máximo de usuarios por zona y validamos su formato
+    let maxUserNumber = document.getElementById("maxUserNumber");
+    let errorMaxUserNumber = document.getElementById("errorMaxUserNumber");
+    if (maxUserNumber.value == "") {
+        maxUserNumber.classList.add("is-invalid");
+        errorMaxUserNumber.textContent = "Por favor, escribe un número máximo de usuarios en la zona (de 1 a 99)";
+        totalErrors++;
+    }
+    
     if (totalErrors > 0) {
         return false;
     } else {
-        loginForm.action="../php/login.php";
+        zoneForm.action = action;
     }
 }
-
-
-//Función usada para dar de alta zonas
-function createZone(zoneName){
-    //Inicializamos los errores
-    totalErrors = 0;
-    //Accedemos a la base de datos para comprobar si ya existe una zona con ese nombre 
-    llamarA="../php/crudZones.php";
-
-    //Recuperamos el valor de la contraseña y validamos su formato
-    let password = document.getElementById("userPassword");
-    let errorPassword = document.getElementById("errorPassword");
-    validatePassword(password, errorPassword);
-
-    if (totalErrors > 0) {
-        return false;
-    } else {
-        loginForm.action="../php/login.php";
-    }
-}
-
-
+ 
 
 /////////////////////////////////////////////////////////////////////////////////////
 //Si el formulario existe, al retirar el foco quitaremos la clase "is-invalid".    //
@@ -182,6 +177,12 @@ if (loginForm) {
 
 if (modifyPasswordForm) {
     modifyPasswordForm.addEventListener("blur", (event) => {
+        if (event.target.value != "") event.target.classList.remove("is-invalid");
+    }, true);
+}
+
+if (zoneForm) {
+    zoneForm.addEventListener("blur", (event) => {
         if (event.target.value != "") event.target.classList.remove("is-invalid");
     }, true);
 }
