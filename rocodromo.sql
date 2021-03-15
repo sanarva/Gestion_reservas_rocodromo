@@ -2,10 +2,10 @@
 -- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 14-03-2021 a las 01:48:22
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.4.11
+-- Host: 127.0.0.1
+-- Generation Time: Mar 15, 2021 at 08:43 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,29 +18,29 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `rocodromo`
+-- Database: `rocodromo`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `hours`
+-- Table structure for table `hours`
 --
 
 CREATE TABLE `hours` (
   `id_hours` int(2) NOT NULL COMMENT 'ID of the time zone',
-  `id_start_hour` int(4) UNSIGNED ZEROFILL NOT NULL COMMENT 'Hour when reservation starts',
-  `id_end_hour` int(4) UNSIGNED ZEROFILL NOT NULL COMMENT 'Hour when reservation finishes',
+  `start_hour` int(4) UNSIGNED ZEROFILL NOT NULL COMMENT 'Hour when reservation starts',
+  `end_hour` int(4) UNSIGNED ZEROFILL NOT NULL COMMENT 'Hour when reservation finishes',
   `week_day` varchar(7) NOT NULL COMMENT 'Array with active week day ([LMXJVSD] for all week days)',
   `user_modification` int(6) NOT NULL COMMENT 'ID of th user who has done the transaction',
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'When the transaction was done'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `hours`
+-- Dumping data for table `hours`
 --
 
-INSERT INTO `hours` (`id_hours`, `id_start_hour`, `id_end_hour`, `week_day`, `user_modification`, `timestamp`) VALUES
+INSERT INTO `hours` (`id_hours`, `start_hour`, `end_hour`, `week_day`, `user_modification`, `timestamp`) VALUES
 (1, 0800, 0930, 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
 (2, 1000, 1130, 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
 (3, 1200, 1330, 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
@@ -52,7 +52,7 @@ INSERT INTO `hours` (`id_hours`, `id_start_hour`, `id_end_hour`, `week_day`, `us
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `reservations`
+-- Table structure for table `reservations`
 --
 
 CREATE TABLE `reservations` (
@@ -67,21 +67,21 @@ CREATE TABLE `reservations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Tabal de reservas';
 
 --
--- Volcado de datos para la tabla `reservations`
+-- Dumping data for table `reservations`
 --
 
 INSERT INTO `reservations` (`id_reservation`, `reservation_date`, `hour_id`, `zone_id`, `user_id`, `reservation_status`, `user_modification`, `timestamp`) VALUES
-(2, '2021-03-15', 1, 1, 3, 'A', 999999, '2021-02-28 18:02:00'),
-(5, '2021-01-28', 1, 1, 3, 'I', 999999, '2021-02-28 18:04:11'),
-(6, '2021-03-28', 1, 1, 3, 'I', 999999, '2021-02-28 18:06:36'),
-(7, '2021-03-15', 2, 1, 1, 'A', 999999, '2021-02-28 18:06:36'),
-(8, '2021-03-28', 3, 3, 1, 'A', 999999, '2021-02-28 18:06:36'),
-(10, '2021-04-28', 4, 6, 1, 'A', 999999, '2021-02-28 18:06:36');
+(2, '2021-03-15', 1, 1, 3, 'A', 999999, '2021-02-28 17:02:00'),
+(5, '2021-01-28', 1, 1, 3, 'I', 999999, '2021-02-28 17:04:11'),
+(6, '2021-03-28', 1, 1, 3, 'I', 999999, '2021-02-28 17:06:36'),
+(7, '2021-03-15', 2, 1, 1, 'A', 999999, '2021-02-28 17:06:36'),
+(8, '2021-03-28', 3, 3, 1, 'A', 999999, '2021-02-28 17:06:36'),
+(10, '2021-04-28', 4, 6, 1, 'A', 999999, '2021-02-28 17:06:36');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -99,11 +99,11 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Tabla de usuarios';
 
 --
--- Volcado de datos para la tabla `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id_user`, `user_type`, `card_number`, `user_status`, `user_email`, `user_password`, `user_name`, `start_date_user`, `end_date_user`, `user_modification`, `timestamp`) VALUES
-(1, 'A', 108, 1, 'plosky21@hotmail.com', 'P@sswor1', 'Sandra Arcas', '2020-01-01', '0000-00-00', 1, '2021-03-09 17:50:35'),
+(1, 'A', 108, 1, 'plosky21@hotmail.com', 'P@sswor1', 'Sandra Arcas', '2020-01-01', '0000-00-00', 1, '2021-03-14 19:26:31'),
 (2, 'G', 25, 0, 'email1@hotmail.com', 'P@sswor1', 'Name1 Surname1 Surname2', '2019-01-01', '2021-01-01', 999999, '2021-03-05 16:09:28'),
 (3, 'G', 400, 1, 'email2@hotmail.com', 'P@sswor1', 'Name2 Surname1 Surname2', '2020-01-01', '0000-00-00', 1, '2021-03-08 10:49:50'),
 (4, 'G', 108, 1, 'email3@hotmail.com', 'P@sswor1', 'Name3 Surname1 Surname2', '2020-01-01', '0000-00-00', 1, '2021-03-08 10:49:50'),
@@ -113,7 +113,7 @@ INSERT INTO `users` (`id_user`, `user_type`, `card_number`, `user_status`, `user
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `zones`
+-- Table structure for table `zones`
 --
 
 CREATE TABLE `zones` (
@@ -126,34 +126,34 @@ CREATE TABLE `zones` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `zones`
+-- Dumping data for table `zones`
 --
 
 INSERT INTO `zones` (`id_zone`, `zone_name`, `max_users_zone`, `zone_status`, `user_modification`, `timestamp`) VALUES
-(1, 'Volúmenes', 3, 'A', 1, '2021-03-13 23:44:12'),
-(2, 'Moonboard', 2, 'A', 999999, '2021-03-08 17:33:20'),
-(3, 'Placa desplomada', 2, 'I', 999999, '2021-03-13 23:37:13'),
-(4, 'Plafón', 2, 'A', 999999, '2021-03-08 17:33:20'),
-(6, 'Vía R1', 2, 'A', 999999, '2021-03-08 17:33:20'),
-(7, 'Vía R2', 2, 'I', 999999, '2021-03-09 16:20:34'),
-(8, 'Vía R3', 2, 'A', 999999, '2021-03-08 17:33:20'),
-(9, 'Vía R4', 2, 'A', 999999, '2021-03-08 17:33:20'),
-(10, 'Vía R5', 2, 'A', 999999, '2021-03-08 17:33:20'),
-(20, 'Caballo', 2, 'A', 999999, '2021-03-13 23:51:23');
+(1, 'Volúmenes', 3, 'A', 1, '2021-03-13 22:44:12'),
+(2, 'Moonboard', 2, 'A', 999999, '2021-03-08 16:33:20'),
+(3, 'Placa desplomada', 2, 'I', 1, '2021-03-15 09:59:04'),
+(4, 'Plafón', 2, 'A', 1, '2021-03-15 12:15:34'),
+(6, 'Vía R1', 2, 'A', 1, '2021-03-15 12:16:11'),
+(7, 'Vía R2', 2, 'I', 1, '2021-03-15 09:58:50'),
+(8, 'Vía R3', 2, 'A', 1, '2021-03-15 09:59:33'),
+(9, 'Vía R4', 2, 'A', 999999, '2021-03-08 16:33:20'),
+(10, 'Vía R5', 2, 'A', 1, '2021-03-15 09:58:17'),
+(11, 'Caballo', 2, 'A', 999999, '2021-03-13 22:51:23');
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `hours`
+-- Indexes for table `hours`
 --
 ALTER TABLE `hours`
   ADD PRIMARY KEY (`id_hours`),
-  ADD UNIQUE KEY `id_start_hour` (`id_start_hour`,`id_end_hour`);
+  ADD UNIQUE KEY `id_start_hour` (`start_hour`,`end_hour`);
 
 --
--- Indices de la tabla `reservations`
+-- Indexes for table `reservations`
 --
 ALTER TABLE `reservations`
   ADD PRIMARY KEY (`id_reservation`),
@@ -163,52 +163,52 @@ ALTER TABLE `reservations`
   ADD KEY `reservation_date` (`reservation_date`);
 
 --
--- Indices de la tabla `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`),
   ADD KEY `card_number` (`card_number`,`user_status`,`user_name`);
 
 --
--- Indices de la tabla `zones`
+-- Indexes for table `zones`
 --
 ALTER TABLE `zones`
   ADD PRIMARY KEY (`id_zone`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `hours`
+-- AUTO_INCREMENT for table `hours`
 --
 ALTER TABLE `hours`
   MODIFY `id_hours` int(2) NOT NULL AUTO_INCREMENT COMMENT 'ID of the time zone', AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla `reservations`
+-- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
   MODIFY `id_reservation` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID of reservation', AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id_user` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID of the user', AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT de la tabla `zones`
+-- AUTO_INCREMENT for table `zones`
 --
 ALTER TABLE `zones`
-  MODIFY `id_zone` int(2) NOT NULL AUTO_INCREMENT COMMENT 'ID of the zone', AUTO_INCREMENT=23;
+  MODIFY `id_zone` int(2) NOT NULL AUTO_INCREMENT COMMENT 'ID of the zone', AUTO_INCREMENT=70;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `reservations`
+-- Constraints for table `reservations`
 --
 ALTER TABLE `reservations`
   ADD CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`),
