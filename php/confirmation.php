@@ -1,5 +1,5 @@
 <?php
-    unset ($_SESSION['confirmation']);   
+    unset ($_SESSION["confirmation"]); 
 ?>
 <!-- Mensaje modal de confirmación para eliminar registros-->
 
@@ -25,7 +25,18 @@
  
             <div class="modal-footer">
                 <button type="button" data-dismiss="alert" class="btn btn-dark">Cancelar</button>
-                <a href="../php/deleteZone.php?Id=<?php echo $_SESSION['idZone']?>&zoneName=<?php echo $_SESSION['zoneName']?>&delete=yes" class="btn btn-danger">Eliminar</a>
+                <?php 
+                switch ($_SESSION["page"]){ 
+                    case "zone": ?>
+                        <a href="../php/deleteZone.php?Id=<?php echo $_SESSION['idZone']?>&zoneName=<?php echo $_SESSION['zoneName']?>&delete=yes" class="btn btn-danger">Eliminar</a>
+                    <?php ; 
+                        break;
+                    case "hour":?>
+                        <a href="../php/deleteHour.php?Id=<?php echo $_SESSION['idHour']?>&startHour=<?php echo $_SESSION['startHour']?>&endHour=<?php echo $_SESSION['endHour']?>&delete=yes" class="btn btn-danger">Eliminar</a>
+                    <?php ; 
+                        break; 
+                    }    ?>    
+                
             </div>
 
         </div>
@@ -34,4 +45,6 @@
 
 <?php
     $_SESSION["message"] = ""; 
+    unset ($_SESSION["page"]);
+
 ?>

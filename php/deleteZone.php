@@ -55,6 +55,7 @@ try {
             
         } else {
             $_SESSION['confirmation'] = "";
+            $_SESSION["page"] = "zone";
             $_SESSION['idZone']   = $idZone;
             $_SESSION['zoneName'] = $zoneName;
             $_SESSION['message']  = "Estás a punto de eliminar la zona $zoneName. Esto también eliminará las reservas pasadas asociadas a esa zona." ;

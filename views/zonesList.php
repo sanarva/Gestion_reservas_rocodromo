@@ -25,7 +25,7 @@
   <h2>GESTIÓN DE ZONAS</h2>
 
   <div class="container">      
-    <table class="table  mt-5">  
+    <table class="table">  
       <thead>
         <tr>
           <th>ZONA</th>
@@ -53,7 +53,7 @@
             <!--Botones Actualizar y Eliminar -->
             <td class="d-flex justify-content-center">
               <a href="zone.php?Id=<?php echo $zone->id_zone?>&zoneName=<?php echo $zone->zone_name?>&maxUserNumber=<?php echo $zone->max_users_zone?>&zoneStatus=<?php echo $zone->zone_status?>">
-                <i title="Modificar" class="far fa-edit fa-lg cursorHand text-info mr-4"></i>
+                <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
               </a>              
               <a href="../php/deleteZone.php?Id=<?php echo $zone->id_zone?>&zoneName=<?php echo $zone->zone_name?>">
                 <i title="Eliminar" class="far fa-trash-alt fa-lg text-danger "></i>
