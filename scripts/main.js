@@ -128,7 +128,7 @@ function validatePassword(password, errorPassword){
 //Comprueba que el campo contraseña tenga un formato correcto antes de enviar la petición al servidor
 //(Mínimo 8 caracteres, máximo 15, mínimo 1 mayúscula, mínimo 1 minúscula, mínimo 1 número, no espacios)
 function validateFormatPassword(password) {
-    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8}$/;
+    const regexPassword = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,8}$/;
     return regexPassword.test(password) ? true : false;
 }
 
@@ -228,15 +228,11 @@ function validateHourForm(btnClicked){
     }
 
 
-
-
-
     if (totalErrors > 0) {
         return false;
     } else {
         hourForm.action = action;
     }
-
 }
 
 
