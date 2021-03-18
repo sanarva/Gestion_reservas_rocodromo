@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2021 at 08:43 PM
+-- Generation Time: Mar 18, 2021 at 01:06 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `hours` (
-  `id_hours` int(2) NOT NULL COMMENT 'ID of the time zone',
-  `start_hour` int(4) UNSIGNED ZEROFILL NOT NULL COMMENT 'Hour when reservation starts',
-  `end_hour` int(4) UNSIGNED ZEROFILL NOT NULL COMMENT 'Hour when reservation finishes',
+  `id_hour` int(2) NOT NULL COMMENT 'ID of the time zone',
+  `start_hour` varchar(5) NOT NULL COMMENT 'Hour when reservation starts',
+  `end_hour` varchar(5) NOT NULL COMMENT 'Hour when reservation finishes',
   `week_day` varchar(7) NOT NULL COMMENT 'Array with active week day ([LMXJVSD] for all week days)',
   `user_modification` int(6) NOT NULL COMMENT 'ID of th user who has done the transaction',
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'When the transaction was done'
@@ -40,14 +40,14 @@ CREATE TABLE `hours` (
 -- Dumping data for table `hours`
 --
 
-INSERT INTO `hours` (`id_hours`, `start_hour`, `end_hour`, `week_day`, `user_modification`, `timestamp`) VALUES
-(1, 0800, 0930, 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
-(2, 1000, 1130, 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
-(3, 1200, 1330, 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
-(4, 1400, 1530, 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
-(5, 1600, 1730, 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
-(6, 1800, 1930, 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
-(7, 1945, 2115, 'LMXJVSD', 999999, '2021-02-28 17:39:17');
+INSERT INTO `hours` (`id_hour`, `start_hour`, `end_hour`, `week_day`, `user_modification`, `timestamp`) VALUES
+(1, '08:00', '09:30', 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
+(2, '10:00', '11:30', 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
+(3, '12:00', '13:30', 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
+(4, '14:00', '15:30', 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
+(5, '16:00', '17:30', 'LMXJVSD', 999999, '2021-02-28 17:39:17'),
+(6, '18:00', '19:30', 'LMXJV', 1, '2021-02-28 17:39:17'),
+(7, '19:45', '21:15', 'LMXJV', 1, '2021-02-28 17:39:17');
 
 -- --------------------------------------------------------
 
@@ -136,7 +136,7 @@ INSERT INTO `zones` (`id_zone`, `zone_name`, `max_users_zone`, `zone_status`, `u
 (4, 'Plafón', 2, 'A', 1, '2021-03-15 12:15:34'),
 (6, 'Vía R1', 2, 'A', 1, '2021-03-15 12:16:11'),
 (7, 'Vía R2', 2, 'I', 1, '2021-03-15 09:58:50'),
-(8, 'Vía R3', 2, 'A', 1, '2021-03-15 09:59:33'),
+(8, '', 0, '', 1, '2021-03-18 11:07:55'),
 (9, 'Vía R4', 2, 'A', 999999, '2021-03-08 16:33:20'),
 (10, 'Vía R5', 2, 'A', 1, '2021-03-15 09:58:17'),
 (11, 'Caballo', 2, 'A', 999999, '2021-03-13 22:51:23');
@@ -149,7 +149,7 @@ INSERT INTO `zones` (`id_zone`, `zone_name`, `max_users_zone`, `zone_status`, `u
 -- Indexes for table `hours`
 --
 ALTER TABLE `hours`
-  ADD PRIMARY KEY (`id_hours`),
+  ADD PRIMARY KEY (`id_hour`),
   ADD UNIQUE KEY `id_start_hour` (`start_hour`,`end_hour`);
 
 --
@@ -183,7 +183,7 @@ ALTER TABLE `zones`
 -- AUTO_INCREMENT for table `hours`
 --
 ALTER TABLE `hours`
-  MODIFY `id_hours` int(2) NOT NULL AUTO_INCREMENT COMMENT 'ID of the time zone', AUTO_INCREMENT=8;
+  MODIFY `id_hour` int(2) NOT NULL AUTO_INCREMENT COMMENT 'ID of the time zone', AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `reservations`
@@ -201,7 +201,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `zones`
 --
 ALTER TABLE `zones`
-  MODIFY `id_zone` int(2) NOT NULL AUTO_INCREMENT COMMENT 'ID of the zone', AUTO_INCREMENT=70;
+  MODIFY `id_zone` int(2) NOT NULL AUTO_INCREMENT COMMENT 'ID of the zone', AUTO_INCREMENT=74;
 
 --
 -- Constraints for dumped tables
@@ -212,8 +212,8 @@ ALTER TABLE `zones`
 --
 ALTER TABLE `reservations`
   ADD CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`),
-  ADD CONSTRAINT `reservations_ibfk_3` FOREIGN KEY (`hour_id`) REFERENCES `hours` (`id_hours`),
-  ADD CONSTRAINT `reservations_ibfk_4` FOREIGN KEY (`zone_id`) REFERENCES `zones` (`id_zone`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `reservations_ibfk_4` FOREIGN KEY (`zone_id`) REFERENCES `zones` (`id_zone`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservations_ibfk_5` FOREIGN KEY (`hour_id`) REFERENCES `hours` (`id_hour`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
