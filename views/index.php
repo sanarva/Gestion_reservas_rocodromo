@@ -45,7 +45,8 @@
                     <!-- Icono para mostrar/ocultar la contraseña -->
                     <i class="fas fa-eye passwordIcon" id="eyeIcon" onclick="showHidePassword('userPassword')"></i> 
                     <!-- Mensaje de error por formato incorrecto en la contraseña -->
-                    <div class="invalid-feedback" id="errorPassword"></div> 
+                    <div title="La contraseña debe ser de 8 caracteres y tener como mínimo una mayúscula, una minúscula y un número." class="invalid-feedback" id="errorPassword"></div> 
+                    
                 </div>
             </div>
 
@@ -59,7 +60,7 @@
                         Acceder
                     </button>
                     <!--Link para acceder a la pantalla de recuperar contraseña -->
-                    <a class="small" href="recoveryPsw.html"> He olvidado mi contraseña <i class="far fa-grin-beam-sweat"></i></a>
+                    <a class="small" href="recoveryPsw.php"> He olvidado mi contraseña <i class="far fa-grin-beam-sweat"></i></a>
                 </div>
             </div>
         </form>
