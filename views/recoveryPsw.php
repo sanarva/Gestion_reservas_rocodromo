@@ -18,23 +18,24 @@
 </head>
 
 <body >
+
+    <header>
+        <?php include("../php/header.php")?>
+    <header>
+
     <div class="container">
-
-        <p class= "closeSession"><i class="fas fa-sign-out-alt fa-lg "></i> Cerrar sesión</p> 
-
-        <h1>RECUPERAR CONTRASEÑA</h1>
 
         <div class="row ">
             <div class="col-lg-1"></div>
             <p class="col-lg-10 text-justify">¿Has olvidado tu contraseña? No te preocupes, escribe tu correo electrónico para que podamos enviarte una nueva.</p>
         </div>
         
-        <form>
+        <form method="post" action="#" autocomplete="off" id="recoveryPswForm" name="recoveryPswForm" onsubmit="return checkEmail()">
             <div class="form-group row">
                 <div class="col-lg-1"></div>
                 <label for="inputUser" class="col-lg-2 col-form-label"><i class="fas fa-user-check"></i> Usuario</label>
                 <div class="col-lg-8">
-                    <input type="text" class="form-control" id="inputUser" placeholder="Introduce tu email">
+                    <input type="text" autofocus class="form-control" id="userEmail" name="userEmail" placeholder="Introduce tu email">
                     <div class="invalid-feedback" id="errorEmail"></div>
                 </div>
             </div>
@@ -42,36 +43,27 @@
             <div class="form-group row">
                 <div class="col-lg-1"></div>
                 <div class="col-lg-8">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Enviar contraseña</button>
+                    <button type="submit" class="btn btn-primary">Enviar contraseña</button>
                 </div>
             </div>
         </form>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"> <i class="far fa-check-circle text-success"></i> Contraseña enviada</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body ">
-                      Te hemos enviado una nueva contraseña a tu email con las instrucciones. Si no las has recibido, revisa la carpeta de spam.</i>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div> 
-
     </div>
+
+    <?php 
+        if (isset($_SESSION['successFlag'])) {
+            include "../php/message.php";
+        } 
+    ?>
+
     <!-- Scripts para Bootstrap 4-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+
+    <!-- Scripts para la lógica de la app-->
+    <script src="../scripts/main.js"></script>
+
 </body>
 
 
