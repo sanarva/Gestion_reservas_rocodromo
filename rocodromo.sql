@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2021 at 01:06 PM
+-- Generation Time: Mar 19, 2021 at 11:17 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -92,8 +92,6 @@ CREATE TABLE `users` (
   `user_email` varchar(50) NOT NULL COMMENT 'User email',
   `user_password` varchar(8) NOT NULL COMMENT 'Password of the user',
   `user_name` varchar(100) NOT NULL COMMENT 'User name & surnames',
-  `start_date_user` date NOT NULL COMMENT 'Date when user has been suscribed',
-  `end_date_user` date NOT NULL COMMENT 'Date when user has been unsubscribed',
   `user_modification` int(6) NOT NULL COMMENT 'ID of the user Who has done the transaction',
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'When transaccion has done'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Tabla de usuarios';
@@ -102,13 +100,13 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id_user`, `user_type`, `card_number`, `user_status`, `user_email`, `user_password`, `user_name`, `start_date_user`, `end_date_user`, `user_modification`, `timestamp`) VALUES
-(1, 'A', 108, 1, 'plosky21@hotmail.com', 'P@sswor1', 'Sandra Arcas', '2020-01-01', '0000-00-00', 1, '2021-03-14 19:26:31'),
-(2, 'G', 25, 0, 'email1@hotmail.com', 'P@sswor1', 'Name1 Surname1 Surname2', '2019-01-01', '2021-01-01', 999999, '2021-03-05 16:09:28'),
-(3, 'G', 400, 1, 'email2@hotmail.com', 'P@sswor1', 'Name2 Surname1 Surname2', '2020-01-01', '0000-00-00', 1, '2021-03-08 10:49:50'),
-(4, 'G', 108, 1, 'email3@hotmail.com', 'P@sswor1', 'Name3 Surname1 Surname2', '2020-01-01', '0000-00-00', 1, '2021-03-08 10:49:50'),
-(5, 'G', 123, 1, 'email4@hotmail.com', 'P@sswor1', 'Name4 Surname1 Surname2', '2020-01-01', '0000-00-00', 1, '2021-03-08 10:49:50'),
-(6, 'G', 325, 1, 'email5@hotmail.com', 'P@sswor1', 'Name5 Surname1 Surname2', '2020-01-01', '0000-00-00', 1, '2021-03-08 10:49:50');
+INSERT INTO `users` (`id_user`, `user_type`, `card_number`, `user_status`, `user_email`, `user_password`, `user_name`, `user_modification`, `timestamp`) VALUES
+(1, 'A', 108, 1, 'plosky21@hotmail.com', 'Passwor1', 'Sandra Arcas', 1, '2021-03-19 21:56:08'),
+(2, 'G', 25, 0, 'email1@hotmail.com', 'Passwor1', 'Name1 Surname1 Surname2', 999999, '2021-03-18 14:41:13'),
+(3, 'G', 400, 1, 'email2@hotmail.com', 'kL6Cdt48', 'Name2 Surname1 Surname2', 999999, '2021-03-19 08:59:33'),
+(4, 'G', 108, 1, 'email3@hotmail.com', 'Passwor1', 'Name3 Surname1 Surname2', 1, '2021-03-19 09:28:41'),
+(5, 'G', 123, 1, 'email4@hotmail.com', 'Passwor1', 'Name4 Surname1 Surname2', 1, '2021-03-18 14:41:30'),
+(6, 'G', 325, 1, 'email5@hotmail.com', 'Passwor1', 'Name5 Surname1 Surname2', 1, '2021-03-18 14:41:35');
 
 -- --------------------------------------------------------
 
