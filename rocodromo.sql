@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2021 at 11:17 PM
+-- Generation Time: Mar 20, 2021 at 10:04 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -88,7 +88,7 @@ CREATE TABLE `users` (
   `id_user` int(6) NOT NULL COMMENT 'ID of the user',
   `user_type` varchar(1) NOT NULL COMMENT 'Type of user ["A"=Admin, "G"=generic]',
   `card_number` int(6) NOT NULL COMMENT 'Card number',
-  `user_status` tinyint(1) NOT NULL COMMENT 'User status (Active =>False=0, True=1]',
+  `user_status` varchar(1) NOT NULL COMMENT 'Status of the user \r\n(Active = "A") \r\n(Inactive = "I"',
   `user_email` varchar(50) NOT NULL COMMENT 'User email',
   `user_password` varchar(8) NOT NULL COMMENT 'Password of the user',
   `user_name` varchar(100) NOT NULL COMMENT 'User name & surnames',
@@ -101,12 +101,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `user_type`, `card_number`, `user_status`, `user_email`, `user_password`, `user_name`, `user_modification`, `timestamp`) VALUES
-(1, 'A', 108, 1, 'plosky21@hotmail.com', 'Passwor1', 'Sandra Arcas', 1, '2021-03-19 21:56:08'),
-(2, 'G', 25, 0, 'email1@hotmail.com', 'Passwor1', 'Name1 Surname1 Surname2', 999999, '2021-03-18 14:41:13'),
-(3, 'G', 400, 1, 'email2@hotmail.com', 'kL6Cdt48', 'Name2 Surname1 Surname2', 999999, '2021-03-19 08:59:33'),
-(4, 'G', 108, 1, 'email3@hotmail.com', 'Passwor1', 'Name3 Surname1 Surname2', 1, '2021-03-19 09:28:41'),
-(5, 'G', 123, 1, 'email4@hotmail.com', 'Passwor1', 'Name4 Surname1 Surname2', 1, '2021-03-18 14:41:30'),
-(6, 'G', 325, 1, 'email5@hotmail.com', 'Passwor1', 'Name5 Surname1 Surname2', 1, '2021-03-18 14:41:35');
+(1, 'A', 108, 'A', 'plosky21@hotmail.com', 'Passwor1', 'Sandra Arcas', 1, '2021-03-20 21:02:49'),
+(2, 'G', 25, 'I', 'email1@hotmail.com', 'Passwor1', 'Name1 Surname1 Surname2', 999999, '2021-03-20 21:04:02'),
+(3, 'G', 400, 'A', 'email2@hotmail.com', 'kL6Cdt48', 'Name2 Surname1 Surname2', 999999, '2021-03-20 21:03:35'),
+(4, 'G', 108, 'A', 'email3@hotmail.com', 'Passwor1', 'Name3 Surname1 Surname2', 1, '2021-03-20 21:03:35'),
+(5, 'G', 123, 'A', 'email4@hotmail.com', 'Passwor1', 'Name4 Surname1 Surname2', 1, '2021-03-20 21:03:35'),
+(6, 'G', 325, 'A', 'email5@hotmail.com', 'Passwor1', 'Name5 Surname1 Surname2', 1, '2021-03-20 21:03:35');
 
 -- --------------------------------------------------------
 
