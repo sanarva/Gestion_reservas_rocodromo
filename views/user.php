@@ -24,22 +24,33 @@
         <form>
             <div class="form-group row">
                 <div class="col-lg-1 "></div>
-                <label for="inputCardNumber" class="col-lg-3 col-form-label"><i class="fas fa-address-card"></i> Nº de tarjeta</label>
-                <div class="col-lg-7">
-                    <input type="text" class="form-control" id="inputData" placeholder="Introduce el número de tarjeta">
-                    <div class="invalid-feedback" id="errorCardNumber"></div>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-lg-1 "></div>
                 <label for="inputUserName" class="col-lg-3 col-form-label"><i class="fas fa-user"></i> Nombre usuario</label>
                 <div class="col-lg-7">
                     <input type="text" class="form-control" id="inputUserName" placeholder="Introduce nombre y apellidos">
                     <div class="invalid-feedback" id="errorUserName"></div>
                 </div>
             </div>
+            
+            <div class="form-group row">
+                <div class="col-lg-1 "></div>
+                <label for="usertype" class="col-lg-3 col-form-label"><i class="fas fa-user-cog"></i> Tipo usuario</label>
+                <div class="col-lg-7 input-group">
+                    <select class="form-control" id="userType" name="userType">
+                        <option value="A">Admin</option> 
+                        <option selected value="I">Genérico</option>  
+                    </select>
+                </div>
+            </div>            
 
+            <div class="form-group row">
+                <div class="col-lg-1 "></div>
+                <label for="inputCardNumber" class="col-lg-3 col-form-label"><i class="fas fa-address-card"></i> Nº de tarjeta</label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control" id="inputData" placeholder="Introduce el número de tarjeta">
+                    <div class="invalid-feedback" id="errorCardNumber"></div>
+                </div>
+            </div>
+            
             <div class="form-group row">
                 <div class="col-lg-1 "></div>
                 <label for="inputUserEmail" class="col-lg-3 col-form-label"><i class="fas fa-envelope"></i> Email usuario</label>
@@ -49,19 +60,16 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-1"></div>
-                <div class="col-lg-3">
-                    <p class="d-inline"><i class="fas fa-question-circle"></i> Estado:</p>
-                </div>
-                <div class="col-lg-7"> 
-                    <input type="radio" id="inputUserStatus" name="inputUserStatus" value="Activo" >
-                    <label for="inputUserStatus">Activo</label>
-                    <input type="radio" name="inputUserStatus" value="Inactivo" >
-                    <label for="inputUserStatus">Inactivo</label>
+            <div class="form-group row">
+                <div class="col-lg-1 "></div>
+                <label for="userStatus" class="col-lg-3 col-form-label"><i class="fas fa-question-circle"></i> Estado usuario</label>
+                <div class="col-lg-7 input-group">
+                    <select class="form-control" id="userStatus" name="userStatus">
+                        <option value="A">Activo</option> 
+                        <option value="I">Inactivo</option>  
+                    </select>
                 </div>
             </div>
-
 
             <div class="form-group row">
                 <div class="col-lg-1"></div>

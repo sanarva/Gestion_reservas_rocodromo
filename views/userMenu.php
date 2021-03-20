@@ -35,7 +35,7 @@
             <a href="http://www.escolamuntanya.org/rocodrom-usuaris" target="blank" class="itemOption"><p class="itemOptionText">NORMATIVA ROCÓDROMO<i class="fas fa-book-reader d-block"></i></p></a>
             <!-- Items específicos para usuarios usuarios administradores --> 
             <?php if ((isset($_SESSION['sessionUserType'])) && $_SESSION['sessionUserType']=="A") { ?>
-            <a href="usersList.html" class="itemOption"><p class="itemOptionText">GESTIONAR USUARIOS<i class="fas fa-users-cog d-block"></i></p></a>
+            <a href="usersList.php" class="itemOption"><p class="itemOptionText">GESTIONAR USUARIOS<i class="fas fa-users-cog d-block"></i></p></a>
             <a href="reservationList.html" class="itemOption"><p class="itemOptionText">LISTADO RESERVAS<i class="fas fa-clipboard-list d-block"></i></p></a>
             <a href="zonesList.php" class="itemOption"><p class="itemOptionText">CONFIGURAR ZONAS<i class="fas fa-map-signs d-block"></i></p></a>
             <a href="hoursList.php" class="itemOption"><p class="itemOptionText">CONFIGURAR HORARIOS<i class="fas fa-clock d-block"></i></p></a> 
