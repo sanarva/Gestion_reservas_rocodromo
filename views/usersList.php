@@ -53,6 +53,7 @@
         <thead>
             <tr>
               <th>NOMBRE USUARIO</th>
+              <th class="text-center">TIPO</th>
               <th class="text-center">Nº TARJETA</th>
               <th>EMAIL</th>
               <th class="text-center">ESTADO</th>
@@ -62,9 +63,10 @@
         <tbody>
           <tr> <!--Por cada reserva que exista en la base de datos, tendrá que aparecer un registro-->
             <td id="userNameUL"  name="userNameUL">Sandra Arcas Valero</td>
+            <td id="userTypeUL"  name="userTypeUL" class="text-center">Admin</td>
             <td class="text-center" id="cardNumberUL"  name="cardNumberUL">0108</td>
             <td id="emailUL"  name="emailUL">plosky21@hotmail.com</td>
-            <td id="checkUserStatusUL"  name="checkUserStatusUL" class="text-center"><i class="fas fa-check fa-lg text-success"></i></td>
+            <td id="userStatusUL"  name="userStatusUL" class="text-center"><i class="fas fa-check fa-lg text-success"></i></td>
             <td class="d-flex justify-content-center">
               <i class="fas fa-pen-square fa-lg text-info cursorHand mr-4"></i>
               <i class="fas fa-times-circle fa-lg text-danger cursorHand"></i>
@@ -75,7 +77,7 @@
       
       <div class="row">
         <div class="col-12">
-          <a class="btn btn-primary" href="user.html" >Crear usuario</a>
+          <a class="btn btn-primary" href="user.php">Crear usuario</a>
         </div>
       </div>
   </div>
