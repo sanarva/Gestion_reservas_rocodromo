@@ -97,7 +97,7 @@
           </td>
           <!--Botones Actualizar y Eliminar -->
           <td class="d-flex justify-content-center">
-            <a href="user.php?Id=<?php echo $user->id_user?>&userName=<?php echo $user->user_name?>&userType=<?php echo $user->user_type?>&card_number=<?php echo $user->card_number?>&userEmail=<?php echo $user->user_email?>&userStatus=<?php echo $user->user_status?>">
+            <a href="user.php?Id=<?php echo $user->id_user?>&userName=<?php echo $user->user_name?>&userType=<?php echo $user->user_type?>&cardNumber=<?php echo $user->card_number?>&userEmail=<?php echo $user->user_email?>&userStatus=<?php echo $user->user_status?>">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
             </a>              
             <a href="../php/deleteUser.php?Id=<?php echo $user->id_user?>&userName=<?php echo $user->user_name?>">
@@ -111,7 +111,7 @@
     
     <div class="row">
       <div class="col-12">
-        <a class="btn btn-primary" href="user.php">Crear usuario</a>
+        <a class="btn btn-primary" href="user.php?Id= &userName=&userType=&cardNumber=&userEmail=&userStatus=">Crear usuario</a>
       </div>
     </div>
   </div>

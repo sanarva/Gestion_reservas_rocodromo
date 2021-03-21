@@ -86,9 +86,9 @@
       }
 
         if (isset($_SESSION['successFlag'])) { 
-        $_SESSION["button1"] = "Lista zonas";
-        $_SESSION["formaction1"]  = "zonesList.php";
-        $_SESSION["colorbutton1"] = "btn-dark";
+            $_SESSION["button1"] = "Lista zonas";
+            $_SESSION["formaction1"]  = "zonesList.php";
+            $_SESSION["colorbutton1"] = "btn-dark";
         //Solo permitimos volver a la pantalla Zona en la creación de zonas
         if ($idZone == " ") {
             $_SESSION["button2"] = "Crear otra zona";
