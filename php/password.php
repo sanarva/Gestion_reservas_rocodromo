@@ -11,13 +11,13 @@ $userNewPassword = $_POST["userNewPassword"];
 $userConfirmNewPassword = $_POST["userConfirmNewPassword"];
 
 try {
-    // user_Status = 1 significa que el usuario está activo
+    // user_Status = "A" significa que el usuario está activo
     $sql = "UPDATE users 
                SET user_password     = :userNewPassword 
                  , user_modification = :userModification
              WHERE user_email = :useremail 
                AND user_password = :userpassword 
-               AND user_status = '1'";
+               AND user_status = 'A'";
     $query = $conn->prepare($sql);
     $query->bindParam(":userNewPassword",$userNewPassword);
     $query->bindParam(":userModification",$_SESSION["sessionIdUser"]);
