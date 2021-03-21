@@ -35,6 +35,14 @@
                         <a href="../php/deleteHour.php?Id=<?php echo $_SESSION['idHour']?>&startHour=<?php echo $_SESSION['startHour']?>&endHour=<?php echo $_SESSION['endHour']?>&delete=yes" class="btn btn-danger">Eliminar</a>
                     <?php ; 
                         break; 
+                    case "user":?>
+                        <a href="../php/deleteUser.php?Id=<?php echo $_SESSION['idUser']?>&userName=<?php echo $_SESSION['userName']?>&delete=yes" class="btn btn-danger">Eliminar</a>
+                    <?php ; 
+                        break; 
+                    case "reservation":?>
+                        <a href="../php/deleteReservation.php?Id=<?php echo $_SESSION['idReservation']?>&delete=yes" class="btn btn-danger">Eliminar</a>
+                    <?php ; 
+                        break; 
                     }    ?>    
                 
             </div>
