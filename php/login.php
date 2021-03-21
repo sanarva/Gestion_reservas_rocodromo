@@ -11,7 +11,11 @@ $userEmail    = $_POST["userEmail"];
 $userPassword = $_POST["userPassword"];
 
 try {
-    $sql = "SELECT id_user, user_type, user_name, user_email FROM users WHERE user_email = :useremail AND  user_password = :userpassword  AND user_status = 1";
+    $sql = "SELECT id_user, user_type, user_name, user_email 
+              FROM users 
+             WHERE user_email = :useremail 
+               AND user_password = :userpassword 
+               AND user_status = 'A'";
     $query = $conn->prepare($sql);
     //Estamos usando un array asociativo para los parámetros
     $query->execute(array(":useremail"=>$userEmail,":userpassword"=>$userPassword));

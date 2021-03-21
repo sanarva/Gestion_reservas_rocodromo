@@ -9,7 +9,7 @@ $userEmail = $_POST["userEmail"];
 
 try {
     //Buscamos si existe el usuario y está activo
-    $sql = "SELECT id_user  FROM users WHERE user_email = :useremail AND user_status = '1'";
+    $sql = "SELECT id_user  FROM users WHERE user_email = :useremail AND user_status = 'A'";
     $query = $conn->prepare($sql); 
     $query->execute(array(":useremail"=>$userEmail));  
     $result = $query->fetch(PDO::FETCH_ASSOC);
@@ -26,7 +26,7 @@ try {
                        SET user_password     = :usernewpassword 
                          , user_modification = '999999'
                      WHERE user_email = :useremail 
-                       AND user_status = '1'"; // user_Status = 1 significa que el usuario está activo
+                       AND user_status = 'A'"; // user_Status = 1 significa que el usuario está activo
             $query = $conn->prepare($sql);
             $query->bindParam(":usernewpassword",$userNewPassword);
             $query->bindParam(":useremail", $userEmail);
