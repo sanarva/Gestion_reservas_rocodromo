@@ -15,6 +15,12 @@ let modifyPasswordForm = document.getElementById("modifyPasswordForm");
 //Variable necesaria para determinar si existe o no formulario de zonas 
 let zoneForm = document.getElementById("zoneForm");
 
+//Variable necesaria para determinar si existe o no formulario de recuperar contraseña 
+let recoveryPswForm = document.getElementById("recoveryPswForm");
+
+//Variable necesaria para determinar si existe o no formulario de usuarios 
+let userForm = document.getElementById("userForm");
+
 //Mostrar/ocultar contraseña
 function showHidePassword(field) {
     let psw = document.getElementById(field);
@@ -96,7 +102,7 @@ function validateEmail() {
 
    if (email.value == "") {
         email.classList.add("is-invalid");
-        errorEmail.textContent = "Por favor, escribe tu email";
+        errorEmail.textContent = "Por favor, escribe el email";
         totalErrors++;
     } else if (!validateFormatEmail(email.value)) {
         email.classList.add("is-invalid");
@@ -180,6 +186,48 @@ function checkEmail(){
 }
 
 
+//Función usada para hacer las validaciones del formulario de usuarios antes de hacer la petición al servidor
+function validateUserForm(btnClicked){
+    //Inicializamos los errores
+    totalErrors = 0;
+
+    let action = document.getElementById(btnClicked).formAction;
+
+    //Recuperamos el valor del nombre del usuario y validamos su formato
+    let userName = document.getElementById("inputUserName");
+    let errorUserName = document.getElementById("errorUserName");
+    if (userName.value == "") {
+        userName.classList.add("is-invalid");
+        errorUserName.textContent = "Por favor, escribe un nombre de usuario";
+        totalErrors++;
+    }
+
+    //Recuperamos el número de tajeta y validamos que sea numérico entre 0 y 999999
+    let cardNumber = document.getElementById("cardNumber");
+    let errorCardNumber = document.getElementById("errorCardNumber");
+    if (cardNumber.value == "") {
+        cardNumber.classList.add("is-invalid");
+        errorCardNumber.textContent = "Por favor, escribe el número de tarjeta";
+        totalErrors++;
+    } else if (isNaN(cardNumber.value)) {
+        cardNumber.classList.add("is-invalid");
+        errorCardNumber.textContent = "El número de tarjeta debe ser un número";
+        totalErrors++;
+    }
+    
+    //Validamos el formato del email 
+    validateEmail();
+
+    
+    if (totalErrors > 0) {
+        return false;
+    } else {
+        userForm.action = action;
+    }
+}
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////
 //Si el formulario existe, al retirar el foco quitaremos la clase "is-invalid".    //
 /////////////////////////////////////////////////////////////////////////////////////
@@ -201,11 +249,19 @@ if (zoneForm) {
     }, true);
 }
 
+if (userForm) {
+    userForm.addEventListener("blur", (event) => {
+        if (event.target.value != "") event.target.classList.remove("is-invalid");
+    }, true);
+}
+
 //Ocultar error en formulario de recuperar contraseña
 if (recoveryPswForm) {
     recoveryPswForm.addEventListener("blur", (event) => {
         if (event.target.value != "") event.target.classList.remove("is-invalid");
     }, true);
 }
+
+
 /////////////////////////////////////////////////////////////////////////////////////
  
