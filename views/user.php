@@ -33,14 +33,13 @@
     <header>
 
     <div class="container">
-        <h2><?php if ($idUser == " ") {?> CREAR NUEVA USUARIO <?php } else {?> MODIFICACIÓN USUARIO <?php }?></h2>
-        <form>
+        <h2><?php if ($idUser == " ") {?> CREAR NUEVO USUARIO <?php } else {?> MODIFICACIÓN USUARIO <?php }?></h2>
         <form method="post" action="#" autocomplete="off" id="userForm" name="userForm" onsubmit="return validateUserForm( <?php if($idUser ==' ') { ?> 'btnInsertUser' <?php } else {?>  'btnUpdateUser' <?php }?> )">
             <div class="form-group row">
                 <div class="col-lg-1 "></div>
                 <label for="inputUserName" class="col-lg-3 col-form-label"><i class="fas fa-user"></i> Nombre usuario</label>
                 <div class="col-lg-7">
-                    <input type="text" class="form-control" id="inputUserName" placeholder="Introduce nombre y apellidos" value ="<?php echo $userName ?>">
+                    <input autofocus type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Introduce nombre y apellidos" value ="<?php echo $userName ?>">
                     <div class="invalid-feedback" id="errorUserName"></div>
                 </div>
             </div>
@@ -60,7 +59,7 @@
                 <div class="col-lg-1 "></div>
                 <label for="inputCardNumber" class="col-lg-3 col-form-label"><i class="fas fa-address-card"></i> Nº de tarjeta</label>
                 <div class="col-lg-7">
-                    <input type="text" class="form-control" id="inputData" placeholder="Introduce el número de tarjeta" value ="<?php echo $cardNumber ?>">
+                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Introduce el número de tarjeta" value ="<?php echo $cardNumber ?>">
                     <div class="invalid-feedback" id="errorCardNumber"></div>
                 </div>
             </div>
@@ -69,8 +68,8 @@
                 <div class="col-lg-1 "></div>
                 <label for="inputUserEmail" class="col-lg-3 col-form-label"><i class="fas fa-envelope"></i> Email usuario</label>
                 <div class="col-lg-7">
-                    <input type="text" class="form-control" id="inputUserEmail" placeholder="Introduce el email" value ="<?php echo $userEmail ?>">
-                    <div class="invalid-feedback" id="errorUserEmail"></div>
+                    <input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="Introduce el email" value ="<?php echo $userEmail ?>">
+                    <div class="invalid-feedback" id="errorEmail"></div>
                 </div>
             </div>
 
@@ -89,9 +88,9 @@
                 <div class="col-lg-1"></div>
                 <div class="col-lg-8">
                     <?php if ($idUser == " ") {?>
-                        <button type="submit" formaction="../php/insertUser.php?Id=<?php echo $userId?>&userName=<?php echo $userName?>&userType=<?php echo $userType?>&cardNumber=<?php echo $cardNumber?>&userEmail=<?php echo $userEmail?>&userStatus=<?php echo $userStatus?>" id="btnInsertUser" class="btn btn-primary">Crear usuario </button>
+                        <button type="submit" formaction="../php/insertUser.php?Id=<?php echo $idUser?>&currentUserName=<?php echo $userName?>&currentUserType=<?php echo $userType?>&currentCardNumber=<?php echo $cardNumber?>&currentUserEmail=<?php echo $userEmail?>&currentUserStatus=<?php echo $userStatus?>" id="btnInsertUser" class="btn btn-primary">Crear usuario </button>
                     <?php } else {?>
-                        <button type="submit" formaction="../php/updateUser.php?Id=<?php echo $userId?>&userName=<?php echo $userName?>&userType=<?php echo $userType?>&cardNumber=<?php echo $cardNumber?>&userEmail=<?php echo $userEmail?>&userStatus=<?php echo $userStatus?>" id="btnUpdateUser" class="btn btn-primary">Modificar usuario</button>
+                        <button type="submit" formaction="../php/updateUser.php?Id=<?php echo $idUser?>&currentUserName=<?php echo $userName?>&currentUserType=<?php echo $userType?>&currentCardNumber=<?php echo $cardNumber?>&currentUserEmail=<?php echo $userEmail?>&currentUserStatus=<?php echo $userStatus?>" id="btnUpdateUser" class="btn btn-primary">Modificar usuario</button>
                         <button type="submit" formmethod="post" formaction="../php/deleteUser.php?Id=<?php echo $idUser?>&userName=<?php echo $userName?>" class="btn btn-danger ml-3">Eliminar usuario</button>
                     <?php }?>     
                 </div>
@@ -123,5 +122,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+
+    <!-- Scripts para la lógica de la app-->
+    <script src="../scripts/main.js"></script>
 </body>
 </html>
