@@ -48,7 +48,7 @@ try {
     //Si no existen usuarios, mostramos un aviso
     if ($users == [] ){
         $_SESSION['successFlag'] = "W";
-        $_SESSION['message'] = "No se han encontrado ningún usuario.";
+        $_SESSION['message'] = "No se ha encontrado ningún usuario.";
     }
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "C";
