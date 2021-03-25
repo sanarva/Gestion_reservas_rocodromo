@@ -6,71 +6,92 @@ $path = "../views/userMenu.php";
 require "database.php";
 
 //Comprobamos si viene información del formulario de buscar reserva
-if (isset ($_POST["dateFromFilter"]) && $_POST["dateFromFilter"] != "") {  
-    $dateFromFilter    = $_POST["dateFromFilter"];
-    $dateFromFilterGet = $_POST["dateFromFilter"];
-} else {
-    $dateFromFilter = "0000-01-01";
-    $dateFromFilterGet = "";
+if (isset($_POST["filterDateFrom"]) && $_POST["filterDateFrom"] != "") {  
+    $filterDateFrom                 = $_POST["filterDateFrom"];
+    $filterDateFromShow             = $_POST["filterDateFrom"];
+    $_SESSION['dateFromFilterShow'] = $_POST["filterDateFrom"];
+} else if (!isset($filterDateFrom) || (isset($filterDateFrom) && $filterDateFrom == "")){
+    $filterDateFrom                 = "0000-01-01";
+    $filterDateFromShow             = "";
+    $_SESSION['filterDateFromShow'] = "";
 }
 
-if (isset ($_POST["dateToFilter"]) && $_POST["dateToFilter"] != "") {
-    $dateToFilter    = $_POST["dateToFilter"];
-    $dateToFilterGet = $_POST["dateToFilter"];
-} else {
-    $dateToFilter = "9999-12-31";
-    $dateToFilterGet = "";
+if (isset($_POST["filterDateTo"]) && $_POST["filterDateTo"] != "") {
+    $filterDateTo                 = $_POST["filterDateTo"];
+    $filterDateToShow             = $_POST["filterDateTo"];
+    $_SESSION['filterDateToShow'] = $_POST["filterDateTo"];
+} else if (!isset($filterDateTo) || (isset($filterDateTo) && $filterDateTo == "")){
+    $filterDateTo                 = "9999-12-31";
+    $filterDateToShow             = "";
+    $_SESSION['filterDateToShow'] = "";
 }
 
-if (isset ($_POST["userFilter"])) {
-    $userFilter    = $_POST["userFilter"] . "%";
-    $userFilterGet = $_POST["userFilter"];
-} else {
-    $userFilter   = "%";
-    $userFilterGet = "";
+if (isset($_POST["filterUserName"])) {
+    $filterUserName                 = $_POST["filterUserName"] . "%";
+    $filterUserNameShow             = $_POST["filterUserName"];
+    $_SESSION['filterUserNameShow'] = $_POST["filterUserName"];
+} else if (!isset($filterUserName) || (isset($filterUserName) && $filterUserName == "")){
+    $filterUserName                 = "%";
+    $filterUserNameShow             = "";
+    $_SESSION['filterUserNameShow'] = "";
 }
 
-if (isset ($_POST["cardNumberFilter"])) {
-    $cardNumberFilter    = $_POST["cardNumberFilter"] . "%";
-    $cardNumberFilterGet = $_POST["cardNumberFilter"];
-} else {
-    $cardNumberFilter   = "%";
-    $cardNumberFilterGet = "";
+if (isset($_POST["filterCardNumber"])) {
+    $filterCardNumber                = $_POST["filterCardNumber"] . "%";
+    $filterCardNumberShow             = $_POST["filterCardNumber"];
+    $_SESSION['filterCardNumberShow'] = $_POST["filterCardNumber"];
+} else if (!isset($filterCardNumber) || (isset($filterCardNumber) && $filterCardNumber == "")){
+    $filterCardNumber                 = "%";
+    $filterCardNumberShow             = "";
+    $_SESSION['filterCardNumberShow'] = "";
 }
 
-if (isset ($_POST["hourStartFilter"]) && $_POST["hourStartFilter"] != "") {
-    $hourStartFilter    = $_POST["hourStartFilter"];
-    $hourStartFilterGet = $_POST["hourStartFilter"];
-} else {
-    $hourStartFilter   = "00:00";
-    $hourStartFilterGet = "";
+if (isset($_POST["filterStartHour"]) && $_POST["filterStartHour"] != "") {
+    $filterStartHour                 = $_POST["filterStartHour"];
+    $filterStartHourShow             = $_POST["filterStartHour"];
+    $_SESSION['filterStartHourShow'] = $_POST["filterStartHour"];
+} else if (!isset($filterStartHour) || (isset($filterStartHour) && $filterStartHour == "")){
+    $filterStartHour                 = "00:00";
+    $filterStartHourShow             = "";
+    $_SESSION['filterStartHourShow'] = "";
 }
 
-if (isset ($_POST["hourEndFilter"]) && $_POST["hourEndFilter"] != "") {
-    $hourEndFilter    = $_POST["hourEndFilter"];
-    $hourEndFilterGet = $_POST["hourEndFilter"];
-} else {
-    $hourEndFilter   = "99:99";
-    $hourEndFilterGet = "";
+if (isset($_POST["filterEndHour"]) && $_POST["filterEndHour"] != "") {
+    $filterEndHour                  = $_POST["filterEndHour"];
+    $filterEndHourShow              = $_POST["filterEndHour"];
+    $_SESSION['filterEndHourShow']  = $_POST["filterEndHour"];
+} else if (!isset($filterEndHour) || (isset($filterEndHour) && $filterEndHour == "")){
+    $filterEndHour                 = "99:99";
+    $filterEndHourShow              = "";
+    $_SESSION['filterEndHourShow']  = "";
 }
 
-if (isset ($_POST["selectZoneFilter"])) {
-    $selectZoneFilter    = $_POST["selectZoneFilter"] . "%";
-    $selectZoneFilterGet = $_POST["selectZoneFilter"];
-} else {
-    $selectZoneFilter   = "%";
-    $selectZoneFilterGet = "";
+if (isset($_POST["filterZoneName"])) {
+    $filterZoneName                 = $_POST["filterZoneName"] . "%";
+    $filterZoneNameShow             = $_POST["filterZoneName"];
+    $_SESSION['filterZoneNameShow'] = $_POST["filterZoneName"];
+} else if (!isset($filterZoneName) || (isset($filterZoneName) && $filterZoneName == "")){
+    $filterZoneName                 = "%";
+    $filterZoneNameShow             = "";
+    $_SESSION['filterZoneNameShow'] = "";
 }
 
-if (isset ($_POST["checkAllReservationsFilter"])) {
-    $checkAllReservationsFilter = "%";
-    $checkAllReservationsFilterGet = $_POST["checkAllReservationsFilter"];
-} else {
-    $checkAllReservationsFilter = "A%";
-    $checkAllReservationsFilterGet = "";
+if (isset($_POST["filterAllStatusReservation"])) {
+    $filterAllStatusReservation                 = "%";
+    $filterAllStatusReservationShow             = $_POST["filterAllStatusReservation"];
+    $_SESSION['filterAllStatusReservationShow'] = $_POST["filterAllStatusReservation"];
+} else if (!isset($filterAllStatusReservation) || (isset($filterAllStatusReservation) && $filterAllStatusReservation == "")){
+    $filterAllStatusReservation                 = "A";
+    $filterAllStatusReservationShow             = "";
+    $_SESSION['filterAllStatusReservationShow'] = "";
+} else if (isset($filterAllStatusReservation) && $filterAllStatusReservation == "on"){
+    $filterAllStatusReservation                 = "%";
+    $filterAllStatusReservationShow             = "on";
+    $_SESSION['filterAllStatusReservationShow'] = "on";
+
 }
 
-
+  
 //*********************************************************************************************//
 // Esta parte se encarga de cargar en la lista de reservas, las reservas de la BBDD            //
 //*********************************************************************************************//
@@ -96,21 +117,23 @@ try {
                AND zone_name        LIKE :zonename
           ORDER BY reservation_date DESC, start_hour ASC, end_hour ASC, card_number ASC";
     $query = $conn->prepare($sql);
-    $query->bindParam(":reservationstatus",$checkAllReservationsFilter);
-    $query->bindParam(":fromreservationdate",$dateFromFilter);
-    $query->bindParam(":toreservationdate",$dateToFilter);
-    $query->bindParam(":username",$userFilter);
-    $query->bindParam(":cardnumber",$cardNumberFilter);
-    $query->bindParam(":starthour",$hourStartFilter);
-    $query->bindParam(":endhour",$hourEndFilter);
-    $query->bindParam(":zonename",$selectZoneFilter);
+    $query->bindParam(":reservationstatus",$filterAllStatusReservation);
+    $query->bindParam(":fromreservationdate",$filterDateFrom);
+    $query->bindParam(":toreservationdate",$filterDateTo);
+    $query->bindParam(":username",$filterUserName);
+    $query->bindParam(":cardnumber",$filterCardNumber);
+    $query->bindParam(":starthour",$filterStartHour);
+    $query->bindParam(":endhour",$filterEndHour);
+    $query->bindParam(":zonename",$filterZoneName);
 
     $query->execute();
     $reservations = $query->fetchAll(PDO::FETCH_OBJ);
-    //Si no existen usuarios, mostramos un aviso
+    //Si no existen reservas, mostramos un aviso
     if ($reservations == [] ){
-        $_SESSION['successFlag'] = "W";
-        $_SESSION['message'] = "No se ha encontrado ninguna reserva.";
+        if ($_SESSION['successFlag'] != "Y"){ //Si en la lista solo hay un registro y se elimina, en lugar de dar el error de que se ha eliminado correctamente, aparece el warning de que no se ha encontrado ninguna reservas. Así que ponemos este if para solucionar el problema
+            $_SESSION['successFlag'] = "W";
+            $_SESSION['message'] = "No se ha encontrado ninguna reserva.";
+        }
     }
 
 } catch(PDOException $e){
@@ -122,10 +145,13 @@ try {
     //Limpiamos la memoria 
     $conn = null;
 
-    if (isset ($_POST["dateFromFilter"]) || isset ($_POST["dateToFilter"]) || isset ($_POST["userFilter"]) || isset ($_POST["cardNumberFilter"]) || isset ($_POST["hourStartFilter"]) || isset ($_POST["hourEndFilter"]) || isset ($_POST["selectZoneFilter"]) || isset ($_POST["checkAllReservationsFilter"])) {
+    if (isset ($_POST["filterDateFrom"]) || isset ($_POST["filterDateTo"]) || isset ($_POST["filterUserName"]) || isset ($_POST["filterCardNumber"]) || isset ($_POST["filterStartHour"]) || isset ($_POST["filterEndHour"]) || isset ($_POST["filterZoneName"]) || isset ($_POST["filterAllStatusReservation"])) {
         $_SESSION["searchReservations"] = $reservations;
-        header("Location: ../views/reservationsList.php?dateFrom=$dateFromFilterGet&dateTo=$dateToFilterGet&userName=$userFilterGet&cardNumber=$cardNumberFilterGet&startHour=$hourStartFilterGet&endHour=$hourEndFilterGet&zoneName=$selectZoneFilterGet&checkAllReservationsFilterGet=$checkAllReservationsFilterGet");
+
+        header("Location: ../views/reservationsList.php?dateFrom=$filterDateFromShow&dateTo=$filterDateToShow&userName=$filterUserNameShow&cardNumber=$filterCardNumberShow&startHour=$filterStartHourShow&endHour=$filterEndHourShow&zoneName=$filterZoneNameShow&allStatusReservation=$filterAllStatusReservationShow");
     }
+    
+
 }
 
 ?>

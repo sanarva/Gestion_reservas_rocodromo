@@ -23,14 +23,14 @@
     include("../php/inactivateReservations.php");
 
     //Recuperamos los valores que nos llegan a través del GET
-    $searchDateFrom                =  $_GET["dateFrom"];
-    $searchDateTo                  =  $_GET["dateTo"];
-    $searchUserName                =  $_GET["userName"];
-    $searchCardNumber              =  $_GET["cardNumber"];
-    $searchStartHour               =  $_GET["startHour"];
-    $searchEndHour                 =  $_GET["endHour"];
-    $searchZoneName                =  $_GET["zoneName"];
-    $checkAllReservationsFilterGet =  $_GET["checkAllReservationsFilterGet"];
+    $filterDateFrom             = $_GET["dateFrom"];
+    $filterDateTo               = $_GET["dateTo"];
+    $filterUserName             = $_GET["userName"];
+    $filterCardNumber           = $_GET["cardNumber"];
+    $filterStartHour            = $_GET["startHour"];
+    $filterEndHour              = $_GET["endHour"];
+    $filterZoneName             = $_GET["zoneName"];
+    $filterAllStatusReservation = $_GET["allStatusReservation"]; 
   ?>
 
   <header>
@@ -44,32 +44,32 @@
     <p class="border-bottom">Filtros:</p>
     <form method="post" action="../php/readReservations.php" autocomplete="off">     
       <div class="filterLayoutItems">
-        <label for="dateFromFilter" class="col-form-label d-block"><i class="far fa-calendar-alt"></i> Fecha desde:</label>
-        <input type="date" name="dateFromFilter" id="dateFromFilter" value = <?php echo $searchDateFrom?>>
+        <label for="filterDateFrom" class="col-form-label d-block"><i class="far fa-calendar-alt"></i> Fecha desde:</label>
+        <input type="date" name="filterDateFrom" id="filterDateFrom" value = <?php echo $filterDateFrom?>>
       </div>  
       <div class="filterLayoutItems">
-        <label for="dateToFilter" class="col-form-label d-block"><i class="far fa-calendar-alt"></i> Fecha hasta:</label>
-        <input type="date" name="dateToFilter" id="dateToFilter" value = <?php echo $searchDateTo?>>
+        <label for="filterDateTo" class="col-form-label d-block"><i class="far fa-calendar-alt"></i> Fecha hasta:</label>
+        <input type="date" name="filterDateTo" id="filterDateTo" value = <?php echo $filterDateTo?>>
       </div>
       
       <div class="filterLayoutItems">
-        <label for="userFilter" class="col-form-label d-block"><i class="far fa-user"></i> Usuario:</label>
-        <input type="text" name="userFilter" id="userFilter" value = <?php echo $searchUserName?>>
+        <label for="filterUserName" class="col-form-label d-block"><i class="far fa-user"></i> Usuario:</label>
+        <input type="text" name="filterUserName" id="filterUserName" value = <?php echo $filterUserName?>>
       </div>
       
       <div class="filterLayoutItems">
-        <label for="cardNumberFilter" class="col-form-label d-block"><i class="far fa-address-card"></i> Nº tarjeta:</label>
-        <input type="text" name="cardNumberFilter" id="cardNumberFilter" value = <?php echo $searchCardNumber?>>
+        <label for="filterCardNumber" class="col-form-label d-block"><i class="far fa-address-card"></i> Nº tarjeta:</label>
+        <input type="text" name="filterCardNumber" id="filterCardNumber" value = <?php echo $filterCardNumber?>>
       </div>
 
       <?php include("../php/dropdowns.php");?>
 
       <div class="filterLayoutItems">
-        <label for="hourStartFilter" class="col-form-label d-block"><i class="far fa-clock"></i> Hora inicio:</label>
-        <select name="hourStartFilter">
+        <label for="filterStartHour" class="col-form-label d-block"><i class="far fa-clock"></i> Hora inicio:</label>
+        <select name="filterStartHour">
           <option value="">Cualquier hora</option>
           <?php foreach($hours as $startHour):?>
-           <option name="hourStartFilter" value="<?php echo $startHour->start_hour?>" <?php if ($startHour->start_hour == $searchStartHour) {?> selected <?php } ?>  >
+           <option value="<?php echo $startHour->start_hour?>" <?php if ($startHour->start_hour == $filterStartHour) {?> selected <?php } ?>  >
             <?php echo $startHour->start_hour?> 
            </option>
           <?php endforeach; ?>
@@ -77,11 +77,11 @@
       </div>
 
       <div class="filterLayoutItems">
-        <label for="hourEndFilter" class="col-form-label d-block"><i class="far fa-clock"></i> Hora fin:</label>
-        <select name="hourEndFilter" >
+        <label for="filterEndHour" class="col-form-label d-block"><i class="far fa-clock"></i> Hora fin:</label>
+        <select name="filterEndHour" >
           <option value="">Cualquier hora</option>
           <?php foreach($hours as $endHour):?>
-           <option value="<?php echo $endHour->end_hour?>" <?php if ($endHour->end_hour == $searchEndHour) {?> selected <?php } ?>>
+           <option value="<?php echo $endHour->end_hour?>" <?php if ($endHour->end_hour == $filterEndHour) {?> selected <?php } ?>>
             <?php echo $endHour->end_hour?> 
           </option>
           <?php endforeach; ?>
@@ -89,11 +89,11 @@
       </div>
 
       <div class="filterLayoutItems">
-        <label for="selectZoneFilter" class="col-form-label d-block"><i class="fas fa-map-signs"></i> Zona:</label>
-        <select name="selectZoneFilter" >
+        <label for="filterZoneName" class="col-form-label d-block"><i class="fas fa-map-signs"></i> Zona:</label>
+        <select name="filterZoneName" >
           <option value="">Todas las zonas</option>
           <?php foreach($zones as $zone):?>
-           <option value="<?php echo $zone->zone_name?>" <?php if ($zone->zone_name == $searchZoneName) {?> selected <?php } ?> >
+           <option value="<?php echo $zone->zone_name?>" <?php if ($zone->zone_name == $filterZoneName) {?> selected <?php } ?> >
             <?php echo $zone->zone_name?>
           </option>
           <?php endforeach; ?>
@@ -101,8 +101,8 @@
       </div>
 
       <div class="filterLayoutItems">
-        <input type="checkbox" name="checkAllReservationsFilter" id="checkAllReservationsFilter" <?php if ($checkAllReservationsFilterGet == "on") {?> checked <?php } ?>>
-        <label for="checkAllReservationsFilter" class="col-form-label">Mostrar reservas inactivas</label>
+        <input type="checkbox" name="filterAllStatusReservation" id="filterAllStatusReservation" <?php if ($filterAllStatusReservation == "on") {?> checked <?php } ?>>
+        <label for="filterAllStatusReservation" class="col-form-label">Mostrar reservas inactivas</label>
       </div>
 
       <div class="row mt-2">
@@ -127,7 +127,7 @@
       </thead>
       <tbody>
       <!--Llamamos a leer reservas para cargar la lista de reservas -->
-      <?php 
+      <?php
         if ((!isset($_SESSION["searchReservations"]))){
           include("../php/readReservations.php");
         } else {
@@ -156,12 +156,23 @@
           </td>
            <!--Botones Actualizar y Eliminar -->
           <td class="d-flex justify-content-center">
+            <!--Se inhabilita el botón de actualizar si el estado de la reserva en inactiva -->
+            <?php if ($reservation->reservation_status == "I") {?>
+              <i title="No se puede modificar una reserva inactiva" class="far fa-edit fa-lg textPrimaryDisabled mr-4"></i>
+            <?php }else {?>  
             <a href="../php/updateReservation.php?Id=<?php echo $reservation->id_reservation?>">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
             </a> 
-            <a href="../php/deleteReservation.php?Id=<?php echo $reservation->id_reservation?>">
+            <?php }?>
+
+            <!--Se inhabilita el botón de eliminar si el estado de la reserva en activa -->
+            <?php if ($reservation->reservation_status == "A") {?>
+              <i title="No se puede eliminar una reserva pendiente. Cancela la reserva antes." class="far fa-trash-alt fa-lg textDangerDisabled"></i>
+            <?php }else {?> 
+              <a href="../php/deleteReservation.php?Id=<?php echo $reservation->id_reservation?>"> 
               <i title="Eliminar" class="far fa-trash-alt fa-lg text-danger "></i>
             </a> 
+            <?php }?>
           </td>
         </tr>
       <?php endforeach; ?> <?php }?>
@@ -178,7 +189,7 @@
   </div>
 
   <?php   
-    if ( isset($_SESSION['confirmation'])) {
+    if (isset($_SESSION['confirmation'])) {
       include "../php/confirmation.php";
     }
 
