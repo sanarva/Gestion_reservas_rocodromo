@@ -161,6 +161,10 @@ function validateZoneForm(btnClicked){
         maxUserNumber.classList.add("is-invalid");
         errorMaxUserNumber.textContent = "Por favor, escribe un número máximo de usuarios en la zona (de 1 a 99)";
         totalErrors++;
+    } else if (isNaN(maxUserNumber.value)) {
+        maxUserNumber.classList.add("is-invalid");
+        errorMaxUserNumber.textContent = "El número máximo de usuarios por zona debe ser un número del 1 al 99";
+        totalErrors++;
     }
     
     if (totalErrors > 0) {
