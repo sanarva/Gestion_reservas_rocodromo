@@ -143,3 +143,10 @@ h2 {
     margin-left: 0;
 }
  
+.textPrimaryDisabled {
+    color: rgba(0,123,255,0.5);
+}
+
+.textDangerDisabled {
+    color: rgba(220,53,69,0.5);
+}
