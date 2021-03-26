@@ -106,7 +106,7 @@
 
         if (isset($_SESSION['successFlag'])) { 
             $_SESSION["button1"] = "Lista usuarios";
-            $_SESSION["formaction1"]  = "usersList.php?userName=&cardNumber=&checkAllUsersFilterGet=";
+            $_SESSION["formaction1"]  = "usersList.php?userName=&cardNumber=&allStatusUser=";
             $_SESSION["colorbutton1"] = "btn-dark";
         //Solo permitimos volver a la pantalla Usuario en la creación de usuarios
         if ($idUser == " ") {

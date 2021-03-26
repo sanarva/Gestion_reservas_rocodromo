@@ -111,7 +111,7 @@ try {
     //Limpiamos la memoria 
     $conn = null;
 
-    header("Location: ../views/usersList.php?userName=&cardNumber=&checkAllUsersFilterGet=");
+    header("Location: ../views/usersList.php?userName=&cardNumber=&allStatusUser=");
     
 }
 

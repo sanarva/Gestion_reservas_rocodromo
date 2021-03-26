@@ -34,7 +34,16 @@ if (isset($_POST["filterUserName"])) {
     $filterUserName                 = "%";
     $filterUserNameShow             = "";
     $_SESSION['filterUserNameShow'] = "";
+} else if (isset($filterUserName) && $filterUserName != ""){
+    if (strpos($filterUserName, "%") > 0) {
+        $filterUserName             = $filterUserName;
+    } else {
+        $filterUserName             = $filterUserName . "%";
+    }
+    $filterUserNameShow             = $filterUserName;
+    $_SESSION['filterUserNameShow'] = $filterUserName;
 }
+
 
 if (isset($_POST["filterCardNumber"])) {
     $filterCardNumber                = $_POST["filterCardNumber"] . "%";
@@ -44,6 +53,14 @@ if (isset($_POST["filterCardNumber"])) {
     $filterCardNumber                 = "%";
     $filterCardNumberShow             = "";
     $_SESSION['filterCardNumberShow'] = "";
+} else if (isset($filterCardNumber) && $filterCardNumber != ""){
+    if (strpos($filterCardNumber, "%") > 0) {
+        $filterCardNumber            = $filterCardNumber;
+    } else {
+        $filterCardNumber            = $filterCardNumber . "%";
+    }
+    $filterCardNumberShow             = $filterCardNumber;
+    $_SESSION['filterCardNumberShow'] = $filterCardNumber;
 }
 
 if (isset($_POST["filterStartHour"]) && $_POST["filterStartHour"] != "") {
