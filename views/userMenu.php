@@ -28,20 +28,18 @@
         
         <div class="divOptions">
             <!-- Items comunes para usuarios genéricos y administradores -->    
-            <a href="reservation.html" class="itemOption itemOption1"><p class="itemOptionText">CREAR NUEVA RESERVA<i class="fas fa-plus-circle d-block"></i></p></a>
-            <a class="itemOption itemOption2"><p class="itemOptionText">MODIFICAR RESERVA<i class="fas fa-pen-square d-block"></i></p></a>
-            <a class="itemOption itemOption3"><p class="itemOptionText">CANCELAR RESERVA<i class="fas fa-times-circle d-block"></i></p></a>
+            <a href="myReservationsList.php" class="itemOption itemOption1"><p class="itemOptionText">MIS RESERVAS<i class="fas fa-calendar-check d-block"></i></p></a>
             <a href="modifyPsw.php" class="itemOption"><p class="itemOptionText">CAMBIAR CONTRASEÑA<i class="fas fa-unlock-alt d-block"></i></p></a>  
             <a href="http://www.escolamuntanya.org/rocodrom-usuaris" target="blank" class="itemOption"><p class="itemOptionText">NORMATIVA ROCÓDROMO<i class="fas fa-book-reader d-block"></i></p></a>
+            <a href="mailto:escolaescaladacornella@gmail.com?subject=Contacto%20desde%20la%20web%20de%20reservas" target="blank" class="itemOption"><p class="itemOptionText">CONTACTAR CON EL ROCO <i class="fas fa-envelope d-block"></i></p></a>
             <!-- Items específicos para usuarios usuarios administradores --> 
             <?php if ((isset($_SESSION['sessionUserType'])) && $_SESSION['sessionUserType']=="A") { ?>
             <a href="usersList.php?userName=&cardNumber=&allStatusUser=" class="itemOption"><p class="itemOptionText">GESTIONAR USUARIOS<i class="fas fa-users-cog d-block"></i></p></a>
-            <a href="reservationsList.php?dateFrom=&dateTo=&userName=&cardNumber=&startHour=&endHour=&zoneName=&allStatusReservation" class="itemOption"><p class="itemOptionText">LISTADO RESERVAS<i class="fas fa-clipboard-list d-block"></i></p></a>
-            <a href="zonesList.php" class="itemOption"><p class="itemOptionText">CONFIGURAR ZONAS<i class="fas fa-map-signs d-block"></i></p></a>
-            <a href="hoursList.php" class="itemOption"><p class="itemOptionText">CONFIGURAR HORARIOS<i class="fas fa-clock d-block"></i></p></a> 
+            <a href="reservationsList.php?dateFrom=&dateTo=&userName=&cardNumber=&startHour=&endHour=&zoneName=&allStatusReservation" class="itemOption"><p class="itemOptionText">GESTIONAR RESERVAS<i class="fas fa-clipboard-list d-block"></i></p></a>
+            <a href="zonesList.php" class="itemOption"><p class="itemOptionText">GESTIONAR ZONAS<i class="fas fa-map-signs d-block"></i></p></a>
+            <a href="hoursList.php" class="itemOption"><p class="itemOptionText">GESTIONAR HORARIOS<i class="fas fa-clock d-block"></i></p></a> 
             <?php } ?>
         </div>  
-       
     </div>
 
     <?php         

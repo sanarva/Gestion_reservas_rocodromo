@@ -118,6 +118,7 @@ try {
                  , start_hour
                  , end_hour
                  , zone_name
+                 , user_id
                  , user_name
                  , card_number
                  , reservation_status
