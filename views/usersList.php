@@ -19,9 +19,9 @@
 
 <body>
   <?php
-    $searchUserName         =  $_GET["userName"];
-    $searchCardNumber       =  $_GET["cardNumber"];
-    $checkAllUsersFilterGet =  $_GET["checkAllUsersFilterGet"];
+    $filterUserName         =  $_GET["userName"];
+    $filterCardNumber       =  $_GET["cardNumber"];
+    $filterAllStatusUser    =  $_GET["allStatusUser"];
   ?>
   <header>
     <?php include("../php/header.php");?>
@@ -34,18 +34,18 @@
     <p class="border-bottom">Filtros:</p>
     <form method="post" action="../php/readUsers.php" autocomplete="off" id="filterUsersForm" name="filterUsersForm">     
       <div class="filterLayoutItems">
-        <label for="userNameFilter" class="col-form-label d-block"><i class="far fa-user"></i> Nombre usuario:</label>
-        <input type="text" name="userNameFilter" id="userNameFilter" value = <?php echo $searchUserName?>>
+        <label for="filterUserName" class="col-form-label d-block"><i class="far fa-user"></i> Nombre usuario:</label>
+        <input type="text" name="filterUserName" id="filterUserName" value = <?php echo $filterUserName?>>
       </div>
       
       <div class="filterLayoutItems">
-        <label for="cardNumberFilter" class="col-form-label d-block"><i class="far fa-address-card"></i> Nº tarjeta:</label>
-        <input type="text" name="cardNumberFilter" id="cardNumberFilter" value = <?php echo $searchCardNumber?>>
+        <label for="filterCardNumber" class="col-form-label d-block"><i class="far fa-address-card"></i> Nº tarjeta:</label>
+        <input type="text" name="filterCardNumber" id="filterCardNumber" value = <?php echo $filterCardNumber?>>
       </div>
      
       <div class="filterLayoutItems">
-        <input type="checkbox" name="checkAllUsersFilter" id="checkAllUsersFilter"  <?php if ($checkAllUsersFilterGet == "on") {?> checked <?php } ?> >
-        <label for="checkAllUsersFilter" class="col-form-label">Mostrar usuarios inactivos</label>
+        <input type="checkbox" name="filterAllStatusUser" id="filterAllStatusUser"  <?php if ($filterAllStatusUser == "on") {?> checked <?php } ?> >
+        <label for="filterAllStatusUser" class="col-form-label">Mostrar usuarios inactivos</label>
       </div>
       <div class="row mt-2">
         <div class="col-12">
