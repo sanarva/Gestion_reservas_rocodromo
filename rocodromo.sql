@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2021 at 10:04 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.11
+-- Generation Time: Mar 29, 2021 at 10:11 AM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -71,12 +71,34 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`id_reservation`, `reservation_date`, `hour_id`, `zone_id`, `user_id`, `reservation_status`, `user_modification`, `timestamp`) VALUES
-(2, '2021-03-15', 1, 1, 3, 'A', 999999, '2021-02-28 17:02:00'),
+(2, '2021-05-15', 1, 1, 3, 'A', 999999, '2021-02-28 17:02:00'),
 (5, '2021-01-28', 1, 1, 3, 'I', 999999, '2021-02-28 17:04:11'),
-(6, '2021-03-28', 1, 1, 3, 'I', 999999, '2021-02-28 17:06:36'),
-(7, '2021-03-15', 2, 1, 1, 'A', 999999, '2021-02-28 17:06:36'),
-(8, '2021-03-28', 3, 3, 1, 'A', 999999, '2021-02-28 17:06:36'),
+(6, '2021-06-28', 1, 1, 3, 'A', 999999, '2021-02-28 17:06:36'),
+(7, '2021-04-15', 2, 1, 1, 'I', 999999, '2021-02-28 17:06:36'),
+(8, '2021-03-28', 3, 3, 1, 'I', 999999, '2021-02-28 17:06:36'),
 (10, '2021-04-28', 4, 6, 1, 'A', 999999, '2021-02-28 17:06:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reservationsconfig`
+--
+
+CREATE TABLE `reservationsconfig` (
+  `id_config` int(11) NOT NULL COMMENT 'ID of the configuration',
+  `max_reservation` int(11) NOT NULL COMMENT 'Maximun number of reservations by user',
+  `start_free_date` date NOT NULL COMMENT 'Start free date for  reservations',
+  `end_free_date` date NOT NULL COMMENT 'End free date for  reservations',
+  `user_modification` int(6) NOT NULL COMMENT 'ID of the user who has done last transaction',
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'When last transaction has been done'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `reservationsconfig`
+--
+
+INSERT INTO `reservationsconfig` (`id_config`, `max_reservation`, `start_free_date`, `end_free_date`, `user_modification`, `timestamp`) VALUES
+(1, 2, '2021-01-01', '2021-03-31', 1, '2021-03-29 07:22:08');
 
 -- --------------------------------------------------------
 
@@ -134,7 +156,6 @@ INSERT INTO `zones` (`id_zone`, `zone_name`, `max_users_zone`, `zone_status`, `u
 (4, 'Plafón', 2, 'A', 1, '2021-03-15 12:15:34'),
 (6, 'Vía R1', 2, 'A', 1, '2021-03-15 12:16:11'),
 (7, 'Vía R2', 2, 'I', 1, '2021-03-15 09:58:50'),
-(8, '', 0, '', 1, '2021-03-18 11:07:55'),
 (9, 'Vía R4', 2, 'A', 999999, '2021-03-08 16:33:20'),
 (10, 'Vía R5', 2, 'A', 1, '2021-03-15 09:58:17'),
 (11, 'Caballo', 2, 'A', 999999, '2021-03-13 22:51:23');
@@ -159,6 +180,12 @@ ALTER TABLE `reservations`
   ADD KEY `zone_id` (`zone_id`),
   ADD KEY `card_number_id` (`user_id`),
   ADD KEY `reservation_date` (`reservation_date`);
+
+--
+-- Indexes for table `reservationsconfig`
+--
+ALTER TABLE `reservationsconfig`
+  ADD PRIMARY KEY (`id_config`);
 
 --
 -- Indexes for table `users`
@@ -190,10 +217,16 @@ ALTER TABLE `reservations`
   MODIFY `id_reservation` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID of reservation', AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `reservationsconfig`
+--
+ALTER TABLE `reservationsconfig`
+  MODIFY `id_config` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID of the configuration', AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID of the user', AUTO_INCREMENT=7;
+  MODIFY `id_user` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID of the user', AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `zones`
