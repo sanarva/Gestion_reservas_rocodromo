@@ -37,9 +37,49 @@
     <?php include("../php/header.php");?>
   <header>  
 
-  <h2>LISTADO RESERVAS ROCÓDROMO</h2>
-
   <div class="container">
+    <h2>GESTIÓN DE RESERVAS</h2>
+    <?php include("../php/readReservationConfig.php");?>
+    <form method="post" action="#" autocomplete="off" id="reservationsConfigForm" name="reservationsConfigForm" onsubmit="return validateReservationsConfigForm()">
+      <div class="form-group row">
+        <div class="col-lg-1 "></div>
+        <label for="maxReservationsByUser" class="col-lg-3 col-form-label"><i class="fas fa-users"></i> Nº máximo reservas</label>
+        <div class="col-lg-7">
+          <input type="text" maxlength="2" class="form-control"  id="maxReservationsByUser" name="maxReservationsByUser" placeholder="Introduce el número máximo de reservas por usuario" value ="<?php echo  $reservationsConfig[0]->max_reservation ?>">
+          <!-- Mensaje de error por formato incorrecto en el nombre de la zona -->
+          <div class="invalid-feedback" id="errorMaxReservationsByUser"></div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-lg-1 "></div>
+        <label for="startFreeDate" class="col-lg-3 col-form-label"><i class="fas fa-calendar-check"></i> Abrir período</label>
+        <div class="col-lg-7">
+            <input autofocus type="date" class="form-control" id="startFreeDate" name="startFreeDate" value ="<?php echo  $reservationsConfig[0]->start_free_date ?>">
+            <div class="invalid-feedback" id="errorStartFreeDate"></div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-lg-1 "></div>
+        <label for="endFreeDate" class="col-lg-3 col-form-label"><i class="fas fa-calendar-check"></i> Cerrar período</label>
+        <div class="col-lg-7">
+            <input type="date" class="form-control" id="endFreeDate" name="endFreeDate" value ="<?php echo  $reservationsConfig[0]->end_free_date ?>">
+            <div class="invalid-feedback" id="errorEndFreeDate"></div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-8">
+          <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar configuración</button>
+        </div>
+      </div>
+
+    </form>
+
+    <h2>LISTADO RESERVAS ROCÓDROMO</h2>
+
     <!-- Aquí se muestran los campos para poder filtrar en la lista --> 
     <p class="border-bottom">Filtros:</p>
     <form method="post" action="../php/readReservations.php" autocomplete="off">     
@@ -206,6 +246,9 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+
+  <!-- Scripts para la lógica de la app-->
+  <script src="../scripts/main.js"></script>
 </body>
 
 </html>

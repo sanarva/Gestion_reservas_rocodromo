@@ -21,6 +21,9 @@ let recoveryPswForm = document.getElementById("recoveryPswForm");
 //Variable necesaria para determinar si existe o no formulario de usuarios 
 let userForm = document.getElementById("userForm");
 
+//Variable necesaria para determinar si existe o no formulario de usuarios 
+let reservationsConfigForm = document.getElementById("reservationsConfigForm");
+
 //Mostrar/ocultar contraseña
 function showHidePassword(field) {
     let psw = document.getElementById(field);
@@ -231,6 +234,53 @@ function validateUserForm(btnClicked){
 }
 
 
+//Función usada para hacer las validaciones del formulario de configuración de reservas antes de hacer la petición al servidor
+function validateReservationsConfigForm(){
+    //Inicializamos los errores
+    totalErrors = 0;
+
+    //Recuperamos el valor del número máximo de reservas por usuario y validamos su formato
+    let maxReservationsByUser = document.getElementById("maxReservationsByUser");
+    let errorMaxReservationsByUser = document.getElementById("errorMaxReservationsByUser");
+    if (maxReservationsByUser.value == "" || maxReservationsByUser.value == "0") {
+        maxReservationsByUser.classList.add("is-invalid");
+        errorMaxReservationsByUser.textContent = "Por favor, escribe un número máximo de reservas por usuario (de 1 a 99)";
+        totalErrors++;
+    } else if (isNaN(maxReservationsByUser.value)) {
+        maxReservationsByUser.classList.add("is-invalid");
+        errorMaxReservationsByUser.textContent = "El número máximo de de reservas por usuario debe ser un número del 1 al 99";
+        totalErrors++;
+    }
+
+    //Recuperamos la fecha de apertura de las reservas y la validamos 
+    let startFreeDate = document.getElementById("startFreeDate");
+    let errorStartFreeDate = document.getElementById("errorStartFreeDate");
+    if (startFreeDate.value == "") {
+        startFreeDate.classList.add("is-invalid");
+        errorStartFreeDate.textContent = "Por favor, selecciona la fecha de apertura de reservas";
+        totalErrors++;
+    }
+
+    //Recuperamos la fecha de cierre de las reservas y la validamos 
+    let endFreeDate = document.getElementById("endFreeDate");
+    let errorEndFreeDate = document.getElementById("errorEndFreeDate");
+    if (endFreeDate.value == "") {
+        endFreeDate.classList.add("is-invalid");
+        errorEndFreeDate.textContent = "Por favor, selecciona la fecha de cierre de reservas";
+        totalErrors++;
+    } else if (endFreeDate.value < startFreeDate.value){
+        endFreeDate.classList.add("is-invalid");
+        errorEndFreeDate.textContent = "La fecha de cierre de reservas debe ser mayor que la fecha de apertura de reservas";
+        totalErrors++;
+    }
+    
+    if (totalErrors > 0) {
+        return false;
+    } else {
+        reservationsConfigForm.action = "../php/updateReservationConfig.php";
+    }
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////
 //Si el formulario existe, al retirar el foco quitaremos la clase "is-invalid".    //
@@ -255,6 +305,12 @@ if (zoneForm) {
 
 if (userForm) {
     userForm.addEventListener("blur", (event) => {
+        if (event.target.value != "") event.target.classList.remove("is-invalid");
+    }, true);
+}
+
+if (reservationsConfigForm) {
+    reservationsConfigForm.addEventListener("blur", (event) => {
         if (event.target.value != "") event.target.classList.remove("is-invalid");
     }, true);
 }
