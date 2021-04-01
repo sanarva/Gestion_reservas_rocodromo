@@ -150,3 +150,7 @@ h2 {
 .textDangerDisabled {
     color: rgba(220,53,69,0.5);
 }
+
+.textUserDisabled {
+    color: rgba(124,124,124,0.7);
+}
