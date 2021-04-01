@@ -70,7 +70,7 @@
           </td>
            <!--Botones Actualizar y Eliminar -->
           <td class="d-flex justify-content-center">
-            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $_SESSION['sessionUserName']?>&userId=<?php echo $_SESSION['sessionIdUser']?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
+            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $_SESSION['sessionUserName']?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
             </a> 
             <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>"> 
@@ -85,7 +85,7 @@
     <div class="row">
       <div class="col-12">
         <!-- Si el usuario es genérico y tiene ya dos reservas activas, deshabilitamos el botón de crear -->
-        <a class="btn btn-primary" href="reservation.php?idReservation= &userName=<?php echo $_SESSION["sessionUserName"]?>&userId=&reservationDate=&startHour=&endHour=&zoneName=">Crear reserva</a>
+        <a class="btn btn-primary" href="reservation.php?idReservation= &userName=<?php echo $_SESSION["sessionUserName"]?>&reservationDate=&startHour=&endHour=&zoneName=">Crear reserva</a>
       </div>
     </div>
     

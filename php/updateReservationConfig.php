@@ -11,7 +11,7 @@ $endFreeDate           = $_POST["endFreeDate"];
 
 try {
     //Buscamos si existe la configuración a modificar
-    $sql = "SELECT id_config  FROM reservationsconfig where id_config=3";
+    $sql = "SELECT id_config  FROM reservationsconfig";
     $query = $conn->prepare($sql); 
     $query->execute();  
     $result = $query->fetch(PDO::FETCH_ASSOC);
@@ -25,13 +25,12 @@ try {
                      , start_free_date   = :startfreedate
                      , end_free_date     = :endfreedate
                      , user_modification = :userModification
-                 WHERE id_config = :idconfig";
+                ";
         $query = $conn->prepare($sql);
         $query->bindParam(":maxreservation",$maxReservationsByUser);
         $query->bindParam(":startfreedate", $startFreeDate);
         $query->bindParam(":endfreedate", $endFreeDate);
         $query->bindParam(":userModification",$_SESSION["sessionIdUser"]);
-        $query->bindParam(":idconfig",$result["id_config"]);
         $query->execute();
         
     
@@ -95,11 +94,8 @@ try {
             $_SESSION['successFlag'] = "N";
             $queryError = $e->getMessage();  
             $_SESSION['message'] = "Se ha detectado un problema a la hora de añadir la configuración de las reservas. </br> Descripción del error: " . $queryError ; 
-            
         }
-        
     }
-
 
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "N";
@@ -110,8 +106,7 @@ try {
     //Limpiamos la memoria 
     $conn = null;
 
-    header("Location: ../views/reservationsList.php?dateFrom=&dateTo=&userName=&cardNumber=&startHour=&endHour=&zoneName=&allStatusReservation");
-    
+    header("Location: ../views/reservationsList.php?dateFrom=&dateTo=&userName=&cardNumber=&startHour=&endHour=&zoneName=&allStatusReservation");  
 }
 
 ?>
