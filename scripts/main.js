@@ -24,6 +24,9 @@ let userForm = document.getElementById("userForm");
 //Variable necesaria para determinar si existe o no formulario de usuarios 
 let reservationsConfigForm = document.getElementById("reservationsConfigForm");
 
+//Variable necesaria para determinar si existe o no formulario de búsqueda de reservas disponibles 
+let searchReservationForm = document.getElementById("searchReservationForm");
+
 //Mostrar/ocultar contraseña
 function showHidePassword(field) {
     let psw = document.getElementById(field);
@@ -282,6 +285,56 @@ function validateReservationsConfigForm(){
 }
 
 
+//Función usada para hacer las validaciones del formulario de búsqueda de reservas disponibles
+function validateSearchReservation(){
+    //Inicializamos los errores
+    totalErrors = 0;
+
+    //Recuperamos el nombre del usuario al que irá la reserva 
+    let filterUserName = document.getElementById("filterUserName");
+    let errorFilterUserName = document.getElementById("errorFilterUserName");
+    if (filterUserName.value == "") {
+        filterUserName.classList.add("is-invalid");
+        errorFilterUserName.textContent = "Por favor, introduce el nombre de usuario asociado a la reserva";
+        totalErrors++;
+    }
+
+    //Recuperamos la fecha elejida y la validamos 
+    let reservationDateChoosen = document.getElementById("reservationDateChoosen");
+    let errorReservationDateChoosen = document.getElementById("errorReservationDateChoosen");
+    if (reservationDateChoosen.value == "") {
+        let reservationDateChoosenMin = formatDate(reservationDateChoosen.min);
+        let reservationDateChoosenMax = formatDate(reservationDateChoosen.max);
+
+        reservationDateChoosen.classList.add("is-invalid");
+        errorReservationDateChoosen.textContent = "Por favor, selecciona una fecha del " + reservationDateChoosenMin + " al " + reservationDateChoosenMax;
+        totalErrors++;
+    }
+
+    //Recuperamos las horas 
+    let filterStartHour = document.getElementById("filterStartHour");
+    let filterEndHour   = document.getElementById("filterEndHour");
+    let errorFilterEndHour = document.getElementById("errorFilterEndHour");
+
+    if (filterEndHour.value < filterStartHour.value){
+        filterEndHour.classList.add("is-invalid");
+        errorFilterEndHour.textContent = "La hora de finalizacion debe ser mayor que la de inicio.";
+        totalErrors++;
+    }
+ 
+    if (totalErrors > 0) {
+        return false;
+    } else {
+        searchReservationForm.action = "../php/searchAvailableReservations.php";
+    }
+}
+
+
+//Función usada para pasar fechas de aaaa-mm-dd a dd/mm/aaaa
+function formatDate(dateToBeFormated) {
+    return (dateToBeFormated.substring(8, 10) + "/" + dateToBeFormated.substring(5, 7) + "/" + dateToBeFormated.substring(0,4));
+}
+
 /////////////////////////////////////////////////////////////////////////////////////
 //Si el formulario existe, al retirar el foco quitaremos la clase "is-invalid".    //
 /////////////////////////////////////////////////////////////////////////////////////
@@ -311,6 +364,12 @@ if (userForm) {
 
 if (reservationsConfigForm) {
     reservationsConfigForm.addEventListener("blur", (event) => {
+        if (event.target.value != "") event.target.classList.remove("is-invalid");
+    }, true);
+}
+
+if (searchReservationForm) {
+    searchReservationForm.addEventListener("blur", (event) => {
         if (event.target.value != "") event.target.classList.remove("is-invalid");
     }, true);
 }
