@@ -29,7 +29,8 @@ try {
 try {
     $sql = "SELECT zone_name 
               FROM zones
-          ORDER BY zone_name";
+             WHERE zone_status = 'A'
+          ORDER BY zone_name ASC";
     $query = $conn->prepare($sql);
     $query->execute();
     $zones = $query->fetchAll(PDO::FETCH_OBJ);

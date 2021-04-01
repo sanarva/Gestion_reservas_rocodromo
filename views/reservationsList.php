@@ -200,7 +200,7 @@
             <?php if ($reservation->reservation_status == "I") {?>
               <i title="No se puede modificar una reserva inactiva" class="far fa-edit fa-lg textPrimaryDisabled mr-4"></i>
             <?php }else {?>  
-            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $reservation->user_name?>&userId=<?php echo $reservation->user_id?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
+            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $reservation->user_name?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
             </a> 
             <?php }?>
@@ -221,7 +221,7 @@
 
     <div class="row">
       <div class="col-12">
-        <a class="btn btn-primary" href="reservation.php?idReservation= &userName=&userId=&reservationDate=&startHour=&endHour=&zoneName=">Crear reserva</a>
+        <a class="btn btn-primary" href="reservation.php?idReservation= &userName=&reservationDate=&startHour=&endHour=&zoneName=">Crear reserva</a>
       </div>
     </div>
     
