@@ -31,6 +31,7 @@ try {
                          , end_hour          = :endhour
                          , week_day          = :weeksDay
                          , user_modification = :userModification
+                         , timestamp = current_timestamp
                      WHERE id_hour = :idhour";
             $query = $conn->prepare($sql);
             $query->bindParam(":starthour", $startHour);

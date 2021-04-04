@@ -15,6 +15,7 @@ try {
     $sql = "UPDATE users 
                SET user_password     = :userNewPassword 
                  , user_modification = :userModification
+                 , timestamp = current_timestamp
              WHERE user_email = :useremail 
                AND user_password = :userpassword 
                AND user_status = 'A'";

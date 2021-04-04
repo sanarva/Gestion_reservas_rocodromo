@@ -10,6 +10,7 @@ require "database.php";
 $sql  =  "UPDATE reservations
              SET reservation_status = 'I'  
                , user_modification = '999999'
+               , timestamp = current_timestamp
            WHERE reservation_status = 'A'
              AND reservation_date   < :currentdate";
 $query = $conn->prepare($sql);

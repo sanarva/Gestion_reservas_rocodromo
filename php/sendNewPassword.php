@@ -25,6 +25,7 @@ try {
             $sql = "UPDATE users
                        SET user_password     = :usernewpassword 
                          , user_modification = '999999'
+                         , timestamp = current_timestamp
                      WHERE user_email = :useremail 
                        AND user_status = 'A'"; // user_Status = 1 significa que el usuario está activo
             $query = $conn->prepare($sql);
