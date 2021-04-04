@@ -37,8 +37,6 @@ for($i = 0; $i < count($weekDayArray) ; $i++) {
         case "D":
             $D = true;
             break;
-        default:
-            alert("Se ha producido un error al cargar los días de la semana");
     }
         
 }
