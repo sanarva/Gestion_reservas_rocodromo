@@ -15,6 +15,9 @@ let modifyPasswordForm = document.getElementById("modifyPasswordForm");
 //Variable necesaria para determinar si existe o no formulario de zonas 
 let zoneForm = document.getElementById("zoneForm");
 
+//Variable necesaria para determinar si existe o no formulario de horas 
+let hourForm = document.getElementById("hourForm");
+
 //Variable necesaria para determinar si existe o no formulario de recuperar contraseña 
 let recoveryPswForm = document.getElementById("recoveryPswForm");
 
@@ -178,6 +181,75 @@ function validateZoneForm(btnClicked){
     } else {
         zoneForm.action = action;
     }
+}
+
+//Función usada para hacer las validaciones del formulario de horas antes de hacer la petición al servidor
+function validateHourForm(btnClicked){
+    //Inicializamos los errores
+    totalErrors = 0;
+
+    let action = document.getElementById(btnClicked).formAction;
+
+    //Recuperamos el valor de la hora de inicio y validamos su formato
+    let startHour = document.getElementById("startHour");
+    let errorStartHour = document.getElementById("errorStartHour");
+    if (startHour.value == "") {
+        startHour.classList.add("is-invalid");
+        errorStartHour.textContent = "Por favor, escribe una hora de inicio";
+        totalErrors++;
+    }
+
+    //Recuperamos el valor de la hora de fin y validamos su formato
+    let endHour = document.getElementById("endHour");
+    let errorEndHour = document.getElementById("errorEndHour");
+    if (endHour.value == "") {
+        endHour.classList.add("is-invalid");
+        errorEndHour.textContent = "Por favor, escribe una hora de finalización";
+        totalErrors++;
+    }
+
+    //Comprobamos que la hora de finalización sea mayor que la hora de inicio
+    if (startHour.value > endHour.value ) {
+        endHour.classList.add("is-invalid");
+        errorEndHour.textContent = "La hora de finalización debe ser mayor a la de inicio";
+        totalErrors++;
+    }
+
+    //Comprobamos que se haya marcado algún día de la semana (lo haremos contando las checkbox con nombre = day que tiene el formulario hourForm)
+    let checkboxesDay = document.getElementById("hourForm").day;
+    let counterDays = 0;
+
+    for(i = 0; i < checkboxesDay.length && counterDays == 0; i++) {
+        if (checkboxesDay[i].checked) {
+            counterDays++;
+        }
+    }
+
+    let weekDayArray = [];
+    let weekDayString = "";
+
+    if (counterDays == 0) {
+        weekDay.classList.add("is-invalid"); 
+        //errorWeekDay.classList.add("d-block"); 
+        errorWeekDay.textContent = "Por favor, selecciona al menos un día";
+        totalErrors++;
+    } else {
+        for(i = 0; i < checkboxesDay.length; i++){
+            if (checkboxesDay[i].checked) {
+                weekDayArray.push(checkboxesDay[i].value);
+            }
+        }
+
+        weekDayString = weekDayArray.join(""); 
+        weekDay.value = weekDayString;
+    }
+
+    if (totalErrors > 0) {
+        return false;
+    } else {
+        hourForm.action = action;
+    }
+
 }
  
 
@@ -366,45 +438,76 @@ function formatDate(dateToBeFormated) {
 /////////////////////////////////////////////////////////////////////////////////////
 //Si el formulario existe, al retirar el foco quitaremos la clase "is-invalid".    //
 /////////////////////////////////////////////////////////////////////////////////////
+//Ocultar errores en formulario de login
 if (loginForm) {
     loginForm.addEventListener("blur", (event) => {
         if (event.target.value != "") event.target.classList.remove("is-invalid");
     }, true);
 }
 
+//Ocultar errores en formulario de cambio de contraseña
 if (modifyPasswordForm) {
     modifyPasswordForm.addEventListener("blur", (event) => {
         if (event.target.value != "") event.target.classList.remove("is-invalid");
     }, true);
 }
 
+if (recoveryPswForm) {
+    recoveryPswForm.addEventListener("blur", (event) => {
+        if (event.target.value != "") event.target.classList.remove("is-invalid");
+    }, true);
+}
+
+//Ocultar errores en formulario de zonas
 if (zoneForm) {
     zoneForm.addEventListener("blur", (event) => {
         if (event.target.value != "") event.target.classList.remove("is-invalid");
     }, true);
 }
 
+//Ocultar errores en formulario de horas
+if (hourForm) {
+    hourForm.addEventListener("blur", (event) => {
+        if (event.target.value != "") event.target.classList.remove("is-invalid");
+    }, true);
+}
+
+//Ocultar error en formulario de horas si se hace click en algún día de la semana
+if(hourForm){
+    let checkboxesDay = document.getElementById("hourForm").day;
+
+    for(i = 0; i < checkboxesDay.length; i++) {
+        checkboxesDay[i].addEventListener("change", validate, true);
+    }
+}
+
+function validate(day){
+    if(monday.checked || tuesday.checked || wednesday.checked || thursday.checked || friday.checked || saturday.checked || sunday.checked){
+        let errorWeekDay = document.getElementById("errorWeekDay");
+        errorWeekDay.classList.add("d-none"); 
+        errorWeekDay.classList.remove("d-block"); 
+    } else {
+        errorWeekDay.classList.remove("d-none"); 
+    }
+}
+
+//Ocultar errores en formulario de usuarios
 if (userForm) {
     userForm.addEventListener("blur", (event) => {
         if (event.target.value != "") event.target.classList.remove("is-invalid");
     }, true);
 }
 
+//Ocultar errores en formulario de configuración de reservas
 if (reservationsConfigForm) {
     reservationsConfigForm.addEventListener("blur", (event) => {
         if (event.target.value != "") event.target.classList.remove("is-invalid");
     }, true);
 }
 
+//Ocultar errores en formulario de buscar reservas
 if (searchReservationForm) {
     searchReservationForm.addEventListener("blur", (event) => {
-        if (event.target.value != "") event.target.classList.remove("is-invalid");
-    }, true);
-}
-
-//Ocultar error en formulario de recuperar contraseña
-if (recoveryPswForm) {
-    recoveryPswForm.addEventListener("blur", (event) => {
         if (event.target.value != "") event.target.classList.remove("is-invalid");
     }, true);
 }
