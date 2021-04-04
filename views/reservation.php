@@ -33,14 +33,14 @@
         $filterEndHour          = $_GET["endHour"];
         $filterZoneName         = $_GET["zoneName"];
    ?>
-
+    <p class="d-none" id="idReservation"><?php echo $idReservation ?></p>
     <header>
         <?php include("../php/header.php");?>
       <header>
 
     <div class="container">
         
-        <h2><?php if ($idReservation == " ") {?> CREAR NUEVA RESERVA <?php } else {?> MODIFICACIÓN RESERVA <?php }?></h2>
+        <h2><?php if ($idReservation == " " || $idReservation == "" ) {?> CREAR NUEVA RESERVA <?php } else {?> MODIFICACIÓN RESERVA <?php }?></h2>
         <form method="post" action="#" autocomplete="off" id="searchReservationForm" name="searchReservationForm" onsubmit="return validateSearchReservation()">
             <div class="form-group row">
                 <div class="col-lg-1 "></div>
@@ -150,46 +150,53 @@
             }    
         ?>
 
-        <fildset class="form-group row"><!--Este div aparecerá por cada uno de las posibles reservas a elegir-->
-            <div class="col-lg-1"></div>
-            <div class="col-lg-10"> 
-                <div class="form-check">
-                    <?php if (isset($_SESSION["sessionReservations"])) {
-                        foreach($_SESSION["sessionReservations"] as $reservation):?>
-                        <input class="form-check-input" type="radio" id="radio" name="radio">
-                        <label class="form-check-label d-block" for="radio">
-                            <?php
-                                $count++;
-                                $date = new DateTime( $reservation->reservationDateChoosenClass); 
-                                echo $reservation->reservationDayClass . " " .
-                                $date->format("d/m/Y") . " de " . 
-                                $reservation->startHourClass . " a " .
-                                $reservation->endHourClass . " - " .
-                                $reservation->zoneNameClass . " - " ;
-                                for($i = 0; $i < $reservation->freeReservationsClass; $i++){?>
-                                    <i title="Libre" class="fas fa-user"></i>
+        <form method="post" id="reservationForm" name="reservationForm" action="#" autocomplete="off" onsubmit="reservate()">
+            <fildset class="form-group row"><!--Este div aparecerá por cada uno de las posibles reservas a elegir-->
+                <div class="col-lg-1"></div>
+                <div class="col-lg-10"> 
+                    <div class="form-check">
+                        <?php if (isset($_SESSION["sessionReservations"])) {
+                            foreach($_SESSION["sessionReservations"] as $reservation):?>
+                            <input class="form-check-input" type="radio" id="reservationChoosen" name="reservationChoosenArray" value="<?php echo $reservation->idHourClass ?>, <?php echo $reservation->idZoneClass ?>">
+                            <label class="form-check-label d-block" for="radio" >
                                 <?php
-                                }
-                                for($x = 0; $x < $reservation->busyReservationsClass; $x++){?>
-                                    <i title="Ocupado" class="fas fa-user textUserDisabled"></i>
-                                <?php
-                                }
-                                ;
-                            ?> 
-
-                        </label>
-                    <?php endforeach; }?> 
-                </div>    
-            </div>
-        </fildset>
-
-        <div class="form-group row">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-8">
-                <button type="submit" class="btn btn-primary" <?php if ($count == 0) { ?> disabled <?php } ?> ><i class="far fa-calendar-check"></i> Reservar</button>
-            </div>
-        </div> 
-
+                                    $count++;
+                                    $date = new DateTime( $reservation->reservationDateChoosenClass); 
+                                    echo $reservation->reservationDayClass . " " .
+                                    $date->format("d/m/Y") . " de " . 
+                                    $reservation->startHourClass . " a " .
+                                    $reservation->endHourClass . " - " .
+                                    $reservation->zoneNameClass . " - " ;
+                                    for($i = 0; $i < $reservation->freeReservationsClass; $i++){?>
+                                        <i title="Libre" class="fas fa-user"></i>
+                                    <?php
+                                    }
+                                    for($x = 0; $x < $reservation->busyReservationsClass; $x++){?>
+                                        <i title="Ocupado" class="fas fa-user textUserDisabled"></i>
+                                    <?php
+                                    }
+                                    ;
+                                ?> 
+    
+                            </label>
+                        <?php endforeach; }?> 
+                    </div>    
+                </div>
+            </fildset>
+            <?php if ($count != 0) {?>
+            <div class="form-group row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-8">
+                    <button type="submit" id= "reservationButton" class="btn btn-primary"
+                        <?php if ($idReservation == " " || $idReservation == "" ) {?> formaction="../php/insertReservation.php?userName=<?php echo $userName?>&reservationDate=<?php echo $reservationDateChoosen?>&startHour=<?php echo $filterStartHour?>&endHour=<?php echo $filterEndHour?>&zoneName=<?php echo $filterZoneName?>" value="insertReservation"
+                        <?php } else {?> formaction="../php/updateReservation.php?idReservation=<?php echo $idReservation?>&userName=<?php echo $userName?>&reservationDate=<?php echo $reservationDateChoosen?>&startHour=<?php echo $filterStartHour?>&endHour=<?php echo $filterEndHour?>&zoneName=<?php echo $filterZoneName?>" value="updateReservation" <?php }?>>
+                        <i class="far fa-calendar-check"></i> Reservar
+                    </button>
+                </div>
+            </div> 
+            <?php } ?>
+        </form>
+                        
     </div>
    
     <?php 

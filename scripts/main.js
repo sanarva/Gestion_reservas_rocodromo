@@ -322,11 +322,39 @@ function validateSearchReservation(){
         totalErrors++;
     }
  
+    //Recuperamos el valor del idReservation para saber si tenemos que llamar en modo alta o modificación
+    let idReservationRetrieved = document.getElementById("idReservation").innerHTML; 
+    
     if (totalErrors > 0) {
         return false;
     } else {
-        searchReservationForm.action = "../php/searchAvailableReservations.php";
+        searchReservationForm.action = "../php/searchAvailableReservations.php?idReservation=" + idReservationRetrieved;
     }
+}
+
+//Función usada para hacer las reservas
+function reservate(){
+
+    //Recuperamos la reserva elegida
+    let reservationChoosen = document.reservationForm.reservationChoosenArray.value;
+    
+    //La convertimos en array
+    let reservationChoosenArray = reservationChoosen.split(", ");  
+    
+    //Obtenemos los datos del array
+    for (i=0; i < reservationChoosenArray.length; i++){
+        if (i == 0 ){
+            idHour = reservationChoosenArray[0];
+        }
+        if (i == 1 ){
+            idZone = reservationChoosenArray[1];
+        }
+    }
+    
+    let reservationButton = document.getElementById("reservationButton"); 
+
+    reservationButton.formAction = reservationButton.formAction + "&idHour=" + idHour + "&idZone=" + idZone;
+ 
 }
 
 
