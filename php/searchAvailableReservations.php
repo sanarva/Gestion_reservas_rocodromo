@@ -8,6 +8,9 @@ require "database.php";
 //Declaramos el tipo array para la variable de sesión que contendrá las reservas disponibles
 $_SESSION['sessionReservations'] = [];
 
+//Recuperaos el idReservation
+$idReservation =  $_GET["idReservation"];
+
 //Recuperamos la información que nos llega del formulario de búsqueda de reservas disponibles
 $filterUserName         = $_POST["filterUserName"];
 
@@ -51,6 +54,7 @@ try {
     $results = $query->fetch(PDO::FETCH_ASSOC);
     if (($query->rowCount() > 0 )) {
         $idUser   = $results["id_user"];
+        $_SESSION['sessionUserReservation'] = $results["id_user"];
         $userType = $results["user_type"];
         //*********************************************************************************************//
         // Recuperamos el número máximo de reservas permitidas por usuario                             //
@@ -79,7 +83,7 @@ try {
                     $query->execute();
                     $reservations = $query->fetch(PDO::FETCH_ASSOC);
                     //Si el usuario es genérico y tiene el número máximo de reservas, mostramos un error y no dejamos hacer otra reserva...
-                    if ($reservations['counter'] == $maxReservationsByUser && $userType == 'G') {
+                    if ($reservations['counter'] == $maxReservationsByUser && $userType == 'G' && ($idReservation == "" || $idReservation == " ")) {
                         $_SESSION['successFlag'] = "N";
                         $_SESSION['message'] = "Sólo se permiten $maxReservationsByUser reservas activas por usuario, por lo que no se puede crear otra reserva." ; 
                     } else {
@@ -285,7 +289,7 @@ if (isset($prepareReservations) && $prepareReservations == "Y") {
 $conn = null;
 
 //Volvemos a la página de origen
-header("Location: ../views/reservation.php?idReservation= &userName=$filterUserName&reservationDate=$reservationDateChoosen&startHour=$filterStartHourShow&endHour=$filterEndHourShow&zoneName=$filterZoneNameShow");
+header("Location: ../views/reservation.php?idReservation=$idReservation&userName=$filterUserName&reservationDate=$reservationDateChoosen&startHour=$filterStartHourShow&endHour=$filterEndHourShow&zoneName=$filterZoneNameShow");
 
 ?>
 

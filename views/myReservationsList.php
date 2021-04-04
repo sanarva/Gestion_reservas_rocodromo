@@ -73,15 +73,24 @@
             <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $_SESSION['sessionUserName']?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
             </a> 
-            <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>"> 
+            <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>&cancelReservation"> 
               <i title="Cancelar" class="far fa-times-circle fa-lg text-danger "></i>
             </a> 
           </td>
         </tr>
       <?php endforeach; ?> <?php }?>
+
       </tbody>
     </table>
-
+    <div class="row">
+      <div class="col-12">
+      <?php 
+        if (count($reservations) == 0) {?>
+          <p>No tienes reservas pendientes</p>
+        <?php }?>
+      </div>
+    </div>
+    
     <div class="row">
       <div class="col-12">
         <!-- Si el usuario es genérico y tiene ya dos reservas activas, deshabilitamos el botón de crear -->

@@ -146,13 +146,6 @@ try {
 
     $query->execute();
     $reservations = $query->fetchAll(PDO::FETCH_OBJ);
-    //Si no existen reservas, mostramos un aviso
-    if ($reservations == [] ){
-        if ($_SESSION['successFlag'] != "Y"){ //Si en la lista solo hay un registro y se elimina, en lugar de dar el error de que se ha eliminado correctamente, aparece el warning de que no se ha encontrado ninguna reservas. Así que ponemos este if para solucionar el problema
-            $_SESSION['successFlag'] = "W";
-            $_SESSION['message'] = "No se ha encontrado ninguna reserva.";
-        }
-    }
 
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "C";
