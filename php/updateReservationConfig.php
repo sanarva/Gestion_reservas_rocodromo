@@ -25,6 +25,7 @@ try {
                      , start_free_date   = :startfreedate
                      , end_free_date     = :endfreedate
                      , user_modification = :userModification
+                     , timestamp = current_timestamp
                 ";
         $query = $conn->prepare($sql);
         $query->bindParam(":maxreservation",$maxReservationsByUser);

@@ -36,6 +36,7 @@ try {
                          , user_email        = :useremail
                          , user_status       = :userstatus
                          , user_modification = :userModification
+                         , timestamp = current_timestamp
                      WHERE id_user = :iduser";
             $query = $conn->prepare($sql);
             $query->bindParam(":username",$userName);
@@ -74,6 +75,7 @@ try {
                          , user_email        = :useremail
                          , user_status       = :userstatus
                          , user_modification = :userModification
+                         , timestamp = current_timestamp
                      WHERE id_user = :iduser";
             $query = $conn->prepare($sql);
             $query->bindParam(":username",$userName);

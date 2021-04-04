@@ -37,6 +37,7 @@ try {
                          , max_users_zone    = :maxuserszone
                          , zone_status       = :zonestatus
                          , user_modification = :userModification
+                         , timestamp = current_timestamp
                      WHERE id_zone = :idzone";
             $query = $conn->prepare($sql);
             $query->bindParam(":zonename",$zoneName);
@@ -71,6 +72,7 @@ try {
                          , max_users_zone    = :maxuserszone
                          , zone_status       = :zonestatus
                          , user_modification = :userModification
+                         , timestamp = current_timestamp
                      WHERE id_zone = :idzone";
             $query = $conn->prepare($sql);
             $query->bindParam(":zonename", $zoneName);
