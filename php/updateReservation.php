@@ -20,8 +20,13 @@ if (isset($_GET["cancelReservation"])) {
         $query->execute();
         
         if ($query->rowCount() > 0 ){
-            $_SESSION['successFlag'] = "Y";
-            $_SESSION['message'] = "La reserva ha sido cancelada correctamente"  ;
+            if (isset($_GET["userId"]) && $_GET["userId"] != "" && $_GET["userId"] != $_SESSION["sessionIdUser"]){//Si es el administrador quien está cancelando la reserva de un usuario
+                //Enviamos un email al usuario para avisarle que se ha cancelado una de sus reservas
+                include("../php/sendEmailCancelationReservation.php");
+            } else {
+                $_SESSION['successFlag'] = "Y";
+                $_SESSION['message'] = "La reserva ha sido cancelada correctamente.";
+            }
         } else {
             $_SESSION['successFlag'] = "N";
             $_SESSION['message'] = "Ha habido un problema y no se ha podido cancelar la reserva." ; 
@@ -35,8 +40,11 @@ if (isset($_GET["cancelReservation"])) {
     } finally {
         //Limpiamos la memoria 
         $conn = null;
-
-        header("Location: ../views/myReservationsList.php");
+        if (isset($_GET["userId"])) {
+            header("Location: ../views/reservationsList.php?dateFrom&dateTo&userName&cardNumber&startHour&endHour&zoneName&allStatusReservation");
+        } else {
+            header("Location: ../views/myReservationsList.php");
+        }
     }
 
 } else {//Si el usuario está intentando modificar una reserva...

@@ -194,7 +194,7 @@
                 <i class="fas fa-times text-danger" title="Inactivo"></i> 
               <?php } ?>
           </td>
-           <!--Botones Actualizar y Eliminar -->
+          <!--Botones Actualizar / Eliminar / Cancelar reservas-->
           <td class="d-flex justify-content-center">
             <!--Se inhabilita el botón de actualizar si el estado de la reserva en inactiva -->
             <?php if ($reservation->reservation_status == "I") {?>
@@ -205,10 +205,11 @@
             </a> 
             <?php }?>
 
-            <!--Se inhabilita el botón de eliminar si el estado de la reserva en activa -->
+            <!--Si el estado de la reserva es activa, se cambia el botón de eliminar por el de cancelar-->
             <?php if ($reservation->reservation_status == "A") {?>
-              <i title="No se puede eliminar una reserva pendiente. Cancela la reserva antes." class="far fa-trash-alt fa-lg textDangerDisabled"></i>
-            <?php }else {?> 
+              <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>&userId=<?php echo $reservation->user_id?>&userName=<?php echo $reservation->user_name?>&cancelReservation&reservationDate=<?php echo $date->format("d/m/Y")?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
+              <i title="Cancelar" class="far fa-times-circle fa-lg text-danger"></i>
+            <?php }else {?>  
               <a href="../php/deleteReservation.php?Id=<?php echo $reservation->id_reservation?>"> 
               <i title="Eliminar" class="far fa-trash-alt fa-lg text-danger "></i>
             </a> 
