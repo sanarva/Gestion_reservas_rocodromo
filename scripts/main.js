@@ -323,7 +323,20 @@ function validateReservationsConfigForm(){
         totalErrors++;
     } else if (isNaN(maxReservationsByUser.value)) {
         maxReservationsByUser.classList.add("is-invalid");
-        errorMaxReservationsByUser.textContent = "El número máximo de de reservas por usuario debe ser un número del 1 al 99";
+        errorMaxReservationsByUser.textContent = "El número máximo de reservas por usuario debe ser un número del 1 al 99";
+        totalErrors++;
+    }
+
+    //Recuperamos el valor del número máximo total de usuarios en la zona de vías
+    let maxNumberUsersRoute = document.getElementById("maxNumberUsersRoute");
+    let errorMaxNumberUsersRoute = document.getElementById("errorMaxNumberUsersRoute");
+    if (maxNumberUsersRoute.value == "" || maxNumberUsersRoute.value == "0") {
+        maxNumberUsersRoute.classList.add("is-invalid");
+        errorMaxNumberUsersRoute.textContent = "Por favor, escribe un número máximo de usuarios en la zona de vías (de 1 a 99)";
+        totalErrors++;
+    } else if (isNaN(maxNumberUsersRoute.value)) {
+        maxNumberUsersRoute.classList.add("is-invalid");
+        errorMaxNumberUsersRoute.textContent = "El número máximo de usuarios en la zona de vías debe ser un número del 1 al 99";
         totalErrors++;
     }
 

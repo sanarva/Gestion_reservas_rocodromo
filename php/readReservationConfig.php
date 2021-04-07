@@ -10,6 +10,7 @@ require "database.php";
 //*********************************************************************************************//
 try {
     $sql = "SELECT max_reservation
+                 , max_users_route
                  , start_free_date
                  , end_free_date
               FROM reservationsconfig";

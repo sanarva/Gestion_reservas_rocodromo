@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2021 at 10:11 AM
+-- Generation Time: Apr 07, 2021 at 06:40 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.4.16
 
@@ -71,12 +71,18 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`id_reservation`, `reservation_date`, `hour_id`, `zone_id`, `user_id`, `reservation_status`, `user_modification`, `timestamp`) VALUES
-(2, '2021-05-15', 1, 1, 3, 'A', 999999, '2021-02-28 17:02:00'),
-(5, '2021-01-28', 1, 1, 3, 'I', 999999, '2021-02-28 17:04:11'),
-(6, '2021-06-28', 1, 1, 3, 'A', 999999, '2021-02-28 17:06:36'),
-(7, '2021-04-15', 2, 1, 1, 'I', 999999, '2021-02-28 17:06:36'),
-(8, '2021-03-28', 3, 3, 1, 'I', 999999, '2021-02-28 17:06:36'),
-(10, '2021-04-28', 4, 6, 1, 'A', 999999, '2021-02-28 17:06:36');
+(2, '2021-05-15', 1, 1, 3, 'A', 1, '2021-04-06 18:21:17'),
+(5, '2021-01-28', 1, 1, 3, 'I', 999999, '2021-04-06 08:37:14'),
+(6, '2021-04-28', 2, 1, 3, 'A', 1, '2021-04-06 19:49:48'),
+(7, '2021-04-15', 2, 1, 1, 'A', 1, '2021-04-06 19:56:00'),
+(8, '2021-03-28', 3, 3, 1, 'I', 999999, '2021-04-06 08:37:14'),
+(10, '2021-03-07', 4, 6, 1, 'I', 999999, '2021-04-06 08:37:14'),
+(11, '2021-04-20', 7, 10, 1, 'A', 1, '2021-04-05 22:15:32'),
+(12, '2021-04-26', 6, 2, 1, 'A', 1, '2021-04-05 22:05:04'),
+(13, '2021-04-30', 1, 9, 1, 'A', 1, '2021-04-06 16:41:52'),
+(14, '2021-04-27', 7, 7, 1, 'A', 1, '2021-04-05 22:12:10'),
+(15, '2021-04-15', 2, 10, 5, 'A', 1, '2021-04-07 16:13:58'),
+(16, '2021-04-28', 2, 6, 1, 'A', 1, '2021-04-07 16:20:49');
 
 -- --------------------------------------------------------
 
@@ -87,6 +93,7 @@ INSERT INTO `reservations` (`id_reservation`, `reservation_date`, `hour_id`, `zo
 CREATE TABLE `reservationsconfig` (
   `id_config` int(11) NOT NULL COMMENT 'ID of the configuration',
   `max_reservation` int(11) NOT NULL COMMENT 'Maximun number of reservations by user',
+  `max_users_route` int(2) NOT NULL COMMENT 'Número máximo de usuarios totales en la zona de vías',
   `start_free_date` date NOT NULL COMMENT 'Start free date for  reservations',
   `end_free_date` date NOT NULL COMMENT 'End free date for  reservations',
   `user_modification` int(6) NOT NULL COMMENT 'ID of the user who has done last transaction',
@@ -97,8 +104,8 @@ CREATE TABLE `reservationsconfig` (
 -- Dumping data for table `reservationsconfig`
 --
 
-INSERT INTO `reservationsconfig` (`id_config`, `max_reservation`, `start_free_date`, `end_free_date`, `user_modification`, `timestamp`) VALUES
-(1, 2, '2021-01-01', '2021-03-31', 1, '2021-03-29 07:22:08');
+INSERT INTO `reservationsconfig` (`id_config`, `max_reservation`, `max_users_route`, `start_free_date`, `end_free_date`, `user_modification`, `timestamp`) VALUES
+(1, 2, 6, '2021-04-01', '2021-04-30', 1, '2021-04-07 16:26:14');
 
 -- --------------------------------------------------------
 
@@ -123,9 +130,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `user_type`, `card_number`, `user_status`, `user_email`, `user_password`, `user_name`, `user_modification`, `timestamp`) VALUES
-(1, 'A', 108, 'A', 'plosky21@hotmail.com', 'Passwor1', 'Sandra Arcas', 1, '2021-03-20 21:02:49'),
+(1, 'A', 108, 'A', 'plosky21@hotmail.com', 'Passwor1', 'Sandra Arcas', 1, '2021-04-06 15:12:15'),
 (2, 'G', 25, 'I', 'email1@hotmail.com', 'Passwor1', 'Name1 Surname1 Surname2', 999999, '2021-03-20 21:04:02'),
-(3, 'G', 400, 'A', 'email2@hotmail.com', 'kL6Cdt48', 'Name2 Surname1 Surname2', 999999, '2021-03-20 21:03:35'),
+(3, 'G', 400, 'A', 'guaubisabi@gmail.com', 'Passwor1', 'Name2 Surname1 Surname2', 999999, '2021-04-06 16:36:17'),
 (4, 'G', 108, 'A', 'email3@hotmail.com', 'Passwor1', 'Name3 Surname1 Surname2', 1, '2021-03-20 21:03:35'),
 (5, 'G', 123, 'A', 'email4@hotmail.com', 'Passwor1', 'Name4 Surname1 Surname2', 1, '2021-03-20 21:03:35'),
 (6, 'G', 325, 'A', 'email5@hotmail.com', 'Passwor1', 'Name5 Surname1 Surname2', 1, '2021-03-20 21:03:35');
@@ -152,10 +159,10 @@ CREATE TABLE `zones` (
 INSERT INTO `zones` (`id_zone`, `zone_name`, `max_users_zone`, `zone_status`, `user_modification`, `timestamp`) VALUES
 (1, 'Volúmenes', 3, 'A', 1, '2021-03-13 22:44:12'),
 (2, 'Moonboard', 2, 'A', 999999, '2021-03-08 16:33:20'),
-(3, 'Placa desplomada', 2, 'I', 1, '2021-03-15 09:59:04'),
+(3, 'Placa desplomada', 2, 'A', 1, '2021-04-05 22:02:43'),
 (4, 'Plafón', 2, 'A', 1, '2021-03-15 12:15:34'),
 (6, 'Vía R1', 2, 'A', 1, '2021-03-15 12:16:11'),
-(7, 'Vía R2', 2, 'I', 1, '2021-03-15 09:58:50'),
+(7, 'Vía R2', 2, 'A', 1, '2021-04-05 22:02:38'),
 (9, 'Vía R4', 2, 'A', 999999, '2021-03-08 16:33:20'),
 (10, 'Vía R5', 2, 'A', 1, '2021-03-15 09:58:17'),
 (11, 'Caballo', 2, 'A', 999999, '2021-03-13 22:51:23');
@@ -214,7 +221,7 @@ ALTER TABLE `hours`
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id_reservation` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID of reservation', AUTO_INCREMENT=11;
+  MODIFY `id_reservation` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID of reservation', AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `reservationsconfig`

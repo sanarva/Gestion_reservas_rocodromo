@@ -6,6 +6,7 @@ require "database.php";
  
 
 $maxReservationsByUser = $_POST["maxReservationsByUser"];
+$maxUsersRoute         = $_POST["maxNumberUsersRoute"]; 
 $startFreeDate         = $_POST["startFreeDate"];
 $endFreeDate           = $_POST["endFreeDate"];
 
@@ -22,6 +23,7 @@ try {
         try {
         $sql = "UPDATE reservationsconfig 
                    SET max_reservation   = :maxreservation
+                     , max_users_route   = :maxusersroute
                      , start_free_date   = :startfreedate
                      , end_free_date     = :endfreedate
                      , user_modification = :userModification
@@ -29,6 +31,7 @@ try {
                 ";
         $query = $conn->prepare($sql);
         $query->bindParam(":maxreservation",$maxReservationsByUser);
+        $query->bindParam(":maxusersroute",$maxUsersRoute);
         $query->bindParam(":startfreedate", $startFreeDate);
         $query->bindParam(":endfreedate", $endFreeDate);
         $query->bindParam(":userModification",$_SESSION["sessionIdUser"]);
@@ -41,7 +44,7 @@ try {
             $startFreeDateFormat = $startFreeDate->format("d/m/Y");
             $endFreeDate = New DateTime($endFreeDate);
             $endFreeDateFormat = $endFreeDate->format("d/m/Y");
-            $_SESSION['message'] = "La configuración ha sido modificada correctamente. A partir de este momento, el máximo de reservas por usuario será de $maxReservationsByUser y los usuarios sólo podrán hacer reservas desde el $startFreeDateFormat hasta el $endFreeDateFormat. Ten en cuenta que esto no afectará a las reservas pendientes realizadas antes de estos cambios.";
+            $_SESSION['message'] = "La configuración ha sido modificada correctamente. A partir de este momento: </br> - El máximo de reservas por usuario será de $maxReservationsByUser </br> - En la zona de vías solo podrá haber un máximo de $maxUsersRoute usuarios </br> - Los usuarios sólo podrán hacer reservas desde el $startFreeDateFormat hasta el $endFreeDateFormat. </br>Ten en cuenta que esto no afectará a las reservas pendientes realizadas antes de estos cambios.";
         } else {
             $_SESSION['successFlag'] = "N";
             $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar la configuración." ; 
@@ -60,13 +63,15 @@ try {
         try {
             $sql = "INSERT 
                       INTO reservationsconfig ( 
-                           max_reservation       
+                           max_reservation   
+                         , max_users_route      
                          , start_free_date        
                          , end_free_date       
                          , user_modification
                         ) 
                     VALUES (
                            :maxreservation
+                           :maxusersroute
                          , :startfreedate
                          , :endfreedate
                          , :userModification
@@ -74,6 +79,7 @@ try {
                     ";
             $query = $conn->prepare($sql);
             $query->bindParam(":maxreservation", $maxReservationsByUser);
+            $query->bindParam(":maxusersroute", $maxUsersRoute);
             $query->bindParam(":startfreedate", $startFreeDate);
             $query->bindParam(":endfreedate", $endFreeDate);
             $query->bindParam(":userModification", $_SESSION["sessionIdUser"]);
@@ -85,7 +91,7 @@ try {
                 $startFreeDateFormat = $startFreeDate->format("d/m/Y");
                 $endFreeDate = New DateTime($endFreeDate);
                 $endFreeDateFormat = $endFreeDate->format("d/m/Y");
-                $_SESSION['message'] = "La configuración ha sido añadida correctamente. A partir de este momento, el máximo de reservas por usuario será de $maxReservationsByUser y los usuarios sólo podrán hacer reservas desde el $startFreeDateFormat hasta el $endFreeDateFormat. Ten en cuenta que esto no afectará a las reservas pendientes realizadas antes de estos cambios.";
+                $_SESSION['message'] = "La configuración ha sido añadida correctamente. A partir de este momento: </br> - El máximo de reservas por usuario será de $maxReservationsByUser </br> - En la zona de vías solo podrá haber un máximo de $maxUsersRoute usuarios </br> - Los usuarios sólo podrán hacer reservas desde el $startFreeDateFormat hasta el $endFreeDateFormat. </br>Ten en cuenta que esto no afectará a las reservas pendientes realizadas antes de estos cambios.";
             } else {
                 $_SESSION['successFlag'] = "N";
                 $_SESSION['message'] = "Ha habido un problema y no se ha podido añadir la configuración." ; 

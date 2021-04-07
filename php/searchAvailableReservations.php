@@ -8,7 +8,7 @@ require "database.php";
 //Declaramos el tipo array para la variable de sesión que contendrá las reservas disponibles
 $_SESSION['sessionReservations'] = [];
 
-//Recuperaos el idReservation
+//Recuperamos el idReservation
 $idReservation =  $_GET["idReservation"];
 
 //Recuperamos la información que nos llega del formulario de búsqueda de reservas disponibles
@@ -56,17 +56,19 @@ try {
         $idUser   = $results["id_user"];
         $_SESSION['sessionUserReservation'] = $results["id_user"];
         $userType = $results["user_type"];
-        //*********************************************************************************************//
-        // Recuperamos el número máximo de reservas permitidas por usuario                             //
-        //*********************************************************************************************//
+        //*************************************************************************************************************//
+        // Recuperamos el número máximo de reservas permitidas por usuario  y el máximo de usuarios en la zona de vías //
+        //*************************************************************************************************************//
         try {
-            $sql = "SELECT max_reservation FROM reservationsconfig";
+            $sql = "SELECT max_reservation, max_users_route
+                      FROM reservationsconfig
+                    ";
             $query = $conn->prepare($sql);
             $query->execute();
             $results = $query->fetch(PDO::FETCH_ASSOC);
             if (($query->rowCount() > 0 )) {
                 $maxReservationsByUser = $results["max_reservation"];
-                
+                $maxUsersRoute = $results["max_users_route"];
                 //*********************************************************************************************//
                 // Comprobamos que el usuario no haya llegado al máximo de reservas permitidas                 //
                 // (sólo para usuarios genéricos. Los administradores no tendrán límite de reservas)           //
