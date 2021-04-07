@@ -43,29 +43,41 @@
     <form method="post" action="#" autocomplete="off" id="reservationsConfigForm" name="reservationsConfigForm" onsubmit="return validateReservationsConfigForm()">
       <div class="form-group row">
         <div class="col-lg-1 "></div>
-        <label for="maxReservationsByUser" class="col-lg-3 col-form-label"><i class="fas fa-users"></i> Nº máximo reservas</label>
+        <label for="maxReservationsByUser" class="col-lg-3 col-form-label"><i class="fas fa-user-friends"></i> Nº máximo reservas</label>
         <div class="col-lg-7">
           <input type="text" maxlength="2" class="form-control"  id="maxReservationsByUser" name="maxReservationsByUser" placeholder="Introduce el número máximo de reservas por usuario" value ="<?php echo  $reservationsConfig[0]->max_reservation ?>">
-          <!-- Mensaje de error por formato incorrecto en el nombre de la zona -->
+          <!-- Mensaje de error por formato incorrecto en número máximo de reservas por usuario -->
           <div class="invalid-feedback" id="errorMaxReservationsByUser"></div>
         </div>
       </div>
 
       <div class="form-group row">
         <div class="col-lg-1 "></div>
-        <label for="startFreeDate" class="col-lg-3 col-form-label"><i class="fas fa-calendar-check"></i> Abrir período</label>
+        <label for="maxNumberUsersRoute" class="col-lg-3 col-form-label"><i class="fas fa-users"></i> Máx. usuarios vías</label>
         <div class="col-lg-7">
-            <input autofocus type="date" class="form-control" id="startFreeDate" name="startFreeDate" value ="<?php echo  $reservationsConfig[0]->start_free_date ?>">
-            <div class="invalid-feedback" id="errorStartFreeDate"></div>
+          <input type="text" maxlength="2" class="form-control"  id="maxNumberUsersRoute" name="maxNumberUsersRoute" placeholder="Introduce el número máximo total de usuarios en vías" value ="<?php echo  $reservationsConfig[0]->max_users_route ?>">
+          <!-- Mensaje de error por formato incorrecto en el nombre de la zona -->
+          <div class="invalid-feedback" id="errorMaxNumberUsersRoute"></div>
         </div>
       </div>
-
+      
+      <div class="form-group row">
+        <div class="col-lg-1 "></div>
+        <label for="startFreeDate" class="col-lg-3 col-form-label"><i class="fas fa-calendar-check"></i> Abrir período</label>
+        <div class="col-lg-7">
+          <input autofocus type="date" class="form-control" id="startFreeDate" name="startFreeDate" value ="<?php echo  $reservationsConfig[0]->start_free_date ?>">
+          <!-- Mensaje de error por formato incorrecto en la fecha de apertura -->
+          <div class="invalid-feedback" id="errorStartFreeDate"></div>
+        </div>
+      </div>
+      
       <div class="form-group row">
         <div class="col-lg-1 "></div>
         <label for="endFreeDate" class="col-lg-3 col-form-label"><i class="fas fa-calendar-check"></i> Cerrar período</label>
         <div class="col-lg-7">
-            <input type="date" class="form-control" id="endFreeDate" name="endFreeDate" value ="<?php echo  $reservationsConfig[0]->end_free_date ?>">
-            <div class="invalid-feedback" id="errorEndFreeDate"></div>
+          <input type="date" class="form-control" id="endFreeDate" name="endFreeDate" value ="<?php echo  $reservationsConfig[0]->end_free_date ?>">
+          <!-- Mensaje de error por formato incorrecto en la fecha de cierre -->
+          <div class="invalid-feedback" id="errorEndFreeDate"></div>
         </div>
       </div>
 
