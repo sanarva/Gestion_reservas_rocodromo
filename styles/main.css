@@ -7,8 +7,27 @@
 
 * {
     font-family: 'Montserrat', sans-serif;
+    color: white;
 }
 
+/*Ponemos una imagen de fondo*/
+body {
+    background-image: url(../assets/img/fondo.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 0 0;  
+    padding-bottom: 4rem;
+}
+/*Oscurecemos la imagen*/
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+    z-index:-1;  
+}
 
 h1 {
     font-family: 'Lilita One', cursive;  
@@ -22,27 +41,49 @@ h2 {
     text-align: center; /*Ojo porque en modo movil parece que no funciona cuando hay tablas*/    
 }
 
- 
+input {
+    color: white;
+}
 .cursorHand {
     cursor: pointer;
 }
 
+/*Para poner en negro la x de cerrar los mensajes modales*/ 
+span {
+    color: rgb(0, 0, 0);
+}
 
-.closeSession, .goMenu{
-    padding-top: 1rem;
-    color: #DC3545;
+
+.closeSession {
+    margin-top: 1rem;
+    color: #f56371;
     font-weight:500;
+    border: 1px solid #f56371;
+    padding: .5rem;
 }
-/*De momento esto no funcina...comprobar qué pasa*/
-.closeSession :hover{
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+.closeSessionIcon {
+    color: #f56371;
 }
+.closeSession:hover{
+    border-color: rgb(255,255,255);
+    color: rgb(255,255,255);
+ }
 
 
 .goMenu{
-    color: #006BDE; 
+    margin-top: 1rem;
+    color: #4b9df5;
+    font-weight:500; 
+    border: 1px solid #4b9df5;
+    padding: .5rem;
 } 
-
+.goMenuIcon{
+    color: #4b9df5;
+}
+.goMenu:hover{
+    border-color:rgb(255,255,255);
+    color:rgb(255,255,255);
+}
 
 .divOptions{
     display: flex;
@@ -59,7 +100,7 @@ h2 {
     margin: 1rem;
     width: 200px;
     height: 200px;
-    background-color: grey;
+    border: 2px solid rgb(255, 255, 255); 
     border-radius: 10px;
     cursor: pointer;    
 }
@@ -99,10 +140,20 @@ h2 {
     z-index: 10;
 }
 
+.customModalMessage p, .customModalMessage h5{
+    color: black;
+}
+
 .modalIcon{ 
     font-size: 1.5rem;
     margin-right: 1.1rem; 
 }
+
+
+.fa-eye{
+    color:black;
+}
+
 
 /*Clase usada para los mensajes de Error*/
 .modalIconError{
@@ -114,7 +165,6 @@ h2 {
 .modalIconCorrect{
     color:#3D9900;
 }
-
 
 
 /*Clase usada para los mensajes de warning*/

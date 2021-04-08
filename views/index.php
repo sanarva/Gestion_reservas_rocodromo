@@ -60,7 +60,7 @@
                         Acceder
                     </button>
                     <!--Link para acceder a la pantalla de recuperar contraseña -->
-                    <a class="small" href="recoveryPsw.php"> He olvidado mi contraseña <i class="far fa-grin-beam-sweat"></i></a>
+                    <a class="small text-white" href="recoveryPsw.php"> He olvidado mi contraseña <i class="far fa-grin-beam-sweat"></i></a>
                 </div>
             </div>
         </form>
