@@ -23,13 +23,14 @@ try {
         //Modificamos la BBDD con la nueva contraseña
         try {
             $sql = "UPDATE users
-                       SET user_password     = :usernewpassword 
+                       SET user_password     = :usernewpasswordencripted 
                          , user_modification = '999999'
                          , timestamp = current_timestamp
                      WHERE user_email = :useremail 
                        AND user_status = 'A'"; // user_Status = 1 significa que el usuario está activo
             $query = $conn->prepare($sql);
-            $query->bindParam(":usernewpassword",$userNewPassword);
+            $userNewPasswordEncripted = password_hash($userNewPassword, PASSWORD_DEFAULT);
+            $query->bindParam(":usernewpasswordencripted",$userNewPasswordEncripted);
             $query->bindParam(":useremail", $userEmail);
             $query->execute();
             //Si se ha podido modificar la contraseña en la BBDD...

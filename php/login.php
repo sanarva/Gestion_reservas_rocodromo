@@ -11,18 +11,16 @@ $userEmail    = $_POST["userEmail"];
 $userPassword = $_POST["userPassword"];
 
 try {
-    $sql = "SELECT id_user, user_type, user_name, user_email 
+    $sql = "SELECT id_user, user_type, user_name, user_email, user_password
               FROM users 
-             WHERE user_email = :useremail 
-               AND user_password = :userpassword 
+             WHERE user_email  = :useremail 
                AND user_status = 'A'";
     $query = $conn->prepare($sql);
-    //Estamos usando un array asociativo para los parámetros
-    $query->execute(array(":useremail"=>$userEmail,":userpassword"=>$userPassword));
+    $query->execute(array(":useremail"=>$userEmail)); 
+   
     $result = $query->fetch(PDO::FETCH_ASSOC);
-    
-
-    if (($query->rowCount() > 0 )) {
+ 
+    if (($query->rowCount() > 0 && password_verify($userPassword, $result["user_password"]))) {
         //Guardamos las variables de sesión 
         $_SESSION["sessionIdUser"]    = $result["id_user"];
         $_SESSION["sessionUserType"]  = $result["user_type"];
