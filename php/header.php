@@ -26,10 +26,10 @@ if (!isset($_SESSION["sessionIdUser"])){
     <div class="container-fluid header">
         <div class=" d-flex justify-content-between">
             <a class="text-decoration-none <?=$invisibleClass?>" href="userMenu.php"><p href="userMenu.php" class= "goMenu">
-                <i class="fas fa-arrow-circle-left fa-lg"></i> Volver al menú </p> 
+                <i class="fas fa-arrow-circle-left fa-lg goMenuIcon"></i> Volver al menú </p> 
             </a>
             <a class="text-decoration-none <?=$invisibleClass?>" href="../php/logout.php"><p href="../php/logout.php" class= "closeSession">
-                <i class="fas fa-sign-out-alt fa-lg "></i> Cerrar sesión</p> 
+                <i class="fas fa-sign-out-alt fa-lg closeSessionIcon"></i> Cerrar sesión</p> 
             </a>
         </div>
 
