@@ -26,7 +26,7 @@ try {
     //Si existe, avisamos al usuario administrador de que no se va a crear ese nuevo usuario porque ya existe uno con el mismo nombre o número de tarjeta o email
     if (($query->rowCount() > 0 )) {
         $_SESSION['successFlag'] = "N";
-        $_SESSION['message'] = "No se puede crear el usuario con nombre $userName, número de tarjeta $cardNumber e email $userEmail porque se ha encontrado ul usuario que tiene o el mismo nombre o número de tarjeta o email que el que se quiere dar de alta. Por favor, modifica el existente." ; 
+        $_SESSION['message'] = "No se puede crear el usuario con nombre $userName, número de tarjeta $cardNumber e email $userEmail porque se ha encontrado un usuario que tiene o el mismo nombre o número de tarjeta o email que el que se quiere dar de alta. Por favor, modifica el existente." ; 
 
     } else {
         try {
