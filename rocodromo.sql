@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2021 at 06:40 PM
+-- Generation Time: Apr 08, 2021 at 10:11 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.4.16
 
@@ -119,7 +119,7 @@ CREATE TABLE `users` (
   `card_number` int(6) NOT NULL COMMENT 'Card number',
   `user_status` varchar(1) NOT NULL COMMENT 'Status of the user \r\n(Active = "A") \r\n(Inactive = "I"',
   `user_email` varchar(50) NOT NULL COMMENT 'User email',
-  `user_password` varchar(8) NOT NULL COMMENT 'Password of the user',
+  `user_password` varchar(255) NOT NULL COMMENT 'Password of the user',
   `user_name` varchar(100) NOT NULL COMMENT 'User name & surnames',
   `user_modification` int(6) NOT NULL COMMENT 'ID of the user Who has done the transaction',
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'When transaccion has done'
