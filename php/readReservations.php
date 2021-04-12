@@ -147,6 +147,7 @@ try {
     $query->execute();
     $reservations = $query->fetchAll(PDO::FETCH_OBJ);
 
+
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "C";
     $queryError = $e->getMessage();  

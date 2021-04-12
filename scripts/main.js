@@ -6,6 +6,11 @@ let totalErrors;
 let errorConfirmNewPassword;
 let userConfirmNewPassword;
 
+let date = new Date();
+let currentDate = (date.toISOString()).substring(0,10);
+ 
+
+
 //Variable necesaria para determinar si existe o no formulario de login 
 let loginForm = document.getElementById("loginForm");
 
@@ -62,7 +67,7 @@ function login(){
     if (totalErrors > 0) {
         return false;
     } else {
-        loginForm.action="../php/login.php";
+        loginForm.action="php/login.php";
     }
 }
 
@@ -134,7 +139,7 @@ function validatePassword(password, errorPassword){
         totalErrors++;
     } else if (!validateFormatPassword(password.value)) {
         password.classList.add("is-invalid");
-        errorPassword.textContent = "El formato de la contraseña no es correcto.";
+        errorPassword.textContent = "El formato de la contraseña no es correcto. Debe tener 8 caracteres entre ellos, una mayúscula, una minúscula y un número";
         totalErrors++;
     }  
 }
@@ -230,7 +235,6 @@ function validateHourForm(btnClicked){
 
     if (counterDays == 0) {
         weekDay.classList.add("is-invalid"); 
-        //errorWeekDay.classList.add("d-block"); 
         errorWeekDay.textContent = "Por favor, selecciona al menos un día";
         totalErrors++;
     } else {
@@ -396,6 +400,12 @@ function validateSearchReservation(){
         totalErrors++;
     }
 
+    if (reservationDateChoosen.value < currentDate){
+        reservationDateChoosen.classList.add("is-invalid");
+        errorReservationDateChoosen.textContent = "La fecha de la reserva no puede ser un día pasado";
+        totalErrors++;
+    }
+
     //Recuperamos las horas 
     let filterStartHour = document.getElementById("filterStartHour");
     let filterEndHour   = document.getElementById("filterEndHour");
@@ -403,7 +413,7 @@ function validateSearchReservation(){
 
     if (filterEndHour.value < filterStartHour.value){
         filterEndHour.classList.add("is-invalid");
-        errorFilterEndHour.textContent = "La hora de finalizacion debe ser mayor que la de inicio.";
+        errorFilterEndHour.textContent = "La hora de finalizacion debe ser mayor que la de inicio";
         totalErrors++;
     }
  

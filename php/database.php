@@ -35,7 +35,7 @@ try {
     </br> Error al conectar con la BBDD. </br> Descripción del error: " . $conexionErrorMessage;
 
     if ($path == ""){
-        header("Location: ../views/index.php");
+        header("Location: ../index.php");
     } else {
         header("Location: $path");
     }

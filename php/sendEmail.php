@@ -32,7 +32,7 @@ try {
             $_SESSION['successFlag'] = "Y";
             $_SESSION['message'] = "Te hemos enviado una nueva contraseña a $userEmail con las instrucciones. </br> Si no las has recibido en unos minutos, revisa la carpeta de spam." ; 
             $_SESSION['button1'] = 'Volver al inicio';
-            $_SESSION['formaction1']  = '../views/index.php';
+            $_SESSION['formaction1']  = '../index.php';
             $_SESSION['colorbutton1'] = 'btn-primary';
     
         } else {

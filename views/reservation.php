@@ -32,6 +32,11 @@
         $filterStartHour        = $_GET["startHour"];
         $filterEndHour          = $_GET["endHour"];
         $filterZoneName         = $_GET["zoneName"];
+
+        // Este código indica si se está accediendo desde la vista reservationsList.php o desde myReservationsList.php
+        if(isset($_GET["path"])){
+            $_SESSION["reservationList"] = $_GET["path"];
+        } 
    ?>
     <p class="d-none" id="idReservation"><?php echo $idReservation ?></p>
     <header>
@@ -89,8 +94,8 @@
                    </option>
                   <?php endforeach; ?>
                 </select>
-                </div>
                 <div class="invalid-feedback" id="errorFilterEndHour"></div>
+                </div>
             </div>
 
             <div class="form-group row">

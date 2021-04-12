@@ -14,13 +14,13 @@
     <!-- Estilos para iconos (Font Awesome)-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
     <!-- Estilos propios -->
-    <link rel="stylesheet" href="../styles/main.css"> 
+    <link rel="stylesheet" href="styles/main.css"> 
 </head>
 
 <body>
     
     <header>
-        <?php include("../php/header.php")?>
+        <?php include("php/header.php")?>
     <header>
 
     <div class="container">
@@ -30,7 +30,7 @@
                 <div class="col-lg-1 "></div>
                 <label for="userEmail" class="col-lg-3 col-form-label "><i class="fas fa-user-check"></i> Usuario</label>
                 <div class="col-lg-7">
-                    <input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="Introduce tu usuario">
+                    <input type="text"  autocomplete="on" class="form-control" id="userEmail" name="userEmail" placeholder="Introduce tu usuario" >
                     <!-- Mensaje de error por formato incorrecto en el email -->
                     <div class="invalid-feedback" id="errorEmail"></div>
                 </div>
@@ -60,7 +60,7 @@
                         Acceder
                     </button>
                     <!--Link para acceder a la pantalla de recuperar contraseña -->
-                    <a class="small text-white" href="recoveryPsw.php"> He olvidado mi contraseña <i class="far fa-grin-beam-sweat"></i></a>
+                    <a class="small text-white" href="views/recoveryPsw.php"> He olvidado mi contraseña <i class="far fa-grin-beam-sweat"></i></a>
                 </div>
             </div>
         </form>
@@ -68,7 +68,7 @@
         <!-- Gestión de errores y mensajes-->
         <?php 
             if (isset($_SESSION['successFlag'])) {
-                include "../php/message.php";
+                include "php/message.php";
             } 
         ?>   
 
@@ -79,7 +79,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
     
     <!-- Scripts para la lógica de la app-->
-    <script src="../scripts/main.js"></script>
+    <script src="scripts/main.js"></script>
 </body>
 
 

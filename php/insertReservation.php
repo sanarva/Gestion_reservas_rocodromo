@@ -12,15 +12,24 @@ $filterZoneName        = $_GET["zoneName"];
 $idHour                = $_GET["idHour"];
 $idZone                = $_GET["idZone"];
 
+// Este código indica si se está accediendo desde la vista reservationsList.php o desde myReservationsList.php
+if(isset( $_SESSION["reservationList"])){
+    $reservationList =  $_SESSION["reservationList"];
+    unset ($_SESSION["reservationList"]);
+} else {
+    $reservationList = "";
+}
+
 //Buscamos si existe ya una reserva igual (sólo para usuarios genéricos)
 try {
     $sql = "SELECT COUNT(*) AS equalReservation 
               FROM reservations, users
-             WHERE user_id          = id_user
-               AND user_id          = :iduser
-               AND reservation_Date = :filterreservationdate
-               AND hour_id          = :idhour
-               AND user_type        = 'G'";
+             WHERE user_id            = id_user
+               AND user_id            = :iduser
+               AND reservation_Date   = :filterreservationdate
+               AND hour_id            = :idhour
+               AND user_type          = 'G'
+               AND reservation_status = 'A'";
     $query = $conn->prepare($sql); 
     $query->execute(array(":iduser"=>$_SESSION['sessionUserReservation'], ":filterreservationdate"=>$filterReservationDate, ":idhour"=>$idHour));  
     $result = $query->fetch(PDO::FETCH_ASSOC);
@@ -30,7 +39,7 @@ try {
         $_SESSION['successFlag'] = "N";
         $_SESSION['message'] = "Lo sentimos, no se puede crear la reserva porque ya tienes una reserva el mismo día a la misma hora." ; 
 
-    //Si no existe, miraramos en qué zona se está intentando hacer la reserva
+    //Si no existe, miraremos en qué zona se está intentando hacer la reserva
     } else {
         $checkZone = "";
     }
@@ -140,10 +149,19 @@ if (isset($insertReserve)){
     
         if ($query->rowCount() > 0 ){
             $_SESSION['successFlag'] = "Y";
-            $_SESSION['message'] = "La reserva ha sido creado correctamente" ;
-            $_SESSION['button1'] = 'Volver a mis reservas';
-            $_SESSION['formaction1']  = '../views/myReservationsList.php';
-            $_SESSION['colorbutton1'] = 'btn-primary';
+            $_SESSION['message'] = "La reserva ha sido creada correctamente" ;
+            if ($reservationList != "") {
+                $_SESSION['button1'] = 'Volver a la lista';
+                $_SESSION['formaction1']  = '../views/ReservationsList.php?&dateFrom=&dateTo=&userName=&cardNumber=&startHour=&endHour=&zoneName=&allStatusReservation'; 
+            } else {
+                $_SESSION['button1'] = 'Volver a mis reservas';
+                $_SESSION['formaction1']  = '../views/myReservationsList.php';
+            }  
+            $_SESSION['colorbutton1'] = 'btn-dark';
+            $_SESSION['button2'] = 'Crear otra reserva';
+            $_SESSION['formaction2']  = '#';
+            $_SESSION['colorbutton2'] = 'btn-primary';
+            $_SESSION["datadismiss"]  = "Yes";
         } else {
             $_SESSION['successFlag'] = "N";
             $_SESSION['message'] = "Ha habido un problema y no se ha podido crear la reserva." ; 

@@ -40,7 +40,7 @@
       
       <div class="filterLayoutItems">
         <label for="filterCardNumber" class="col-form-label d-block"><i class="far fa-address-card"></i> Nº tarjeta:</label>
-        <input type="text" name="filterCardNumber" id="filterCardNumber" value = <?php echo $filterCardNumber?>>
+        <input type="text" maxlength="6" name="filterCardNumber" id="filterCardNumber" value = <?php echo $filterCardNumber?>>
       </div>
      
       <div class="filterLayoutItems">
