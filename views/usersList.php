@@ -78,17 +78,17 @@
         <!--Por cada reserva que exista en la base de datos, tendrá que aparecer un registro-->
         <?php if(isset($users)){ foreach($users as $user):?>
         <tr> 
-          <td id="userNameUL"  name="userNameUL"><?php echo $user->user_name?></td>
-          <td id="userTypeUL"  name="userTypeUL" class="text-center">
+          <td data-label="NOMBRE:" id="userNameUL"  name="userNameUL"><?php echo $user->user_name?></td>
+          <td data-label="TIPO:" id="userTypeUL"  name="userTypeUL" class="text-center">
           <?php if ($user->user_type == "A") { ?>
             <i class="fas fa-user-cog" title="Admin"></i> 
               <?php } else if ($user->user_type == "G"){ ?>
                 <i class="far fa-user text-secondary" title="Genérico"></i> 
               <?php } ?>
           </td>
-          <td class="text-center" id="cardNumberUL"  name="cardNumberUL"><?php echo $user->card_number?></td>
-          <td id="emailUL"  name="emailUL"><?php echo $user->user_email?></td>
-          <td id="userStatusUL"  name="userStatusUL" class="text-center">
+          <td data-label="Nº TARJETA:" class="text-center" id="cardNumberUL"  name="cardNumberUL"><?php echo $user->card_number?></td>
+          <td data-label="EMAIL:" id="emailUL"  name="emailUL"><?php echo $user->user_email?></td>
+          <td data-label="ESTADO:" id="userStatusUL"  name="userStatusUL" class="text-center">
           <?php if ($user->user_status == "A") { ?>
                 <i class="fas fa-check text-success" title="Activo"></i> 
               <?php } else if ($user->user_status == "I"){ ?>
@@ -96,7 +96,7 @@
               <?php } ?>
           </td>
           <!--Botones Actualizar y Eliminar -->
-          <td class="d-flex justify-content-center">
+          <td data-label="" class="d-flex justify-content-center">
             <a href="user.php?Id=<?php echo $user->id_user?>&userName=<?php echo $user->user_name?>&userType=<?php echo $user->user_type?>&cardNumber=<?php echo $user->card_number?>&userEmail=<?php echo $user->user_email?>&userStatus=<?php echo $user->user_status?>">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
             </a>              

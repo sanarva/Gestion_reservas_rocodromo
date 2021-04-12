@@ -206,3 +206,37 @@ span {
 .textUserDisabled {
     color: rgba(124,124,124,0.7);
 }
+
+
+/*Tablas en dispositivos móviles*/
+@media screen and (max-width: 600px) {
+
+    table { 
+        width: 100%;
+        font-size: 13px;
+    }
+
+    table thead{
+        display: none;
+    }
+
+    table tr{
+        display: flex;
+        flex-direction: column;
+        border: 1px solid white;
+        margin-bottom: 1em;
+    }
+
+    table td[data-label]{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        border: none;
+        
+    }
+
+    table td[data-label]::before{
+        content: attr(data-label);
+        
+    }
+  }

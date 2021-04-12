@@ -41,9 +41,9 @@
         <!--Por cada zona que exista en la base de datos, tendrá que aparecer un registro-->
         <?php if(isset($zones)){ foreach($zones as $zone):?>
           <tr> 
-            <td id="zoneZM" name="zoneZM"><?php echo $zone->zone_name?></td>
-            <td id="maxUserNumberZM" name="maxUserNumberZM" class="text-center"><?php echo $zone->max_users_zone?></td>
-            <td id="zoneStatusZM" name="zoneStatusZM" class="text-center">
+            <td data-label="ZONA:" id="zoneZM" name="zoneZM"><?php echo $zone->zone_name?></td>
+            <td data-label="MAX. USUARIOS:" id="maxUserNumberZM" name="maxUserNumberZM" class="text-center"><?php echo $zone->max_users_zone?></td>
+            <td data-label="ESTADO:" id="zoneStatusZM" name="zoneStatusZM" class="text-center">
               <?php if ($zone->zone_status == "A") { ?>
                 <i class="fas fa-check text-success" title="Activa"></i> 
               <?php } else if ($zone->zone_status == "I"){ ?>
@@ -51,7 +51,7 @@
               <?php } ?>
             </td>
             <!--Botones Actualizar y Eliminar -->
-            <td class="d-flex justify-content-center">
+            <td data-label="" class="d-flex justify-content-center">
               <a href="zone.php?Id=<?php echo $zone->id_zone?>&zoneName=<?php echo $zone->zone_name?>&maxUserNumber=<?php echo $zone->max_users_zone?>&zoneStatus=<?php echo $zone->zone_status?>">
                 <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
               </a>              
