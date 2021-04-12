@@ -88,10 +88,10 @@
                 <div class="col-lg-1"></div>
                 <div class="col-lg-8">
                     <?php if ($idUser == " ") {?>
-                        <button type="submit" formaction="../php/insertUser.php?Id=<?php echo $idUser?>&currentUserName=<?php echo $userName?>&currentUserType=<?php echo $userType?>&currentCardNumber=<?php echo $cardNumber?>&currentUserEmail=<?php echo $userEmail?>&currentUserStatus=<?php echo $userStatus?>" id="btnInsertUser" class="btn btn-primary">Crear usuario </button>
+                        <button type="submit" formaction="../php/insertUser.php?Id=<?php echo $idUser?>&currentUserName=<?php echo $userName?>&currentUserType=<?php echo $userType?>&currentCardNumber=<?php echo $cardNumber?>&currentUserEmail=<?php echo $userEmail?>&currentUserStatus=<?php echo $userStatus?>" id="btnInsertUser" class="btn btn-primary">Crear</button>
                     <?php } else {?>
-                        <button type="submit" formaction="../php/updateUser.php?Id=<?php echo $idUser?>&currentUserName=<?php echo $userName?>&currentUserType=<?php echo $userType?>&currentCardNumber=<?php echo $cardNumber?>&currentUserEmail=<?php echo $userEmail?>&currentUserStatus=<?php echo $userStatus?>" id="btnUpdateUser" class="btn btn-primary">Modificar usuario</button>
-                        <button type="submit" formmethod="post" formaction="../php/deleteUser.php?Id=<?php echo $idUser?>&userName=<?php echo $userName?>" class="btn btn-danger ml-3">Eliminar usuario</button>
+                        <button type="submit" formaction="../php/updateUser.php?Id=<?php echo $idUser?>&currentUserName=<?php echo $userName?>&currentUserType=<?php echo $userType?>&currentCardNumber=<?php echo $cardNumber?>&currentUserEmail=<?php echo $userEmail?>&currentUserStatus=<?php echo $userStatus?>" id="btnUpdateUser" class="btn btn-primary">Modificar</button>
+                        <button type="submit" formmethod="post" formaction="../php/deleteUser.php?Id=<?php echo $idUser?>&userName=<?php echo $userName?>" class="btn btn-danger ml-3">Eliminar</button>
                     <?php }?>     
                 </div>
             </div>

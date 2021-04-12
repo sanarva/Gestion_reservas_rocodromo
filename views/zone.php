@@ -68,10 +68,10 @@
                 <div class="col-lg-1"></div>
                 <div class="col-lg-8">
                     <?php if ($idZone == " ") {?>
-                        <button type="submit" formaction="../php/insertZone.php?Id=<?php echo $idZone?>&currentMaxUserNumber=<?php echo $maxUserNumber?>&CurrentZoneStatus=<?php echo $zoneStatus?>" id="btnInsertZone" class="btn btn-primary">Crear zona </button>
+                        <button type="submit" formaction="../php/insertZone.php?Id=<?php echo $idZone?>&currentMaxUserNumber=<?php echo $maxUserNumber?>&CurrentZoneStatus=<?php echo $zoneStatus?>" id="btnInsertZone" class="btn btn-primary">Crear</button>
                     <?php } else {?>
-                        <button type="submit" formaction="../php/updateZone.php?Id=<?php echo $idZone?>&currentMaxUserNumber=<?php echo $maxUserNumber?>&CurrentZoneStatus=<?php echo $zoneStatus?>" id="btnUpdateZone" class="btn btn-primary">Modificar zona</button>
-                        <button type="submit" formmethod="post" formaction="../php/deleteZone.php?Id=<?php echo $idZone?>&zoneName=<?php echo $zoneName?>" class="btn btn-danger ml-3">Eliminar zona</button>
+                        <button type="submit" formaction="../php/updateZone.php?Id=<?php echo $idZone?>&currentMaxUserNumber=<?php echo $maxUserNumber?>&CurrentZoneStatus=<?php echo $zoneStatus?>" id="btnUpdateZone" class="btn btn-primary">Modificar</button>
+                        <button type="submit" formmethod="post" formaction="../php/deleteZone.php?Id=<?php echo $idZone?>&zoneName=<?php echo $zoneName?>" class="btn btn-danger ml-3">Eliminar</button>
                     <?php }?>     
                 </div>
             </div>

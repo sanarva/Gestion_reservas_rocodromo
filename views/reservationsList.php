@@ -193,17 +193,17 @@
       <!--Por cada reserva que exista en la base de datos, tendrá que aparecer un registro-->
       <?php if(isset($reservations)){ foreach($reservations as $reservation):?>
         <tr> <!--Por cada reserva que exista en la base de datos, tendrá que aparecer un registro-->
-          <td>
+          <td data-label="FECHA:">
             <?php //Esta función cambia el formato de la fecha dándole la vuelta y poníendole barras en lugar de guiones
               $date = new DateTime( $reservation->reservation_date);
               echo $date->format("d/m/Y");
             ?>
           </td>
-          <td><?php echo $reservation->start_hour . " - " . $reservation->end_hour . "h"?></td>
-          <td><?php echo $reservation->zone_name?></td>
-          <td><?php echo $reservation->user_name?></td>
-          <td class="text-center"><?php echo $reservation->card_number?></td>
-          <td class="text-center">
+          <td data-label="HORA:"><?php echo $reservation->start_hour . " - " . $reservation->end_hour . "h"?></td>
+          <td data-label="ZONA:"><?php echo $reservation->zone_name?></td>
+          <td data-label="USUARIO:"><?php echo $reservation->user_name?></td>
+          <td data-label="Nº TARJETA:" class="text-center"><?php echo $reservation->card_number?></td>
+          <td data-label="ESTADO:" class="text-center">
               <?php if ($reservation->reservation_status == "A") { ?>
                 <i class="fas fa-check text-success" title="Activo"></i> 
               <?php } else if ($reservation->reservation_status == "I"){ ?>
@@ -211,7 +211,7 @@
               <?php } ?>
           </td>
           <!--Botones Actualizar / Eliminar / Cancelar reservas-->
-          <td class="d-flex justify-content-center">
+          <td  data-label="" class="d-flex justify-content-center">
             <!--Se inhabilita el botón de actualizar si el estado de la reserva en inactiva -->
             <?php if ($reservation->reservation_status == "I") {?>
               <i title="No se puede modificar una reserva inactiva" class="far fa-edit fa-lg textPrimaryDisabled mr-4"></i>

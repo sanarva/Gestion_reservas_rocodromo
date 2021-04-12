@@ -41,9 +41,9 @@
         <!--Por cada hora que exista en la base de datos, tendrá que aparecer un registro-->
         <?php if(isset($hours)){ foreach($hours as $hour){?>
         <tr class="text-center"> 
-          <td><?php echo $hour->start_hour?></td>
-          <td><?php echo $hour->end_hour?></td>
-          <td>
+          <td data-label="HORA INICIO:"><?php echo $hour->start_hour?></td>
+          <td data-label="HORA FIN:"><?php echo $hour->end_hour?></td>
+          <td data-label="DÍA:">
             <?php include("../php/checkWeekDay.php");?>
             <input type="checkbox"readonly onclick="javascript: return false;"  <?php if ($L == true) {?> checked <?php } ?> >
             <label for="monday">Lun</label> 
@@ -62,7 +62,7 @@
           </td>
           
           <!--Botones Actualizar y Eliminar -->
-          <td class="d-flex justify-content-center">
+          <td data-label="" class="d-flex justify-content-center">
             <a href="hour.php?Id=<?php echo $hour->id_hour?>&startHour=<?php echo $hour->start_hour?>&endHour=<?php echo $hour->end_hour?>&weekDay=<?php echo $hour->week_day?>">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
             </a>              
