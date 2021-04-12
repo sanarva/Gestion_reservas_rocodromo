@@ -33,7 +33,7 @@ if (!isset($_SESSION["sessionIdUser"])){
             </a>
         </div>
 
-        <h1>ROCÓDROMO CAN MERCADER</h1>
+        <h1 class="mt-5">ROCÓDROMO CAN MERCADER</h1>
     </div>
 
 </body>

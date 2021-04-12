@@ -39,14 +39,14 @@
                             <a href="<?php echo $_SESSION["formaction1"]?>" class="btn <?=$_SESSION["colorbutton1"]?>"><?php echo $_SESSION["button1"]?></a>
                         <?php }?>
                         <?php if (isset($_SESSION["formaction2"]) && $_SESSION["formaction2"] != "") { ?>
-                            <a href="<?php echo $_SESSION["formaction2"]?>" class="btn <?=$_SESSION["colorbutton2"]?>"><?php echo $_SESSION["button2"]?></a>
+                            <a href="<?php echo $_SESSION["formaction2"]?>" class="btn <?=$_SESSION["colorbutton2"]?>" <?php if (isset($_SESSION["datadismiss"]) && $_SESSION["datadismiss"] =! "") {?>data-dismiss="alert" <?php }?> > <?php echo $_SESSION["button2"]?></a>
                         <?php }?>    
                     </div>
                 <?php }?> 
             </div>
         </div>
     </div>
-
+                              
     <!-- Inicializamos las variables de sesión relacionadas con el mensaje modal una vez que hemos mostrado el mensaje -->
         
 <?php 
@@ -58,6 +58,7 @@
     $_SESSION["button2"]      = "";
     $_SESSION["colorbutton2"] = "";
     $_SESSION["formaction2"]  = "";
+    $_SESSION["datadismiss"]  = "";
 }?>
 
 

@@ -41,11 +41,13 @@ h2 {
     text-align: center; /*Ojo porque en modo movil parece que no funciona cuando hay tablas*/    
 }
 
-input {
-    color: white;
-}
+
 .cursorHand {
     cursor: pointer;
+}
+
+select, select option, input {
+    color: rgb(0,0,0);
 }
 
 /*Para poner en negro la x de cerrar los mensajes modales*/ 

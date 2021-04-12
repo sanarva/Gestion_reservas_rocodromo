@@ -31,7 +31,11 @@
     $filterEndHour              = $_GET["endHour"];
     $filterZoneName             = $_GET["zoneName"];
     $filterAllStatusReservation = $_GET["allStatusReservation"]; 
+
+    //Esta variable se usará para saber si se accede a insertar/modificar reserva desde la vista reservartionsList.php o desde myReservationsList para mostrar unas opciones u otras en los botones del mensaje
+    $reservationList = "Y";
   ?>
+
 
   <header>
     <?php include("../php/header.php");?>
@@ -84,7 +88,7 @@
       <div class="form-group row">
         <div class="col-lg-1"></div>
         <div class="col-lg-8">
-          <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Guardar configuración</button>
+          <button type="submit" class="btn btn-primary mb-5"><i class="far fa-save"></i> Guardar configuración</button>
         </div>
       </div>
 
@@ -111,7 +115,7 @@
       
       <div class="filterLayoutItems">
         <label for="filterCardNumber" class="col-form-label d-block"><i class="far fa-address-card"></i> Nº tarjeta:</label>
-        <input type="text" name="filterCardNumber" id="filterCardNumber" value = <?php echo $filterCardNumber?>>
+        <input type="text" maxlength="6" name="filterCardNumber" id="filterCardNumber" value = <?php echo $filterCardNumber?>>
       </div>
 
       <?php include("../php/dropdowns.php");?>
@@ -212,7 +216,7 @@
             <?php if ($reservation->reservation_status == "I") {?>
               <i title="No se puede modificar una reserva inactiva" class="far fa-edit fa-lg textPrimaryDisabled mr-4"></i>
             <?php }else {?>  
-            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $reservation->user_name?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
+            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $reservation->user_name?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>&path=<?php echo $reservationList?>">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
             </a> 
             <?php }?>
@@ -234,7 +238,7 @@
 
     <div class="row">
       <div class="col-12">
-        <a class="btn btn-primary" href="reservation.php?idReservation= &userName=&reservationDate=&startHour=&endHour=&zoneName=">Crear reserva</a>
+        <a class="btn btn-primary" href="reservation.php?idReservation= &userName=&reservationDate=&startHour=&endHour=&zoneName=&path=<?php echo $reservationList?>">Crear reserva</a>
       </div>
     </div>
     

@@ -37,6 +37,13 @@ try {
             if ($query->rowCount() > 0 ){
                 $_SESSION['successFlag'] = "Y";
                 $_SESSION['message'] = "Acabas de cambiar tu contraseña. Recuerda apuntarla bien, no la vayas a olvidar."  ;
+                $_SESSION['button1'] = 'Volver al menú';
+                $_SESSION['formaction1']  = 'userMenu.php';
+                $_SESSION['colorbutton1'] = 'btn-dark';
+                $_SESSION['button2'] = 'Cambiar de nuevo';
+                $_SESSION['formaction2']  = '#';
+                $_SESSION['colorbutton2'] = 'btn-primary';
+                $_SESSION["datadismiss"]  = "Yes";
             } else {
                 $_SESSION['successFlag'] = "N";
                 $_SESSION['message'] = "La contraseña que has escrito no es correcta o coincide con la contraseña actual." ;

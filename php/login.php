@@ -1,7 +1,6 @@
 <?php  
-$path = "../views/index.php";
+$path = "../index.php";
 
-define('HOMEDIR',__DIR__);
 // Requerimos la conexión a la base de datos que está en el fichero database.php
 require "database.php";
 
@@ -32,7 +31,7 @@ try {
     } else {
         $_SESSION["successFlag"] = "N";
         $_SESSION["message"] = "El email o la contraseña no existen";
-        header("Location: ../views/index.php");
+        header("Location: ../index.php");
     }
 
 } catch(PDOException $e){

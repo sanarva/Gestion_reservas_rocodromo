@@ -55,7 +55,7 @@ if ($delete == "yes") {
     $_SESSION['confirmation']  = "";
     $_SESSION["page"]          = "reservation";
     $_SESSION['idReservation'] = $idReservation;
-    $_SESSION['message']       = "Estás a punto de eliminar una reserva. Esto hará que no está nunca más disponible para ser consultada." ;
+    $_SESSION['message']       = "Estás a punto de eliminar una reserva. Esto hará que no esté nunca más disponible para ser consultada." ;
           
 }
 
