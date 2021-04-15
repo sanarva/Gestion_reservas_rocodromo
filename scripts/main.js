@@ -398,9 +398,7 @@ function validateSearchReservation(){
         reservationDateChoosen.classList.add("is-invalid");
         errorReservationDateChoosen.textContent = "Por favor, selecciona una fecha del " + reservationDateChoosenMin + " al " + reservationDateChoosenMax;
         totalErrors++;
-    }
-
-    if (reservationDateChoosen.value < currentDate){
+    } else if (reservationDateChoosen.value < currentDate){
         reservationDateChoosen.classList.add("is-invalid");
         errorReservationDateChoosen.textContent = "La fecha de la reserva no puede ser un día pasado";
         totalErrors++;
