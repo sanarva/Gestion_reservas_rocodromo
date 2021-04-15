@@ -11,7 +11,7 @@ $sql  =  "UPDATE reservations
              SET reservation_status = 'I'  
                , user_modification = '999999'
                , timestamp = current_timestamp
-           WHERE reservation_status = 'A'
+           WHERE reservation_status != 'I'
              AND reservation_date   < :currentdate";
 $query = $conn->prepare($sql);
 $query->bindParam(":currentdate", $currentDate);

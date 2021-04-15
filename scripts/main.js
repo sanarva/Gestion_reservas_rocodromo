@@ -8,7 +8,7 @@ let userConfirmNewPassword;
 
 let date = new Date();
 let currentDate = (date.toISOString()).substring(0,10);
- 
+let currentHour = date.getHours() + ":" + date.getMinutes();
 
 
 //Variable necesaria para determinar si existe o no formulario de login 
@@ -398,9 +398,7 @@ function validateSearchReservation(){
         reservationDateChoosen.classList.add("is-invalid");
         errorReservationDateChoosen.textContent = "Por favor, selecciona una fecha del " + reservationDateChoosenMin + " al " + reservationDateChoosenMax;
         totalErrors++;
-    }
-
-    if (reservationDateChoosen.value < currentDate){
+    } else if (reservationDateChoosen.value < currentDate){
         reservationDateChoosen.classList.add("is-invalid");
         errorReservationDateChoosen.textContent = "La fecha de la reserva no puede ser un día pasado";
         totalErrors++;
@@ -409,14 +407,21 @@ function validateSearchReservation(){
     //Recuperamos las horas 
     let filterStartHour = document.getElementById("filterStartHour");
     let filterEndHour   = document.getElementById("filterEndHour");
+    let errorFilterStartHour = document.getElementById("errorFilterStartHour");
     let errorFilterEndHour = document.getElementById("errorFilterEndHour");
+
+    if (reservationDateChoosen.value == currentDate && filterStartHour.value < currentHour){
+        filterStartHour.classList.add("is-invalid");
+        errorFilterStartHour.textContent = "La hora de inicio no puede ser una hora pasada";
+        totalErrors++;
+    }
 
     if (filterEndHour.value < filterStartHour.value){
         filterEndHour.classList.add("is-invalid");
         errorFilterEndHour.textContent = "La hora de finalizacion debe ser mayor que la de inicio";
         totalErrors++;
     }
- 
+
     //Recuperamos el valor del idReservation para saber si tenemos que llamar en modo alta o modificación
     let idReservationRetrieved = document.getElementById("idReservation").innerHTML; 
     

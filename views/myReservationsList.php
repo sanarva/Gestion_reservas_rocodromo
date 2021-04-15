@@ -66,6 +66,10 @@
                 <i class="fas fa-check text-success" title="Activo"></i> 
               <?php } else if ($reservation->reservation_status == "I"){ ?>
                 <i class="fas fa-times text-danger" title="Inactivo"></i> 
+              <?php } else if ($reservation->reservation_status == "P"){ ?>
+                <i class="fas fa-hourglass-half text-warning" title="Pendiente confirmación"></i> 
+              <?php } else if ($reservation->reservation_status == "W"){ ?>
+                <i class="fas fa-link text-success" title="Auto asegurador"></i> 
               <?php } ?>
           </td>
            <!--Botones Actualizar y Eliminar -->

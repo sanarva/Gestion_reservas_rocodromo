@@ -24,7 +24,7 @@ if (isset($_GET["delete"]) ){
 }
 
 try {
-    $sql = "SELECT id_reservation  FROM reservations WHERE user_id = :iduser AND reservation_status = 'A'";
+    $sql = "SELECT id_reservation  FROM reservations WHERE user_id = :iduser AND reservation_status IN ('A', 'P', 'W')";
     $query = $conn->prepare($sql); 
     $query->execute(array(":iduser"=>$idUser));  
     $result = $query->fetch(PDO::FETCH_ASSOC);

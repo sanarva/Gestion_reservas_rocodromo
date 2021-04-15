@@ -14,7 +14,7 @@ $weekDay = $_POST["weekDay"];
 
 try {
     //Buscamos reservas activas para el horario que se quiere modificar
-    $sql = "SELECT id_reservation  FROM reservations WHERE hour_id = :idhour AND reservation_status = 'A'";
+    $sql = "SELECT id_reservation  FROM reservations WHERE hour_id = :idhour AND reservation_status IN ('A', 'P', 'W')";
     $query = $conn->prepare($sql); 
     $query->execute(array(":idhour"=>$idHour));  
     $result = $query->fetch(PDO::FETCH_ASSOC);
