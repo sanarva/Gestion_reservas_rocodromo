@@ -35,7 +35,7 @@
 
         // Este código indica si se está accediendo desde la vista reservationsList.php o desde myReservationsList.php
         if(isset($_GET["path"])){
-            $_SESSION["reservationList"] = $_GET["path"];
+            $_SESSION["reservationsList"] = $_GET["path"];
         } 
    ?>
     <p class="d-none" id="idReservation"><?php echo $idReservation ?></p>
@@ -79,6 +79,7 @@
                    </option>
                   <?php endforeach; ?>
                 </select>  
+                <div class="invalid-feedback" id="errorFilterStartHour"></div>
                 </div>
             </div>
 

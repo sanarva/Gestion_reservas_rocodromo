@@ -7,7 +7,7 @@ require "database.php";
 //Recuperamos los valores que nos llegan a través del GET
 $idReservation = $_GET["Id"];
 
-//Recuperamos los valores del filtro que nos llegan desde reservationList.php cuando damos a eliminar una reserva
+//Recuperamos los valores del filtro que nos llegan desde reservationsList.php cuando damos a eliminar una reserva
 $filterDateFrom             = $_SESSION['filterDateFromShow'];
 $filterDateTo               = $_SESSION['filterDateToShow'];
 $filterUserName             = $_SESSION['filterUserNameShow'];

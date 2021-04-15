@@ -33,7 +33,7 @@
     $filterAllStatusReservation = $_GET["allStatusReservation"]; 
 
     //Esta variable se usará para saber si se accede a insertar/modificar reserva desde la vista reservartionsList.php o desde myReservationsList para mostrar unas opciones u otras en los botones del mensaje
-    $reservationList = "Y";
+    $reservationsList = "Y";
   ?>
 
 
@@ -208,6 +208,10 @@
                 <i class="fas fa-check text-success" title="Activo"></i> 
               <?php } else if ($reservation->reservation_status == "I"){ ?>
                 <i class="fas fa-times text-danger" title="Inactivo"></i> 
+                <?php } else if ($reservation->reservation_status == "P"){ ?>
+                <i class="fas fa-hourglass-half text-warning" title="Pendiente confirmación"></i> 
+              <?php } else if ($reservation->reservation_status == "W"){ ?>
+                <i class="fas fa-link text-success" title="Auto asegurador"></i> 
               <?php } ?>
           </td>
           <!--Botones Actualizar / Eliminar / Cancelar reservas-->
@@ -216,7 +220,7 @@
             <?php if ($reservation->reservation_status == "I") {?>
               <i title="No se puede modificar una reserva inactiva" class="far fa-edit fa-lg textPrimaryDisabled mr-4"></i>
             <?php }else {?>  
-            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $reservation->user_name?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>&path=<?php echo $reservationList?>">
+            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $reservation->user_name?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>&path=<?php echo $reservationsList?>">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
             </a> 
             <?php }?>
@@ -238,7 +242,7 @@
 
     <div class="row">
       <div class="col-12">
-        <a class="btn btn-primary" href="reservation.php?idReservation= &userName=&reservationDate=&startHour=&endHour=&zoneName=&path=<?php echo $reservationList?>">Crear reserva</a>
+        <a class="btn btn-primary" href="reservation.php?idReservation= &userName=&reservationDate=&startHour=&endHour=&zoneName=&path=<?php echo $reservationsList?>">Crear reserva</a>
       </div>
     </div>
     

@@ -78,7 +78,7 @@ try {
 
                     $sql = "SELECT COUNT(*) AS counter
                             FROM reservations
-                            WHERE reservation_status = 'A' 
+                            WHERE reservation_status IN ('A', 'P') 
                             AND user_id = :iduser";   
                     $query = $conn->prepare($sql);
                     $query->bindParam(":iduser", $idUser);                
@@ -253,7 +253,7 @@ if (isset($prepareReservations) && $prepareReservations == "Y") {
                          WHERE reservation_date   = :reservationdatechoosen
                            AND hour_id = :idhour
                            AND zone_id = :idzone
-                           AND reservation_status = 'A'";
+                           AND reservation_status IN ('A', 'P', 'W')";
                 $query = $conn->prepare($sql);
                 $query->bindParam(":reservationdatechoosen", $reservationDateChoosen);
                 $query->bindParam(":idhour", $hour->id_hour);

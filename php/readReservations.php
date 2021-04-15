@@ -94,15 +94,21 @@ if (isset($_POST["filterZoneName"])) {
 }
 
 if (isset($_POST["filterAllStatusReservation"])) {
-    $filterAllStatusReservation                 = "%";
+    $filterAllStatusReservation1                = "%";
+    $filterAllStatusReservation2                = "%";
+    $filterAllStatusReservation3                = "%";
     $filterAllStatusReservationShow             = $_POST["filterAllStatusReservation"];
     $_SESSION['filterAllStatusReservationShow'] = $_POST["filterAllStatusReservation"];
 } else if (!isset($filterAllStatusReservation) || (isset($filterAllStatusReservation) && $filterAllStatusReservation == "")){
-    $filterAllStatusReservation                 = "A";
+    $filterAllStatusReservation1                = "A";
+    $filterAllStatusReservation2                = "P";
+    $filterAllStatusReservation3                = "W";
     $filterAllStatusReservationShow             = "";
     $_SESSION['filterAllStatusReservationShow'] = "";
 } else if (isset($filterAllStatusReservation) && $filterAllStatusReservation == "on"){
-    $filterAllStatusReservation                 = "%";
+    $filterAllStatusReservation1                = "%";
+    $filterAllStatusReservation2                = "%";
+    $filterAllStatusReservation3                = "%";
     $filterAllStatusReservationShow             = "on";
     $_SESSION['filterAllStatusReservationShow'] = "on";
 
@@ -123,7 +129,7 @@ try {
                  , card_number
                  , reservation_status
               FROM reservations, hours, zones, users
-             WHERE reservation_status LIKE :reservationstatus
+             WHERE (reservation_status LIKE :reservationstatus1 OR reservation_status LIKE :reservationstatus2 OR reservation_status LIKE :reservationstatus3)
                AND hour_id = id_hour
                AND zone_id = id_zone
                AND user_id = id_user
@@ -135,7 +141,9 @@ try {
                AND zone_name        LIKE :zonename
           ORDER BY reservation_date DESC, start_hour ASC, end_hour ASC, card_number ASC";
     $query = $conn->prepare($sql);
-    $query->bindParam(":reservationstatus",$filterAllStatusReservation);
+    $query->bindParam(":reservationstatus1",$filterAllStatusReservation1);
+    $query->bindParam(":reservationstatus2",$filterAllStatusReservation2);
+    $query->bindParam(":reservationstatus3",$filterAllStatusReservation3);
     $query->bindParam(":fromreservationdate",$filterDateFrom);
     $query->bindParam(":toreservationdate",$filterDateTo);
     $query->bindParam(":username",$filterUserName);

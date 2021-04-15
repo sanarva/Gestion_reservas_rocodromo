@@ -31,6 +31,9 @@
                 </div>
                 <div class="modal-body">
                     <p><?=$_SESSION["message"] ?></p>
+                    <?php if (isset($_SESSION['form'])) { ?>
+                        <p class="text-center"> <input type="number" min="1" max = "999999" name="ropeTeam"> </p>
+                    <?php } ?>
                 </div>
 
                 <?php if ($_SESSION["successFlag"] != "C" ) { ?>
@@ -59,6 +62,7 @@
     $_SESSION["colorbutton2"] = "";
     $_SESSION["formaction2"]  = "";
     $_SESSION["datadismiss"]  = "";
+    unset ($_SESSION['form']);
 }?>
 
 
