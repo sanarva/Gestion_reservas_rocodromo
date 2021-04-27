@@ -50,6 +50,7 @@
                 <div class="col-lg-7 input-group">
                     <select class="form-control" id="userType" name="userType">
                         <option value="G" <?php if ($userType == "G") {?>selected <?php }?>>Genérico</option>  
+                        <option value="M" <?php if ($userType == "M") {?>selected <?php }?>>Genérico con menores</option> 
                         <option value="A" <?php if ($userType == "A") {?>selected <?php }?>>Admin</option> 
                     </select>
                 </div>
