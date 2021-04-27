@@ -46,7 +46,7 @@ try {
         
             if (mail) {
                 $_SESSION['successFlag'] = "Y";
-                $_SESSION['message'] = "La reserva ha sido cancelada y se ha enviado al usuario $userName un email para avisarle de ello."; 
+                $_SESSION['message'] = "La reserva ha sido cancelada y se ha enviado un email al usuario $userName para informarle de ello."; 
         
         
             } else {

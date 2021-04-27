@@ -13,17 +13,17 @@ $endHour = $_POST["endHour"];
 $weekDay = $_POST["weekDay"];
 
 try {
-    //Buscamos reservas activas para el horario que se quiere modificar
-    $sql = "SELECT id_reservation  FROM reservations WHERE hour_id = :idhour AND reservation_status IN ('A', 'P', 'W')";
+    //Buscamos reservas activas para la franja horaria que se quiere modificar
+    $sql = "SELECT id_reservation  FROM reservations WHERE hour_id = :idhour AND reservation_status IN ('A', 'P', 'C', 'W')";
     $query = $conn->prepare($sql); 
     $query->execute(array(":idhour"=>$idHour));  
     $result = $query->fetch(PDO::FETCH_ASSOC);
    
-    //Si existen reservas activas, mostramos un error al administrador y no permitimos modificar el horario hasta que no cancele las reservas activas
+    //Si existen reservas activas, mostramos un error al administrador y no permitimos modificar la franja horaria hasta que no cancele las reservas activas
     if (($query->rowCount() > 0 )) {
         $_SESSION['successFlag'] = "N";
-        $_SESSION['message'] = "No se puede modificar el horario de $currentStartHour a $currentEndHour ya que existen reservas activas asociadas a este horario. Cancela antes las reservas activas y vuelve a intentarlo." ; 
-    //Si no existen reservas activas, modificamos el horario    
+        $_SESSION['message'] = "No se puede modificar la franja horaria de $currentStartHour a $currentEndHour ya que existen reservas activas asociadas a ella. Cancela antes las reservas activas y vuelve a intentarlo." ; 
+    //Si no existen reservas activas, modificamos la franja horaria    
     } else {
         try {
             $sql = "UPDATE hours 
@@ -46,7 +46,7 @@ try {
                 $_SESSION['message'] = "El horario de $currentStartHour a $currentEndHour ha sido modificado correctamente"  ;
             } else {
                 $_SESSION['successFlag'] = "N";
-                $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar el horario de $currentStartHour a $currentEndHour." ; 
+                $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar la franja horaria de $currentStartHour a $currentEndHour." ; 
             }
         
         } catch(PDOException $e){
@@ -61,7 +61,7 @@ try {
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "N";
     $queryError = $e->getMessage();  
-    $_SESSION['message'] = "Se ha detectado un problema al buscar reservas activas en el horario a modificar. </br> Descripción del error: " . $queryError ;  
+    $_SESSION['message'] = "Se ha detectado un problema al buscar reservas activas en la franja horaria a modificar. </br> Descripción del error: " . $queryError ;  
      
 } finally { 
     //Limpiamos la memoria 

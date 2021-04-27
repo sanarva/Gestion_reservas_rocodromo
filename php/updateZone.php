@@ -14,7 +14,7 @@ $zoneStatus = $_POST["zoneStatus"];
 
 try {
     //Buscamos reservas activas para la zona que se quiere modificar
-    $sql = "SELECT id_reservation  FROM reservations WHERE zone_id = :idzone AND reservation_status IN ('A', 'P')";
+    $sql = "SELECT id_reservation  FROM reservations WHERE zone_id = :idzone AND reservation_status IN ('A', 'P', 'C')";
     $query = $conn->prepare($sql); 
     $query->execute(array(":idzone"=>$idZone));  
     $result = $query->fetch(PDO::FETCH_ASSOC);

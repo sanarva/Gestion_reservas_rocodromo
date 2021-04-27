@@ -40,90 +40,15 @@ if ($_POST["filterZoneName"] == "") {
     $filterZoneNameShow = $_POST["filterZoneName"];
 }
 
-//*********************************************************************************************//
-// Recuperamos el ID del usuario al que va el nombre la reserva                                //
-//*********************************************************************************************//
-try {
-    $sql = "SELECT id_user, user_type 
-              FROM users
-             WHERE user_name = :filterusername
-               AND user_status = 'A'";
-    $query = $conn->prepare($sql);
-    $query->bindParam(":filterusername",$filterUserName);
-    $query->execute();
-    $results = $query->fetch(PDO::FETCH_ASSOC);
-    if (($query->rowCount() > 0 )) {
-        $idUser   = $results["id_user"];
-        $_SESSION['sessionUserReservation'] = $results["id_user"];
-        $userType = $results["user_type"];
-        //*************************************************************************************************************//
-        // Recuperamos el número máximo de reservas permitidas por usuario  y el máximo de usuarios en la zona de vías //
-        //*************************************************************************************************************//
-        try {
-            $sql = "SELECT max_reservation, max_users_route
-                      FROM reservationsconfig
-                    ";
-            $query = $conn->prepare($sql);
-            $query->execute();
-            $results = $query->fetch(PDO::FETCH_ASSOC);
-            if (($query->rowCount() > 0 )) {
-                $maxReservationsByUser = $results["max_reservation"];
-                $maxUsersRoute = $results["max_users_route"];
-                //*********************************************************************************************//
-                // Comprobamos que el usuario no haya llegado al máximo de reservas permitidas                 //
-                // (sólo para usuarios genéricos. Los administradores no tendrán límite de reservas)           //
-                //*********************************************************************************************//
-                try {
-                    $searchReservations = "N";
 
-                    $sql = "SELECT COUNT(*) AS counter
-                            FROM reservations
-                            WHERE reservation_status IN ('A', 'P') 
-                            AND user_id = :iduser";   
-                    $query = $conn->prepare($sql);
-                    $query->bindParam(":iduser", $idUser);                
-                    $query->execute();
-                    $reservations = $query->fetch(PDO::FETCH_ASSOC);
-                    //Si el usuario es genérico y tiene el número máximo de reservas, mostramos un error y no dejamos hacer otra reserva...
-                    if ($reservations['counter'] == $maxReservationsByUser && $userType == 'G' && ($idReservation == "" || $idReservation == " ")) {
-                        $_SESSION['successFlag'] = "N";
-                        $_SESSION['message'] = "Sólo se permiten $maxReservationsByUser reservas activas por usuario, por lo que no se puede crear otra reserva." ; 
-                    } else {
-                        $searchReservations = "Y"; //Si todo es correcto, buscamos las reservas disponibles
-                    }   
-                } catch(PDOException $e){
-                    $_SESSION['successFlag'] = "C";
-                    $queryError = $e->getMessage();  
-                    $_SESSION['message'] = "Se ha detectado un problema al consultar el número total de reservas del usuario $filterUserName. </br> Descripción del error: " . $queryError ; 
-                
-                } 
-
-            } else {
-                $_SESSION['successFlag'] = "N";
-                $_SESSION['message'] = "Ha habido un problema y no se ha podido recuperar el número máximo de reservas por usuario."; 
-            }
-        
-        } catch(PDOException $e){
-            $_SESSION['successFlag'] = "C";
-            $queryError = $e->getMessage();  
-            $_SESSION['message'] = "Se ha detectado un problema a la hora de consultar el número máximo de reservas por usuario para mostrar las reservas disponibles. </br> Descripción del error: " . $queryError ; 
-        }
-
-    } else {
-        $_SESSION['successFlag'] = "N";
-        $_SESSION['message'] = "El usuario $filterUserName no existe o no está activo, por lo que no se puede crear la reserva." ; 
-        $filterUserName = "";
-    }
-
-} catch(PDOException $e){
-    $_SESSION['successFlag'] = "C";
-    $queryError = $e->getMessage();  
-    $_SESSION['message'] = "Se ha detectado un problema a la hora de recuperar el ID del usuario $filterUserName. </br> Descripción del error: " . $queryError ; 
-
-}
+// Control del número de reservas pendientes que tiene el usuario
+$checkReservationsNumberUser = "Y";
+$userName = $filterUserName;
+$cardNumberRopeTeam = "";
+include("../php/reservationGeneralControls.php");
 
 
-if (isset($searchReservations) && $searchReservations == "Y") {
+if ($checkReservationsNumberUser == "OK") {
     //*********************************************************************************************//
     // Recuperamos el día de la semana de la fecha que nos han pasando                             //
     //*********************************************************************************************//
@@ -253,7 +178,7 @@ if (isset($prepareReservations) && $prepareReservations == "Y") {
                          WHERE reservation_date   = :reservationdatechoosen
                            AND hour_id = :idhour
                            AND zone_id = :idzone
-                           AND reservation_status IN ('A', 'P', 'W')";
+                           AND reservation_status IN ('A', 'P', 'C', 'W')";
                 $query = $conn->prepare($sql);
                 $query->bindParam(":reservationdatechoosen", $reservationDateChoosen);
                 $query->bindParam(":idhour", $hour->id_hour);
@@ -271,10 +196,6 @@ if (isset($prepareReservations) && $prepareReservations == "Y") {
                     array_push($_SESSION['sessionReservations'], $reservationAvailable); 
                 }
 
-                if (count($_SESSION['sessionReservations']) == 0){
-                    $_SESSION['successFlag'] = "W"; 
-                    $_SESSION['message'] = "No existen reservas disponibles con esos criterios" ; 
-                }
             } catch(PDOException $e){
                 $_SESSION['successFlag'] = "C";
                 $queryError = $e->getMessage();  
@@ -284,7 +205,11 @@ if (isset($prepareReservations) && $prepareReservations == "Y") {
 
         }    
     }
-
+    
+    if (count($_SESSION['sessionReservations']) == 0){
+        $_SESSION['successFlag'] = "W"; 
+        $_SESSION['message'] = "No existen reservas disponibles con esos criterios" ; 
+    }
 }
 
 //Limpiamos la memoria 

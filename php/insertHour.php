@@ -10,16 +10,16 @@ $weekDay   = $_POST["weekDay"];
 
 try {
     //Buscamos si existe alguna franja horaria que empiece y acabe a la misma hora 
-    $sql = "SELECT start_hour, end_hour  FROM hours WHERE start_hour = :starthour AND end_hour = :endhour";
+    $sql = "SELECT start_hour, end_hour  FROM hours WHERE start_hour = :starthour";
     $query = $conn->prepare($sql);
     //Estamos usando un array asociativo para los parámetros
-    $query->execute(array(":starthour"=>$startHour,":endhour"=>$endHour));  
+    $query->execute(array(":starthour"=>$startHour));  
     $result = $query->fetch(PDO::FETCH_ASSOC);
    
     //Si existe, avisamos al usuario de que no se va a crear esa nueva hora porque ya existe una.
     if (($query->rowCount() > 0 )) {
         $_SESSION['successFlag'] = "N";
-        $_SESSION['message'] = "No se puede crear el horario de $startHour a $endHour porque ya existe uno. Por favor, modifica el existente." ; 
+        $_SESSION['message'] = "No se puede crear la franja horaria de $startHour a $endHour porque ya existe una con la misma hora de inicio. Por favor, modifica la existente." ; 
 
     } else {
         try {
@@ -50,21 +50,21 @@ try {
                 $_SESSION['message'] = "El horario de $startHour a $endHour ha sido creado correctamente"  ;
             } else {
                 $_SESSION['successFlag'] = "N";
-                $_SESSION['message'] = "Ha habido un problema y no se ha podido crear el horario de $startHour a $endHour." ; 
+                $_SESSION['message'] = "Ha habido un problema y no se ha podido crear la franja horaria de $startHour a $endHour." ; 
             }
         
             
         } catch(PDOException $e){
             $_SESSION['successFlag'] = "C";
             $queryError = $e->getMessage();  
-            $_SESSION['message'] = "Se ha detectado un problema al crear el horario de $startHour a $endHour. </br> Descripción del error: " . $queryError ; 
+            $_SESSION['message'] = "Se ha detectado un problema al crear la franja horaria de $startHour a $endHour. </br> Descripción del error: " . $queryError ; 
         }
     }
 
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "C";
     $queryError = $e->getMessage();  
-    $_SESSION['message'] = "Se ha detectado un problema en la creación de horarios, al buscar si el horario ya existe. </br> Descripción del error: " . $queryError ;  
+    $_SESSION['message'] = "Se ha detectado un problema en la creación de horarios, al buscar si la franja horaria ya existe. </br> Descripción del error: " . $queryError ;  
      
 } finally { 
     //Limpiamos la memoria 

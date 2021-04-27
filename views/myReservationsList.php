@@ -20,7 +20,10 @@
 <body>
   <?php
   //Recuperamos la fecha actual y modificamos el estado de la reserva a Inactiva en caso de que ya haya pasado el día
-    include("../php/inactivateReservations.php");
+  include("../php/inactivateReservations.php");
+  
+  //Con esta variable de sesión indicamos que estamos accediendo a la creación/mantenimiento de reservas desde mi lista de reservas
+  $_SESSION["reservationsList"] = "";
   ?>
 
   <header>
@@ -66,17 +69,22 @@
                 <i class="fas fa-check text-success" title="Activo"></i> 
               <?php } else if ($reservation->reservation_status == "I"){ ?>
                 <i class="fas fa-times text-danger" title="Inactivo"></i> 
-              <?php } else if ($reservation->reservation_status == "P"){ ?>
+              <?php } else if ($reservation->reservation_status == "P" || $reservation->reservation_status == "C"){ ?>
                 <i class="fas fa-hourglass-half text-warning" title="Pendiente confirmación"></i> 
-              <?php } else if ($reservation->reservation_status == "W"){ ?>
-                <i class="fas fa-link text-success" title="Auto asegurador"></i> 
               <?php } ?>
           </td>
            <!--Botones Actualizar y Eliminar -->
-          <td data-label="" class="d-flex justify-content-center">
+          <td data-label="" class="d-flex justify-content-center" >
+          <?php if ($reservation->reservation_status == "C") {?>
+            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $_SESSION['sessionUserName']?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
+              <i title="Confirmar" class="far fa-check-circle fa-lg cursorHand text-primary mr-4"></i>
+            </a> 
+          <?php }else {?>
             <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $_SESSION['sessionUserName']?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
-            </a> 
+            </a>
+          <?php }?>
+
             <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>&cancelReservation"> 
               <i title="Cancelar" class="far fa-times-circle fa-lg text-danger "></i>
             </a> 
@@ -90,7 +98,7 @@
       <div class="col-12">
       <?php 
         if (count($reservations) == 0) {?>
-          <p>No tienes reservas pendientes</p>
+          <p>No tienes reservas pendientes.</p>
         <?php }?>
       </div>
     </div>
