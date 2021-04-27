@@ -83,6 +83,13 @@ if (isset($insertReservation)){
     $j = 1;
 
     do {
+        //Independientemente de la zona escogida, si se trata de una reserva doble con menor, se reservarán dos plazas aunque para el usuario sólo conste como una única reserva
+        if (isset($doubleReservationWithMinor)){
+            $userCounterRoutes = 1;
+            $reservationStatus = "A";
+            $reservationStatusRopeTeam = "W";
+        }
+
         //Si estamos insertando la segunda reserva, cambiaremos los valores de status_reservation y el id del usuario en caso de que fuese una reserva en cordada
         if ($j == 2) {
             $reservationStatus = $reservationStatusRopeTeam;
@@ -173,7 +180,9 @@ if (isset($insertReservation)){
             //Si se han insertado y se trata de una reserva en cordada, enviaremos un email al usuario que debe confirmar y mostraremos un mensaje avisando 
             if ($results['counterInsertedReservations'] == 2) {
                 if ($cardNumberRopeTeam != "") {
-                    if ($_SESSION['userType'] == "A" && $_SESSION['userTypeRopeTeam'] == "A"){ //Si se trata de una reserva en cordada de dos usuarios administradores, no se enviará mail porque las reservas no quedarán pendientes de confirmar)
+                    //Si se trata de una reserva en cordada de dos usuarios administradores, no se enviará mail porque las reservas no quedarán pendientes de confirmar (A/A)
+                    //Si se trata de una reserva doble con menor, tampoco se enviará email porque las reservas no quedarán pendintes de confirmar (A/W)
+                    if (($_SESSION['userType'] == "A" && $_SESSION['userTypeRopeTeam'] == "A") || isset($doubleReservationWithMinor)){ 
                         $_SESSION['successFlag'] = "Y";
                         $_SESSION['message'] = "La reserva ha sido creada correctamente";
                     } else {
