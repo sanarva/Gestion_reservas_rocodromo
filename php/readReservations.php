@@ -97,18 +97,21 @@ if (isset($_POST["filterAllStatusReservation"])) {
     $filterAllStatusReservation1                = "%";
     $filterAllStatusReservation2                = "%";
     $filterAllStatusReservation3                = "%";
+    $filterAllStatusReservation4                = "%";
     $filterAllStatusReservationShow             = $_POST["filterAllStatusReservation"];
     $_SESSION['filterAllStatusReservationShow'] = $_POST["filterAllStatusReservation"];
 } else if (!isset($filterAllStatusReservation) || (isset($filterAllStatusReservation) && $filterAllStatusReservation == "")){
     $filterAllStatusReservation1                = "A";
     $filterAllStatusReservation2                = "P";
     $filterAllStatusReservation3                = "C";
+    $filterAllStatusReservation4                = "W";
     $filterAllStatusReservationShow             = "";
     $_SESSION['filterAllStatusReservationShow'] = "";
 } else if (isset($filterAllStatusReservation) && $filterAllStatusReservation == "on"){
     $filterAllStatusReservation1                = "%";
     $filterAllStatusReservation2                = "%";
     $filterAllStatusReservation3                = "%";
+    $filterAllStatusReservation4                = "%";
     $filterAllStatusReservationShow             = "on";
     $_SESSION['filterAllStatusReservationShow'] = "on";
 
@@ -129,7 +132,7 @@ try {
                  , card_number
                  , reservation_status
               FROM reservations, hours, zones, users
-             WHERE (reservation_status LIKE :reservationstatus1 OR reservation_status LIKE :reservationstatus2 OR reservation_status LIKE :reservationstatus3)
+             WHERE (reservation_status LIKE :reservationstatus1 OR reservation_status LIKE :reservationstatus2 OR reservation_status LIKE :reservationstatus3 OR reservation_status LIKE :reservationstatus4)
                AND hour_id = id_hour
                AND zone_id = id_zone
                AND user_id = id_user
@@ -144,6 +147,7 @@ try {
     $query->bindParam(":reservationstatus1",$filterAllStatusReservation1);
     $query->bindParam(":reservationstatus2",$filterAllStatusReservation2);
     $query->bindParam(":reservationstatus3",$filterAllStatusReservation3);
+    $query->bindParam(":reservationstatus4",$filterAllStatusReservation4);
     $query->bindParam(":fromreservationdate",$filterDateFrom);
     $query->bindParam(":toreservationdate",$filterDateTo);
     $query->bindParam(":username",$filterUserName);

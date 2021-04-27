@@ -566,13 +566,24 @@ function reservate(btnClicked){
         } 
         
     }  
+    
+    cardNumberRopeTeamValue = cardNumberRopeTeam.value;
+    
+    //Si se está haciendo una doble reserva con menor, informaremos el campo &cardNumberRopeTeam con el número de la tarjeta del usuario que hace la reserva 
+    let doubleReservationWithMinor = document.getElementById("doubleReservationWithMinor");
+
+    if (doubleReservationWithMinor.checked){
+        cardNumberRopeTeamValue = doubleReservationWithMinor.value;
+        reservationType = "doubleReservationWithMinor";
+    }
+
 
     if (totalErrors > 0) {
         return false;
     } else {
         
         let path = document.getElementById(btnClicked).dataset.formaction;
-        reservationForm.action = path + "&idHour=" + idHour + "&idZone=" + idZone + "&cardNumberRopeTeam=" + cardNumberRopeTeam.value + "&zoneNameChoosen=" + zoneName + "&reservationType=" + reservationType + "&startHourChoosen=" + startHour + "&endHourChoosen=" + endHour; 
+        reservationForm.action = path + "&idHour=" + idHour + "&idZone=" + idZone + "&cardNumberRopeTeam=" + cardNumberRopeTeamValue + "&zoneNameChoosen=" + zoneName + "&reservationType=" + reservationType + "&startHourChoosen=" + startHour + "&endHourChoosen=" + endHour; 
     }
 }  
 

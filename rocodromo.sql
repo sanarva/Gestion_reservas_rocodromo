@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2021 at 02:07 AM
+-- Generation Time: Apr 27, 2021 at 10:11 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.4.16
 
@@ -78,7 +78,6 @@ INSERT INTO `reservations` (`id_reservation`, `id_related_reservation`, `reserva
 (10, 0, '2021-03-07', 4, 6, 1, 'I', 999999, '2021-04-06 08:37:14'),
 (11, 0, '2021-04-20', 7, 10, 3, 'I', 3, '2021-04-20 10:35:26'),
 (12, 0, '2021-04-26', 2, 1, 1, 'I', 999999, '2021-04-26 22:00:00'),
-(14, 0, '2021-04-27', 7, 7, 1, 'W', 1, '2021-04-12 19:39:49'),
 (15, 0, '2021-04-15', 2, 10, 5, 'I', 1, '2021-04-12 18:08:09'),
 (16, 0, '2021-04-28', 2, 6, 1, 'I', 1, '2021-04-12 16:49:09'),
 (17, 0, '2021-04-15', 7, 1, 1, 'I', 1, '2021-04-09 06:03:13'),
@@ -215,7 +214,7 @@ INSERT INTO `reservationsconfig` (`id_config`, `max_reservation`, `max_users_rou
 
 CREATE TABLE `users` (
   `id_user` int(6) NOT NULL COMMENT 'ID of the user',
-  `user_type` varchar(1) NOT NULL COMMENT 'Type of user ["A"=Admin, "G"=generic]',
+  `user_type` varchar(1) NOT NULL COMMENT 'Type of user ["A"=Admin, "G"=Generic, "M"=Generic with Minors]',
   `card_number` int(6) NOT NULL COMMENT 'Card number',
   `user_status` varchar(1) NOT NULL COMMENT 'Status of the user \r\n(Active = "A") \r\n(Inactive = "I"',
   `user_email` varchar(50) NOT NULL COMMENT 'User email',
@@ -230,13 +229,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `user_type`, `card_number`, `user_status`, `user_email`, `user_password`, `user_name`, `user_modification`, `timestamp`) VALUES
-(1, 'A', 108, 'A', 'plosky21@hotmail.com', '$2y$10$KN53byzg.0fjivHRR4x8Yud47gbuN7VtVvVZdFCaWSR95z4qeZHXK', 'Sandra Arcas', 1, '2021-04-23 06:50:06'),
-(2, 'G', 25, 'I', 'email1@hotmail.com', 'Passwor1', 'Name1 Surname1 Surname2', 999999, '2021-03-20 21:04:02'),
-(3, 'G', 400, 'A', 'guaubisabi@gmail.com', '$2y$10$NXyIGrmwzipqI5FpIJpR9eLdWVenNY9WgWE4K/qVVeIB79LSRgxhy', 'Name2 Surname1 Surname2', 3, '2021-04-12 13:35:01'),
-(4, 'G', 627, 'A', 'ssaannddrruuss@gmail.com', '$2y$10$G/eXT7rE6/jTlHN92OD1Q.N/rbTQSgLjf3d18IQmrwKpw831uHBxK', 'Felip Salinas', 4, '2021-04-23 19:32:39'),
-(5, 'G', 123, 'A', 'email4@hotmail.com', 'Passwor1', 'Name4 Surname1 Surname2', 1, '2021-03-20 21:03:35'),
-(6, 'G', 325, 'A', 'email5@hotmail.com', 'Passwor1', 'Name5 Surname1 Surname2', 1, '2021-03-20 21:03:35'),
-(10, 'A', 100, 'A', 'taykete@gmail.com', '', 'Carlos Izquierdo', 1, '2021-04-12 21:15:12');
+(1, 'A', 100, 'A', 'plosky21@hotmail.com', '$2y$10$KN53byzg.0fjivHRR4x8Yud47gbuN7VtVvVZdFCaWSR95z4qeZHXK', 'Escuela escalada', 1, '2021-04-27 07:24:35'),
+(2, 'G', 200, 'I', 'email1@hotmail.com', 'Passwor1', 'Joan Espinosa', 1, '2021-04-27 07:37:26'),
+(3, 'G', 300, 'A', 'guaubisabi@gmail.com', '$2y$10$NXyIGrmwzipqI5FpIJpR9eLdWVenNY9WgWE4K/qVVeIB79LSRgxhy', 'Felip Solsona', 1, '2021-04-27 07:31:53'),
+(4, 'G', 400, 'A', 'ssaannddrruuss@gmail.com', '$2y$10$NeGc9aJbavkmCNHhBp9KGO9nI8Cbbmuzy5pbeqODrBnxKKyILoVkS', 'Sandra Ruiz', 1, '2021-04-27 07:23:52'),
+(5, 'M', 500, 'A', 'sandra.arcas.valero@gmail.com', '$2y$10$6FLYWBqZUfL8fes/1a0eGOs3gNVvMRSs6gIZyC/NPN81IZ00HT7XS', 'Nuria Crespo', 1, '2021-04-27 08:07:03'),
+(6, 'G', 600, 'A', 'info@guaubisabi.com', '$2y$10$dw5.l9NuOpOWRiHdkJFm5.9k7rc.9YREx0i0CtODLI2J0NWl5.SXi', 'Javier Maroto', 6, '2021-04-27 07:48:17');
 
 -- --------------------------------------------------------
 
@@ -335,7 +333,7 @@ ALTER TABLE `reservationsconfig`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID of the user', AUTO_INCREMENT=11;
+  MODIFY `id_user` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID of the user', AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `zones`

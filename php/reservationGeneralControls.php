@@ -12,7 +12,7 @@ require "database.php";
 if (isset($checkReservationsNumberUser) && $checkReservationsNumberUser == "Y") {
 
     try {
-        $sql = "SELECT id_user, user_type, user_name, user_email 
+        $sql = "SELECT id_user, user_type, user_name, user_email, card_number
                   FROM users
                  WHERE (user_name   = :username
                     OR  card_number = :cardnumberropeteam)
@@ -25,16 +25,24 @@ if (isset($checkReservationsNumberUser) && $checkReservationsNumberUser == "Y") 
         if (($query->rowCount() > 0 )) {
             $idUser   = $userResult["id_user"];
             if ($cardNumberRopeTeam == ""){
-                $_SESSION['sessionIdUserReservation']            = $userResult["id_user"];
-                $_SESSION['sessionIdUserSameReservationControl'] = $userResult["id_user"];                     
-                $_SESSION['sessionNameReservation']              = $userResult["user_name"];
-                $_SESSION['userType']                            = $userResult["user_type"];
+                $_SESSION['sessionIdUserReservation']             = $userResult["id_user"];
+                $_SESSION['sessionIdUserSameReservationControl']  = $userResult["id_user"];                     
+                $_SESSION['sessionNameReservation']               = $userResult["user_name"];
+                $_SESSION['userType']                             = $userResult["user_type"];
+                $_SESSION['cardNumberDoubleReservationWithMinor'] = $userResult["card_number"];
             } else {
                 $_SESSION['sessionIdUserReservationRopeTeam']  = $userResult["id_user"];
                 $_SESSION['sessionNameReservationRopeTeam']    = $userResult["user_name"];
                 $_SESSION['userEmailDobleReservationRopeTeam'] = $userResult["user_email"];
                 $_SESSION['userTypeRopeTeam']                  = $userResult["user_type"];
             }
+
+            //Creamos un indicador para saber que el usuario genérico con menor está haciendo una reserva doble con el menor
+            if ($cardNumberRopeTeam != "" && $_SESSION['userType'] == "M" && $_SESSION['sessionIdUserReservation'] == $userResult["id_user"]){
+                $doubleReservationWithMinor = "Y";
+            } 
+
+            //Controlamos que un usuario genérico no pueda hacer una reserva en cordada poniendo su mismo número de tarjeta
             if ($cardNumberRopeTeam != "" && $_SESSION['userType'] == "G" && $_SESSION['sessionIdUserReservation'] == $userResult["id_user"]){
                 $_SESSION['successFlag'] = "N";
                 $_SESSION['message'] = "No se puede crear la reserva porque el número de la tarjeta de tu compañero/a de cordada debe ser diferente al tuyo." ;
@@ -55,7 +63,7 @@ if (isset($checkReservationsNumberUser) && $checkReservationsNumberUser == "Y") 
                     $query->execute();
                     $reservations = $query->fetch(PDO::FETCH_ASSOC);
                     //Si el usuario es genérico y tiene el número máximo de reservas, mostramos un error y no dejamos hacer otra reserva...
-                    if ($reservations['counter'] >= $_SESSION['sessionMaxReservationByUser'] && $userResult['user_type'] == 'G' && ($idReservation == "" || $idReservation == " ")) {
+                    if ($reservations['counter'] >= $_SESSION['sessionMaxReservationByUser'] && $userResult['user_type'] != 'A' && ($idReservation == "" || $idReservation == " ")) {
                         $maxReservationByUser = $_SESSION['sessionMaxReservationByUser']; 
                         $_SESSION['successFlag'] = "N";
                         $_SESSION['message'] = "El usuario $userName $cardNumberRopeTeam ha alcanzado el máximo número de reservas activas por usuario que es de $maxReservationByUser, por lo que no se puede crear otra reserva." ; 
@@ -109,7 +117,7 @@ if (isset($checkSameReservation) && $checkSameReservation == "Y") {
                    AND user_id            = id_user
                    AND user_id            = :iduser
                    AND reservation_Date   = :filterreservationdate
-                   AND user_type          = 'G'
+                   AND user_type          <> 'A'
                    AND reservation_status IN ('A', 'P', 'C')";
         $query = $conn->prepare($sql); 
         $query->execute(array(":iduser"=>$_SESSION['sessionIdUserSameReservationControl'], ":filterreservationdate"=>$filterReservationDate));  

@@ -83,7 +83,9 @@
           <?php if ($user->user_type == "A") { ?>
             <i class="fas fa-user-cog" title="Admin"></i> 
               <?php } else if ($user->user_type == "G"){ ?>
-                <i class="far fa-user text-secondary" title="Genérico"></i> 
+                <i class="fas fa-user" title="Genérico"></i> 
+              <?php } else if ($user->user_type == "M"){ ?>
+                <i class="fas fa-user-friends" title="Genérico con menores"></i> 
               <?php } ?>
           </td>
           <td data-label="Nº TARJETA:" class="text-center" id="cardNumberUL"  name="cardNumberUL"><?php echo $user->card_number?></td>

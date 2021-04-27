@@ -22,6 +22,13 @@ if ($zoneNameChoosen == "Vía R1" || ($zoneNameChoosen == "Vía R2" && $reservat
     $reservationStatus = "A";
 }
 
+//Independientemente de la zona, si estamos ante una reserva doble con menor, pondremos a 2 el número de inserts
+if ($reservationType == "doubleReservationWithMinor"){
+    $doubleReservationWithMinor = "Y";
+    $numberOfInserts = 2;
+}
+
+
 // Si se trata de una zona de vías, si se va a usar el autoasegurador añadiremos uno a la cuenta pero si se va a escalar en cordada, se sumará 2
 if (isset($userCounterRoutes)) {
     try {

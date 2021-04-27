@@ -200,20 +200,16 @@
                   </div>
                   <div  class="modal-body">
                         <div id="textR1R4R5" class="d-none">
-                            <p> Para reservar en las vías R1, R4 y R5 se necesita una cordada, por lo que es necesario que escribas el número de tarjeta de tu compañero/a.</br>
-                            La reserva no se hará efectiva hasta que éste/a confirme. Tiene 24h para hacerlo, sino la reserva quedará automáticamente cancelada.
-                            </p>
+                            <p> Para reservar en las vías R1, R4 y R5 se necesita una cordada, por lo que es necesario que escribas el número de tarjeta de tu compañero/a.</p>
                         </div>
                         <div id="textR2R3" class="d-none">
                             <p>Estás intentando hacer una reserva en la zona de vías con autoasegurador. Por favor, selecciona una opción:</p>
-                            <input  type="radio" onclick="checkAutoasegurador()" id="conAutoasegurador" name=autoasegurador value="" checked>
+                            <input  type="radio" onclick="checkAutoasegurador()" id="conAutoasegurador" name="autoasegurador" value="" checked>
                             <label  class="form-check-label " for="conAutoasegurador">Iré solo/a (utilizaré el auto asegurador)</label> </br>
-                            <input  type="radio" onclick="checkAutoasegurador()" id="sinAutoasegurador" name=autoasegurador value="">
+                            <input  type="radio" onclick="checkAutoasegurador()" id="sinAutoasegurador" name="autoasegurador" value="">
                             <label  class="form-check-label " for="sinAutoasegurador">Iré con un/a compañero/a de cordada</label> 
                             <div id="divRopeTeam" class="d-none mt-3">
-                                <p> Por favor, indica el número de tarjeta de tu compañero/a de cordada.</br>
-                                La reserva no se hará efectiva hasta que éste/a confirme. Tiene 24h para hacerlo, sino la reserva quedará automáticamente cancelada.
-                                </p>
+                                <p> Por favor, indica el número de tarjeta de tu compañero/a de cordada.</p>
                             </div>
                         </div>
                         <div id="textPlafonCaballo" class="ad-none">
@@ -224,14 +220,20 @@
                                 <li><i title="Libre"   class="fas fa-user pr-2"></i> Significa reserva libre  </li>
                                 <li><i title="Ocupado" class="fas fa-user-slash pr-2"></i>Significa que ya existe una reserva hecha</li>
                             </ul>
-                            <p> ¡Gracias por tu colaboración!</p>
+                            <p> ¡Gracias por tu colaboración!</p>            
                         </div>
+
                         <div id="textOthers" class="d-none">
                             <?php if ($idReservation == ' ' || $idReservation == '' ) { ?>
                                 <p> Estás a punto de crear una nueva reserva. ¿Deseas continuar?</p>
                             <?php } else { ?>        
-                                <p> Estás a punto de modificar la reserva. ¿Deseas continuar?</p>
+                                <p> Estás a punto de modificar la reserva. ¿Deseas continuar?</p> </br>
                             <?php } ?> 
+
+                            <?php if (($idReservation == ' ' || $idReservation == '' ) && $_SESSION['userType'] == "M") {?>
+                                <input  type="checkbox" id="doubleReservationWithMinor" value="<?php echo $_SESSION['cardNumberDoubleReservationWithMinor']?>">
+                                <label  class="form-check-label " for="doubleReservationWithMinor">Marca la casilla si harás la reserva acompañado por un/a menor</label> 
+                            <?php }?>
                         </div>
 
                         <div id="idcardNumberRopeTeam" class="form group-row d-none">
@@ -245,7 +247,7 @@
                     <?php if ($idReservation == " " || $idReservation == "" ) {?> 
                         <button type="submit" id= "btnInsertReservation" class="btn btn-primary" data-formAction="../php/insertReservation.php?idReservation=<?php echo $idReservation?>&userName=<?php echo $userName?>&reservationDate=<?php echo $reservationDateChoosen?>&startHour=<?php echo $filterStartHour?>&endHour=<?php echo $filterEndHour?>&zoneName=<?php echo $filterZoneName?>"> <i class="far fa-calendar-check"></i> Reservar </button>
                     <?php } else {?> 
-                        <button type="submit" id= "btnUpdateReservation" class="btn btn-primary" data-formAction="../php/updateReservation.php?idReservation=<?php echo $idReservation?>&userName=<?php echo $userName?>&reservationDate=<?php echo $reservationDateChoosen?>&startHour=<?php echo $filterStartHour?>&endHour=<?php echo $filterEndHour?>&zoneName=<?php echo $filterZoneName?>" > <i class="far fa-calendar-check"></i> Reservar </button> 
+                        <button type="submit" id= "btnUpdateReservation" class="btn btn-primary" data-formAction="../php/updateReservation.php?idReservation=<?php echo $idReservation?>&userName=<?php echo $userName?>&reservationDate=<?php echo $reservationDateChoosen?>&startHour=<?php echo $filterStartHour?>&endHour=<?php echo $filterEndHour?>&zoneName=<?php echo $filterZoneName?>" > <i class="far fa-calendar-check"></i> Modificar reserva </button> 
                     <?php }?>>
                   </div>
                 </div>
