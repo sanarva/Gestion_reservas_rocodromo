@@ -1,6 +1,6 @@
 <?php  
 
-$path = "../views/userMenu.php";
+$path = "../views/reservation.php?idReservation= &userName=&reservationDate=&startHour=&endHour=&zoneName=";
 
 // Incluímos la conexión a la base de datos que está en el fichero database.php
 require "database.php";
@@ -102,7 +102,7 @@ if (isset($_POST["filterAllStatusReservation"])) {
 } else if (!isset($filterAllStatusReservation) || (isset($filterAllStatusReservation) && $filterAllStatusReservation == "")){
     $filterAllStatusReservation1                = "A";
     $filterAllStatusReservation2                = "P";
-    $filterAllStatusReservation3                = "W";
+    $filterAllStatusReservation3                = "C";
     $filterAllStatusReservationShow             = "";
     $_SESSION['filterAllStatusReservationShow'] = "";
 } else if (isset($filterAllStatusReservation) && $filterAllStatusReservation == "on"){
@@ -139,7 +139,7 @@ try {
                AND start_hour       >= :starthour
                AND end_hour         <= :endhour
                AND zone_name        LIKE :zonename
-          ORDER BY reservation_date DESC, start_hour ASC, end_hour ASC, card_number ASC";
+          ORDER BY reservation_date ASC, start_hour ASC, end_hour ASC, zone_name ASC, card_number ASC";
     $query = $conn->prepare($sql);
     $query->bindParam(":reservationstatus1",$filterAllStatusReservation1);
     $query->bindParam(":reservationstatus2",$filterAllStatusReservation2);

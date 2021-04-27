@@ -16,7 +16,7 @@ $userStatus = $_POST["userStatus"];
 
 try {
     //Buscamos reservas activas para el usuario que se quiere modificar (sólo si se está desactivando el usuario)
-    $sql = "SELECT id_reservation  FROM reservations WHERE user_id = :iduser AND reservation_status IN ('A', 'P')";
+    $sql = "SELECT id_reservation  FROM reservations WHERE user_id = :iduser AND reservation_status IN ('A', 'P', 'C')";
     $query = $conn->prepare($sql); 
     $query->execute(array(":iduser"=>$idUser));  
     $result = $query->fetch(PDO::FETCH_ASSOC);

@@ -21,6 +21,10 @@ try {
     if ($reservationsConfig == [] ){
         $_SESSION['successFlag'] = "N";
         $_SESSION['message'] = "No se ha encontrado la información de configuración de reservas. Es necesario que la cree para que los usuarios puedan reservar.";
+    //Si existe, crearemos estas dos variables de sesión para no tener que acceder varias veces a la hora de hacer una reserva
+    } else {
+        $_SESSION['sessionMaxReservationByUser'] = $reservationsConfig[0]->max_reservation;
+        $_SESSION['sessionMaxUsersInRouteZone']  = $reservationsConfig[0]->max_users_route;
     }
 
 } catch(PDOException $e){

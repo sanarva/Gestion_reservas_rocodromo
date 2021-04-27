@@ -45,6 +45,10 @@ try {
             $endFreeDate = New DateTime($endFreeDate);
             $endFreeDateFormat = $endFreeDate->format("d/m/Y");
             $_SESSION['message'] = "La configuración ha sido modificada correctamente. A partir de este momento: </br> - El máximo de reservas por usuario será de $maxReservationsByUser </br> - En la zona de vías solo podrá haber un máximo de $maxUsersRoute usuarios </br> - Los usuarios sólo podrán hacer reservas desde el $startFreeDateFormat hasta el $endFreeDateFormat. </br>Ten en cuenta que esto no afectará a las reservas pendientes realizadas antes de estos cambios.";
+            $_SESSION['button2'] = 'Aceptar';
+            $_SESSION['formaction2']  = '#';
+            $_SESSION['colorbutton2'] = 'btn-primary';
+            $_SESSION["datadismiss"]  = "Yes";
         } else {
             $_SESSION['successFlag'] = "N";
             $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar la configuración." ; 
@@ -92,6 +96,10 @@ try {
                 $endFreeDate = New DateTime($endFreeDate);
                 $endFreeDateFormat = $endFreeDate->format("d/m/Y");
                 $_SESSION['message'] = "La configuración ha sido añadida correctamente. A partir de este momento: </br> - El máximo de reservas por usuario será de $maxReservationsByUser </br> - En la zona de vías solo podrá haber un máximo de $maxUsersRoute usuarios </br> - Los usuarios sólo podrán hacer reservas desde el $startFreeDateFormat hasta el $endFreeDateFormat. </br>Ten en cuenta que esto no afectará a las reservas pendientes realizadas antes de estos cambios.";
+                $_SESSION['button2'] = 'Aceptar';
+                $_SESSION['formaction2']  = '#';
+                $_SESSION['colorbutton2'] = 'btn-primary';
+                $_SESSION["datadismiss"]  = "Yes";
             } else {
                 $_SESSION['successFlag'] = "N";
                 $_SESSION['message'] = "Ha habido un problema y no se ha podido añadir la configuración." ; 

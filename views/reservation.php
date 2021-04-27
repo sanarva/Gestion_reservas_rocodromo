@@ -20,11 +20,6 @@
 <body>
 
     <?php
-        $count = 0;
-
-        // Recuperamos las fechas en las que se puede hacer reservas
-        include("../php/readReservationConfig.php");
-
         // Recuperamos la información de la lista de reservas
         $idReservation          = $_GET["idReservation"];
         $userName               = $_GET["userName"];
@@ -32,12 +27,11 @@
         $filterStartHour        = $_GET["startHour"];
         $filterEndHour          = $_GET["endHour"];
         $filterZoneName         = $_GET["zoneName"];
-
-        // Este código indica si se está accediendo desde la vista reservationsList.php o desde myReservationsList.php
-        if(isset($_GET["path"])){
-            $_SESSION["reservationsList"] = $_GET["path"];
-        } 
+        
+        // Recuperamos las fechas en las que se puede hacer reservas, el número máximo de reservas por usuario y el total de usuarios en la zona de vías
+        include("../php/readReservationConfig.php");
    ?>
+   
     <p class="d-none" id="idReservation"><?php echo $idReservation ?></p>
     <header>
         <?php include("../php/header.php");?>
@@ -51,7 +45,10 @@
                 <div class="col-lg-1 "></div>
                 <label for="filterUserName" class="col-lg-3 col-form-label"><i class="fas fa-user"></i> Nombre usuario</label>
                 <div class="col-lg-7">
-                    <input type="text" class="form-control" id="filterUserName" name="filterUserName" placeholder="Introduce nombre y apellidos" value ="<?php echo $userName ?>" <?php if($userName != ""){ ?> readonly <?php }?>  >
+                    <input type="text" class="form-control" id="filterUserName" name="filterUserName" placeholder="Introduce nombre y apellidos" value ="<?php echo $userName ?>" <?php if($userName != "" && !isset($_SESSION['sessionErrorLookingForUser'])){ ?> readonly <?php }?> >
+                    <?php if (isset($_SESSION['sessionErrorLookingForUser'])){ //Eliminamos el indicador de error al buscar el nombre por un admin
+                        unset ($_SESSION['sessionErrorLookingForUser']);
+                    } ?>
                     <div class="invalid-feedback" id="errorFilterUserName"></div>
                 </div>
             </div>
@@ -104,7 +101,7 @@
                 <label for="filterZoneName" class="col-lg-3 col-form-label"><i class="fas fa-map-signs"></i> Elije zona</label>
                 <div class="col-lg-7 input-group">
                 <select class="form-control" name="filterZoneName">
-                  <option value="">Todas las zona</option>
+                  <option value="">Todas las zonas</option>
                   <?php foreach($zones as $zone):?>
                    <option value="<?php echo $zone->zone_name?>" <?php if ($zone->zone_name == $filterZoneName) {?> selected <?php } ?> >
                     <?php echo $zone->zone_name?>
@@ -156,17 +153,16 @@
             }    
         ?>
 
-        <form method="post" id="reservationForm" name="reservationForm" action="#" autocomplete="off" onsubmit="reservate()">
+        <form method="post" action="#" autocomplete="off" id="reservationForm" name="reservationForm" onsubmit="return reservate(<?php if ($idReservation == ' ' || $idReservation == '' ) { ?> 'btnInsertReservation' <?php } else {?>  'btnUpdateReservation' <?php }?>)">
             <fildset class="form-group row"><!--Este div aparecerá por cada uno de las posibles reservas a elegir-->
                 <div class="col-lg-1"></div>
                 <div class="col-lg-10"> 
                     <div class="form-check">
                         <?php if (isset($_SESSION["sessionReservations"])) {
                             foreach($_SESSION["sessionReservations"] as $reservation):?>
-                            <input class="form-check-input" type="radio" id="reservationChoosen" name="reservationChoosenArray" value="<?php echo $reservation->idHourClass ?>, <?php echo $reservation->idZoneClass ?>">
-                            <label class="form-check-label d-block" for="radio" >
+                            <input class="form-check-input" type="radio" onclick="checkZoneReservation()" id="reservationChoosen" name="reservationChoosenArray" value="<?php echo $reservation->idHourClass ?>, <?php echo $reservation->idZoneClass ?>, <?php echo $reservation->zoneNameClass?>, <?php echo $reservation->startHourClass?>, <?php echo $reservation->endHourClass?>"  data-toggle="modal" data-target="#exampleModal">
+                            <label  class="form-check-label d-block" for="reservationChoosen" >
                                 <?php
-                                    $count++;
                                     $date = new DateTime( $reservation->reservationDateChoosenClass); 
                                     echo $reservation->reservationDayClass . " " .
                                     $date->format("d/m/Y") . " de " . 
@@ -178,7 +174,7 @@
                                     <?php
                                     }
                                     for($x = 0; $x < $reservation->busyReservationsClass; $x++){?>
-                                        <i title="Ocupado" class="fas fa-user textUserDisabled"></i>
+                                        <i title="Ocupado" class="fas fa-user-slash"></i>
                                     <?php
                                     }
                                     ;
@@ -189,18 +185,72 @@
                     </div>    
                 </div>
             </fildset>
-            <?php if ($count != 0) {?>
-            <div class="form-group row">
-                <div class="col-lg-1"></div>
-                <div class="col-lg-8">
-                    <button type="submit" id= "reservationButton" class="btn btn-primary"
-                        <?php if ($idReservation == " " || $idReservation == "" ) {?> formaction="../php/insertReservation.php?userName=<?php echo $userName?>&reservationDate=<?php echo $reservationDateChoosen?>&startHour=<?php echo $filterStartHour?>&endHour=<?php echo $filterEndHour?>&zoneName=<?php echo $filterZoneName?>" value="insertReservation"
-                        <?php } else {?> formaction="../php/updateReservation.php?idReservation=<?php echo $idReservation?>&userName=<?php echo $userName?>&reservationDate=<?php echo $reservationDateChoosen?>&startHour=<?php echo $filterStartHour?>&endHour=<?php echo $filterEndHour?>&zoneName=<?php echo $filterZoneName?>" value="updateReservation" <?php }?>>
-                        <i class="far fa-calendar-check"></i> Reservar
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <i class="fas fa-exclamation-triangle modalIcon modalIconWarning"></i>   
+                        
+                    <h5 id="exampleModalLabel">ATENCIÓN:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
                     </button>
+                  </div>
+                  <div  class="modal-body">
+                        <div id="textR1R4R5" class="d-none">
+                            <p> Para reservar en las vías R1, R4 y R5 se necesita una cordada, por lo que es necesario que escribas el número de tarjeta de tu compañero/a.</br>
+                            La reserva no se hará efectiva hasta que éste/a confirme. Tiene 24h para hacerlo, sino la reserva quedará automáticamente cancelada.
+                            </p>
+                        </div>
+                        <div id="textR2R3" class="d-none">
+                            <p>Estás intentando hacer una reserva en la zona de vías con autoasegurador. Por favor, selecciona una opción:</p>
+                            <input  type="radio" onclick="checkAutoasegurador()" id="conAutoasegurador" name=autoasegurador value="" checked>
+                            <label  class="form-check-label " for="conAutoasegurador">Iré solo/a (utilizaré el auto asegurador)</label> </br>
+                            <input  type="radio" onclick="checkAutoasegurador()" id="sinAutoasegurador" name=autoasegurador value="">
+                            <label  class="form-check-label " for="sinAutoasegurador">Iré con un/a compañero/a de cordada</label> 
+                            <div id="divRopeTeam" class="d-none mt-3">
+                                <p> Por favor, indica el número de tarjeta de tu compañero/a de cordada.</br>
+                                La reserva no se hará efectiva hasta que éste/a confirme. Tiene 24h para hacerlo, sino la reserva quedará automáticamente cancelada.
+                                </p>
+                            </div>
+                        </div>
+                        <div id="textPlafonCaballo" class="ad-none">
+                            <p>Por motivos de seguridad (COVID), en esta zona sólo puede haber reservas simultáneas de personas del mismo núcleo familiar. 
+                            <p>Como esta aplicación es incapaz de conocer esa información, la escuela de escala confía en que serás responsable y solo reservarás en esta zona en caso de que no exista ninguna reserva ya hecha o si la reserva hecha, pertenece a una personas de tu mismo nucleo familiar.</p> 
+                            <p>Para saber si ya se ha hecho una reserva, fíjate en los motigotillos que aparecen al lado de cada una de las reservas disponibles: </p>
+                            <ul>
+                                <li><i title="Libre"   class="fas fa-user pr-2"></i> Significa reserva libre  </li>
+                                <li><i title="Ocupado" class="fas fa-user-slash pr-2"></i>Significa que ya existe una reserva hecha</li>
+                            </ul>
+                            <p> ¡Gracias por tu colaboración!</p>
+                        </div>
+                        <div id="textOthers" class="d-none">
+                            <?php if ($idReservation == ' ' || $idReservation == '' ) { ?>
+                                <p> Estás a punto de crear una nueva reserva. ¿Deseas continuar?</p>
+                            <?php } else { ?>        
+                                <p> Estás a punto de modificar la reserva. ¿Deseas continuar?</p>
+                            <?php } ?> 
+                        </div>
+
+                        <div id="idcardNumberRopeTeam" class="form group-row d-none">
+                            <input type="text" maxlength="6" id="cardNumberRopeTeam" name="cardNumberRopeTeam" class="form-control" placeholder="Escribe el nº de tarjeta de tu compañero/a"> 
+                            <div class="invalid-feedback" id="errorCardNumberRopeTeam"></div>
+                        </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+                    <?php if ($idReservation == " " || $idReservation == "" ) {?> 
+                        <button type="submit" id= "btnInsertReservation" class="btn btn-primary" data-formAction="../php/insertReservation.php?idReservation=<?php echo $idReservation?>&userName=<?php echo $userName?>&reservationDate=<?php echo $reservationDateChoosen?>&startHour=<?php echo $filterStartHour?>&endHour=<?php echo $filterEndHour?>&zoneName=<?php echo $filterZoneName?>"> <i class="far fa-calendar-check"></i> Reservar </button>
+                    <?php } else {?> 
+                        <button type="submit" id= "btnUpdateReservation" class="btn btn-primary" data-formAction="../php/updateReservation.php?idReservation=<?php echo $idReservation?>&userName=<?php echo $userName?>&reservationDate=<?php echo $reservationDateChoosen?>&startHour=<?php echo $filterStartHour?>&endHour=<?php echo $filterEndHour?>&zoneName=<?php echo $filterZoneName?>" > <i class="far fa-calendar-check"></i> Reservar </button> 
+                    <?php }?>>
+                  </div>
                 </div>
-            </div> 
-            <?php } ?>
+              </div>
+            </div>
         </form>
                         
     </div>

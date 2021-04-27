@@ -1,17 +1,16 @@
 <?php  
-$path = "../views/myReservationsList.php";
-
 // Incluímos la conexión a la base de datos que está en el fichero database.php
 require "database.php";
  
 $idReservation = $_GET["idReservation"];
 
 // Este código indica si se está accediendo desde la vista reservationsList.php o desde myReservationsList.php
-if(isset( $_SESSION["reservationsList"])){
+if($_SESSION["reservationsList"] == "Y"){
     $reservationsList =  $_SESSION["reservationsList"];
-    unset ($_SESSION["reservationsList"]);
+    $path = "../views/reservationsList.php";
 } else {
     $reservationsList = "";
+    $path = "../views/myReservationsList.php";
 }
 
 //Si el usuario está intentando cancelar una reserva...

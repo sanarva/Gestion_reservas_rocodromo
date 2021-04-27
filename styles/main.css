@@ -157,6 +157,11 @@ span {
 }
 
 
+h5, .modal-body, .modal-body div p, .modal-body div label {
+    color: black;
+}
+
+
 /*Clase usada para los mensajes de Error*/
 .modalIconError{
     color:#DC3545;
@@ -208,6 +213,12 @@ span {
 }
 
 
+ul li, ul li i {
+    list-style: none;
+    color: black;
+}
+
+
 /*Tablas en dispositivos móviles*/
 @media screen and (max-width: 600px) {
 
@@ -238,5 +249,9 @@ span {
     table td[data-label]::before{
         content: attr(data-label);
         
+    }
+
+    .fa-lg {
+        font-size: 1.75em;
     }
   }

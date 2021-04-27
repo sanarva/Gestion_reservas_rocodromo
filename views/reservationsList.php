@@ -21,7 +21,7 @@
   <?php
     //Recuperamos la fecha actual y modificamos el estado de la reserva a Inactiva en caso de que ya haya pasado el día
     include("../php/inactivateReservations.php");
-
+    
     //Recuperamos los valores que nos llegan a través del GET
     $filterDateFrom             = $_GET["dateFrom"];
     $filterDateTo               = $_GET["dateTo"];
@@ -31,14 +31,15 @@
     $filterEndHour              = $_GET["endHour"];
     $filterZoneName             = $_GET["zoneName"];
     $filterAllStatusReservation = $_GET["allStatusReservation"]; 
-
-    //Esta variable se usará para saber si se accede a insertar/modificar reserva desde la vista reservartionsList.php o desde myReservationsList para mostrar unas opciones u otras en los botones del mensaje
-    $reservationsList = "Y";
   ?>
 
-
   <header>
-    <?php include("../php/header.php");?>
+    <?php 
+      include("../php/header.php");
+      //Con esta variable de sesión indicamos que estamos accediendo a la creación/mantenimiento de reservas desde la lista general de reservas
+      $_SESSION["reservationsList"] = "Y";
+    ?>
+
   <header>  
 
   <div class="container">
@@ -101,28 +102,28 @@
     <form method="post" action="../php/readReservations.php" autocomplete="off">     
       <div class="filterLayoutItems">
         <label for="filterDateFrom" class="col-form-label d-block"><i class="far fa-calendar-alt"></i> Fecha desde:</label>
-        <input type="date" name="filterDateFrom" id="filterDateFrom" value = <?php echo $filterDateFrom?>>
+        <input type="date" class="form-control" name="filterDateFrom" id="filterDateFrom" value = <?php echo $filterDateFrom?>>
       </div>  
       <div class="filterLayoutItems">
         <label for="filterDateTo" class="col-form-label d-block"><i class="far fa-calendar-alt"></i> Fecha hasta:</label>
-        <input type="date" name="filterDateTo" id="filterDateTo" value = <?php echo $filterDateTo?>>
+        <input type="date" class="form-control" name="filterDateTo" id="filterDateTo" value = <?php echo $filterDateTo?>>
       </div>
       
       <div class="filterLayoutItems">
         <label for="filterUserName" class="col-form-label d-block"><i class="far fa-user"></i> Usuario:</label>
-        <input type="text" name="filterUserName" id="filterUserName" value = <?php echo $filterUserName?>>
+        <input type="text" class="form-control" name="filterUserName" id="filterUserName" value = <?php echo $filterUserName?>>
       </div>
       
       <div class="filterLayoutItems">
         <label for="filterCardNumber" class="col-form-label d-block"><i class="far fa-address-card"></i> Nº tarjeta:</label>
-        <input type="text" maxlength="6" name="filterCardNumber" id="filterCardNumber" value = <?php echo $filterCardNumber?>>
+        <input type="text" class="form-control" maxlength="6" name="filterCardNumber" id="filterCardNumber" value = <?php echo $filterCardNumber?>>
       </div>
 
       <?php include("../php/dropdowns.php");?>
 
       <div class="filterLayoutItems">
         <label for="filterStartHour" class="col-form-label d-block"><i class="far fa-clock"></i> Hora inicio:</label>
-        <select name="filterStartHour">
+        <select class="form-control" name="filterStartHour">
           <option value="">Cualquier hora</option>
           <?php foreach($hours as $startHour):?>
            <option value="<?php echo $startHour->start_hour?>" <?php if ($startHour->start_hour == $filterStartHour) {?> selected <?php } ?>  >
@@ -134,7 +135,7 @@
 
       <div class="filterLayoutItems">
         <label for="filterEndHour" class="col-form-label d-block"><i class="far fa-clock"></i> Hora fin:</label>
-        <select name="filterEndHour" >
+        <select class="form-control" name="filterEndHour" >
           <option value="">Cualquier hora</option>
           <?php foreach($hours as $endHour):?>
            <option value="<?php echo $endHour->end_hour?>" <?php if ($endHour->end_hour == $filterEndHour) {?> selected <?php } ?>>
@@ -146,7 +147,7 @@
 
       <div class="filterLayoutItems">
         <label for="filterZoneName" class="col-form-label d-block"><i class="fas fa-map-signs"></i> Zona:</label>
-        <select name="filterZoneName" >
+        <select class="form-control" name="filterZoneName" >
           <option value="">Todas las zonas</option>
           <?php foreach($zones as $zone):?>
            <option value="<?php echo $zone->zone_name?>" <?php if ($zone->zone_name == $filterZoneName) {?> selected <?php } ?> >
@@ -157,8 +158,8 @@
       </div>
 
       <div class="filterLayoutItems">
-        <input type="checkbox" name="filterAllStatusReservation" id="filterAllStatusReservation" <?php if ($filterAllStatusReservation == "on") {?> checked <?php } ?>>
-        <label for="filterAllStatusReservation" class="col-form-label">Mostrar reservas inactivas</label>
+        <input class="form-check-input" type="checkbox" name="filterAllStatusReservation" id="filterAllStatusReservation" <?php if ($filterAllStatusReservation == "on") {?> checked <?php } ?>>
+        <label class="form-check-label" for="filterAllStatusReservation" class="col-form-label">Mostrar reservas inactivas</label>
       </div>
 
       <div class="row mt-2">
@@ -208,30 +209,34 @@
                 <i class="fas fa-check text-success" title="Activo"></i> 
               <?php } else if ($reservation->reservation_status == "I"){ ?>
                 <i class="fas fa-times text-danger" title="Inactivo"></i> 
-                <?php } else if ($reservation->reservation_status == "P"){ ?>
+                <?php } else if ($reservation->reservation_status == "P" || $reservation->reservation_status == "C"){ ?>
                 <i class="fas fa-hourglass-half text-warning" title="Pendiente confirmación"></i> 
               <?php } else if ($reservation->reservation_status == "W"){ ?>
-                <i class="fas fa-link text-success" title="Auto asegurador"></i> 
+                <i class="fas fa-link text-success" title="Reserva doble"></i> 
               <?php } ?>
           </td>
           <!--Botones Actualizar / Eliminar / Cancelar reservas-->
           <td  data-label="" class="d-flex justify-content-center">
-            <!--Se inhabilita el botón de actualizar si el estado de la reserva en inactiva -->
+            <!--Se inhabilita el botón de actualizar si el estado de la reserva en inactiva, pendiente de confirmar o de autoasegurador -->
             <?php if ($reservation->reservation_status == "I") {?>
-              <i title="No se puede modificar una reserva inactiva" class="far fa-edit fa-lg textPrimaryDisabled mr-4"></i>
-            <?php }else {?>  
-            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $reservation->user_name?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>&path=<?php echo $reservationsList?>">
+              <i title="No se puede modificar una reserva inactiva, pendiente de confirmar o de auto asegurador" class="far fa-edit fa-lg textPrimaryDisabled mr-4"></i>
+            <?php }else if ($reservation->reservation_status == "A" || $reservation->reservation_status == "P"  || $reservation->reservation_status == "W"){?>  
+            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $reservation->user_name?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
+            </a> 
+            <?php }else if ($reservation->reservation_status == "C"){?>  
+            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $reservation->user_name?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
+              <i title="Confirmar" class="far fa-check-circle fa-lg cursorHand text-primary mr-4"></i>
             </a> 
             <?php }?>
 
-            <!--Si el estado de la reserva es activa, se cambia el botón de eliminar por el de cancelar-->
-            <?php if ($reservation->reservation_status == "A") {?>
-              <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>&userId=<?php echo $reservation->user_id?>&userName=<?php echo $reservation->user_name?>&cancelReservation&reservationDate=<?php echo $date->format("d/m/Y")?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
-              <i title="Cancelar" class="far fa-times-circle fa-lg text-danger"></i>
-            <?php }else {?>  
+            <!--Si el estado de la reserva es activa o pendiente de confirmar o de autoasegurador, se cambia el botón de eliminar por el de cancelar-->
+            <?php if ($reservation->reservation_status == "I") {?>
               <a href="../php/deleteReservation.php?Id=<?php echo $reservation->id_reservation?>"> 
               <i title="Eliminar" class="far fa-trash-alt fa-lg text-danger "></i>
+            <?php }else {?>  
+              <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>&userId=<?php echo $reservation->user_id?>&userName=<?php echo $reservation->user_name?>&cancelReservation&reservationDate=<?php echo $date->format("d/m/Y")?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
+              <i title="Cancelar" class="far fa-times-circle fa-lg text-danger"></i>
             </a> 
             <?php }?>
           </td>
@@ -239,10 +244,18 @@
       <?php endforeach; ?> <?php }?>
       </tbody>
     </table>
+    <div class="row">
+      <div class="col-12">
+      <?php 
+        if (count($reservations) == 0) {?>
+          <p>No se han encontrado coincidencias.</p>
+        <?php }?>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-12">
-        <a class="btn btn-primary" href="reservation.php?idReservation= &userName=&reservationDate=&startHour=&endHour=&zoneName=&path=<?php echo $reservationsList?>">Crear reserva</a>
+        <a class="btn btn-primary" href="reservation.php?idReservation= &userName=&reservationDate=&startHour=&endHour=&zoneName=">Crear reserva</a>
       </div>
     </div>
     
