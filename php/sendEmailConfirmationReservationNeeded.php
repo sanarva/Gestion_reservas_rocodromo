@@ -60,7 +60,7 @@ try {
 } catch (Exception $e) {
     $_SESSION['successFlag'] = 'N';
     $mailError = $e->getMessage();  
-    $_SESSION['message'] = "Aunque la reserva ha sido creada en estado pendiente, se ha producido un error en el envío del mail y no se ha podido avisar a tu compañero/a de cordada para que confirme, así que te aconsejamos que le envíes un WhatApp o le llames para que confirme y así te aseguras la reserva porque, si no lo hace en un plazo de 24h, la reserva será cancelada."; 
+    $_SESSION['message'] = "Aunque la reserva ha sido creada en estado pendiente, se ha producido un error en el envío del mail y no se ha podido avisar a tu compañero/a de cordada para que confirme, así que te aconsejamos que le envíes un WhatApp o le llames para que confirme y así te aseguras la reserva porque, si no lo hace en un plazo de 24h, la reserva será cancelada. </br> Descripción del error: " . $queryError ;  
 } finally {
     unset ($_SESSION['sessionIdUserReservationRopeTeam']);
     unset ($_SESSION['sessionNameReservationRopeTeam']);
