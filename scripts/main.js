@@ -572,7 +572,7 @@ function reservate(btnClicked){
     //Si se está haciendo una doble reserva con menor, informaremos el campo &cardNumberRopeTeam con el número de la tarjeta del usuario que hace la reserva 
     let doubleReservationWithMinor = document.getElementById("doubleReservationWithMinor");
 
-    if (doubleReservationWithMinor.checked){
+    if (doubleReservationWithMinor != null && doubleReservationWithMinor.checked){
         cardNumberRopeTeamValue = doubleReservationWithMinor.value;
         reservationType = "doubleReservationWithMinor";
     }
