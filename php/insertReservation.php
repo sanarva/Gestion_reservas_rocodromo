@@ -215,8 +215,10 @@ if (isset($insertReservation)){
     }
 }
 
-
-
-header("Location: ../views/reservation.php?idReservation= &userName=$filterUserName&reservationDate=$filterReservationDate&startHour=$filterStartHour&endHour=$filterEndHour&zoneName=$filterZoneName");
-
+//Si estamos entrando desde mi lista de reservas, guardaremos el nombre del usuario
+if ($reservationsList == "") {
+    header("Location: ../views/reservation.php?idReservation= &userName=$filterUserName&reservationDate=&startHour=&endHour=&zoneName=");
+} else {
+    header("Location: ../views/reservation.php?idReservation= &userName=&reservationDate=&startHour=&endHour=&zoneName=");   
+}
 ?>

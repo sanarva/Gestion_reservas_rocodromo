@@ -230,7 +230,7 @@
                                 <p> Estás a punto de modificar la reserva. ¿Deseas continuar?</p> </br>
                             <?php } ?> 
 
-                            <?php if (($idReservation == ' ' || $idReservation == '' ) && $_SESSION['userType'] == "M") {?>
+                            <?php if (($idReservation == ' ' || $idReservation == '' ) && isset($_SESSION['userType']) && $_SESSION['userType'] == "M") {?>
                                 <input  type="checkbox" id="doubleReservationWithMinor" value="<?php echo $_SESSION['cardNumberDoubleReservationWithMinor']?>">
                                 <label  class="form-check-label " for="doubleReservationWithMinor">Marca la casilla si harás la reserva acompañado por un/a menor</label> 
                             <?php }?>
