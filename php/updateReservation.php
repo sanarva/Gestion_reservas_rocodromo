@@ -13,20 +13,53 @@ if($_SESSION["reservationsList"] == "Y"){
     $path = "../views/myReservationsList.php";
 }
 
+//Comprobamos si se trata de una reserva doble
+try{
+    $sql = "SELECT id_related_reservation
+              FROM reservations
+             WHERE id_reservation  = $idReservation
+               AND id_related_reservation > 0";
+    $query = $conn->prepare($sql);
+    $query->execute();
+    $relatedReservationResult = $query->fetch(PDO::FETCH_ASSOC);
+    if (($query->rowCount() > 0 )) {
+        $idRelatedReservation = $relatedReservationResult["id_related_reservation"];
+    } else {
+        $idRelatedReservation = "nonexistent";
+    }
+    $relatedReservationControlOk = "Y";
+
+} catch(PDOException $e){
+    $relatedReservationControlOk = "N";
+    $_SESSION['successFlag'] = "N";
+    $queryError = $e->getMessage();  
+    $_SESSION['message'] = "Se ha detectado un problema al buscar reservas dobles en la modificación/cancelación de reservas. </br> Descripción del error: " . $queryError ;   
+
+} finally {
+    if (isset($_GET["userId"])) {
+        header("Location: ../views/reservationsList.php?dateFrom&dateTo&userName&cardNumber&startHour&endHour&zoneName&allStatusReservation");
+    } else {
+        header("Location: ../views/myReservationsList.php");
+    }
+}
+
+
 //Si el usuario está intentando cancelar una reserva...
-if (isset($_GET["cancelReservation"])) {
+if (isset($_GET["cancelReservation"]) && $relatedReservationControlOk == "Y") {
     try {
-        $sql = "UPDATE reservations 
+        $sql = "UPDATE reservations
                    SET reservation_status = 'I'
                      , user_modification = :userModification
                      , timestamp = current_timestamp
-                 WHERE id_reservation = :idreservation";
-        $query = $conn->prepare($sql);
-        $query->bindParam(":userModification",$_SESSION["sessionIdUser"]);
-        $query->bindParam(":idreservation",$idReservation);
-        $query->execute();
+                 WHERE id_reservation         = :idreservation
+                    OR id_related_reservation = :idrelatedreservation";
+        $queryCancel = $conn->prepare($sql);
+        $queryCancel->bindParam(":userModification",$_SESSION["sessionIdUser"]);
+        $queryCancel->bindParam(":idreservation",$idReservation);
+        $queryCancel->bindParam(":idrelatedreservation",$idRelatedReservation);
+        $queryCancel->execute();
         
-        if ($query->rowCount() > 0 ){
+        if ($queryCancel->rowCount() > 0 ){
             if (isset($_GET["userId"]) && $_GET["userId"] != "" && $_GET["userId"] != $_SESSION["sessionIdUser"]){//Si es el administrador quien está cancelando la reserva de un usuario
                 //Enviamos un email al usuario para avisarle que se ha cancelado una de sus reservas
                 include("../php/sendEmailCancelationReservation.php");
@@ -49,8 +82,6 @@ if (isset($_GET["cancelReservation"])) {
         $_SESSION['message'] = "Se ha detectado un problema a la hora de cancelar la reserva. </br> Descripción del error: " . $queryError ; 
        
     } finally {
-        //Limpiamos la memoria 
-        $conn = null;
         if (isset($_GET["userId"])) {
             header("Location: ../views/reservationsList.php?dateFrom&dateTo&userName&cardNumber&startHour&endHour&zoneName&allStatusReservation");
         } else {
@@ -58,7 +89,47 @@ if (isset($_GET["cancelReservation"])) {
         }
     }
 
-} else {//Si el usuario está intentando modificar una reserva...
+} else if (isset($_GET["confirmReservation"]) && $relatedReservationControlOk == "Y"){//Si el usuario está intentado confirmar una reserva
+    try {
+        $sql = "UPDATE reservations
+                   SET reservation_status = 'A'
+                     , user_modification = :userModification
+                     , timestamp = current_timestamp
+                 WHERE id_reservation         = :idreservation
+                    OR id_related_reservation = :idrelatedreservation";
+        $queryConfirm = $conn->prepare($sql);
+        $queryConfirm->bindParam(":userModification",$_SESSION["sessionIdUser"]);
+        $queryConfirm->bindParam(":idreservation",$idReservation);
+        $queryConfirm->bindParam(":idrelatedreservation",$idRelatedReservation);
+        $queryConfirm->execute();
+        
+        if ($queryConfirm->rowCount() > 0 ){
+            $_SESSION['successFlag'] = "Y";
+            $_SESSION['message'] = "La reserva ha sido confirmada correctamente.";
+            $_SESSION['button2'] = 'Aceptar';
+            $_SESSION['formaction2']  = '#';
+            $_SESSION['colorbutton2'] = 'btn-primary';
+            $_SESSION["datadismiss"]  = "Yes";
+        } else {
+            $_SESSION['successFlag'] = "N";
+            $_SESSION['message'] = "Ha habido un problema y no se ha podido confirmar la reserva." ; 
+        }
+    
+    } catch(PDOException $e){
+        $_SESSION['successFlag'] = "N";
+        $queryError = $e->getMessage();  
+        $_SESSION['message'] = "Se ha detectado un problema a la hora de confirmar la reserva. </br> Descripción del error: " . $queryError ; 
+       
+    } finally {
+        if (isset($_GET["userId"])) {
+            header("Location: ../views/reservationsList.php?dateFrom&dateTo&userName&cardNumber&startHour&endHour&zoneName&allStatusReservation");
+        } else {
+            header("Location: ../views/myReservationsList.php");
+        }
+    }
+
+
+} else if ($relatedReservationControlOk == "Y"){//Si el usuario está intentando modificar una reserva...
     
     $filterUserName        = $_GET["userName"];
     $filterReservationDate = $_GET["reservationDate"];
@@ -112,13 +183,12 @@ if (isset($_GET["cancelReservation"])) {
         $_SESSION['message'] = "Se ha detectado un problema a la hora de modificar la reserva. </br> Descripción del error: " . $queryError ; 
     
     } finally {
-        //Limpiamos la memoria 
-        $conn = null;
-
         header("Location: ../views/reservation.php?idReservation=$idReservation&userName=$filterUserName&reservationDate=$filterReservationDate&startHour=$filterStartHour&endHour=$filterEndHour&zoneName=$filterZoneName");
     }
  
 } 
 
+//Limpiamos la memoria 
+$conn = null;
 
 ?>

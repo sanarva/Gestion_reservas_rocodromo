@@ -414,13 +414,20 @@ function validateSearchReservation(){
     let errorFilterStartHour = document.getElementById("errorFilterStartHour");
     let errorFilterEndHour = document.getElementById("errorFilterEndHour");
 
+
     if (reservationDateChoosen.value == currentDate && filterStartHour.value < currentHour){
         filterStartHour.classList.add("is-invalid");
         errorFilterStartHour.textContent = "La hora de inicio no puede ser una hora pasada";
         totalErrors++;
     }
 
-    if (filterEndHour.value < filterStartHour.value){
+    if (reservationDateChoosen.value == currentDate && filterStartHour.value == ""){
+        filterStartHour.classList.add("is-invalid");
+        errorFilterStartHour.textContent = "Selecciona una hora de inicio";
+        totalErrors++;
+    }
+
+    if (filterEndHour.value != "" && filterEndHour.value < filterStartHour.value){
         filterEndHour.classList.add("is-invalid");
         errorFilterEndHour.textContent = "La hora de finalizacion debe ser mayor que la de inicio";
         totalErrors++;
@@ -572,7 +579,7 @@ function reservate(btnClicked){
     //Si se está haciendo una doble reserva con menor, informaremos el campo &cardNumberRopeTeam con el número de la tarjeta del usuario que hace la reserva 
     let doubleReservationWithMinor = document.getElementById("doubleReservationWithMinor");
 
-    if (doubleReservationWithMinor.checked){
+    if (doubleReservationWithMinor != null && doubleReservationWithMinor.checked){
         cardNumberRopeTeamValue = doubleReservationWithMinor.value;
         reservationType = "doubleReservationWithMinor";
     }

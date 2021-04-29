@@ -35,12 +35,12 @@
     <form method="post" action="../php/readUsers.php" autocomplete="off" id="filterUsersForm" name="filterUsersForm">     
       <div class="filterLayoutItems">
         <label for="filterUserName" class="col-form-label d-block"><i class="far fa-user"></i> Nombre usuario:</label>
-        <input type="text" name="filterUserName" id="filterUserName" value = <?php echo $filterUserName?>>
+        <input type="text" class="form-control" name="filterUserName" id="filterUserName" value = <?php echo $filterUserName?>>
       </div>
       
       <div class="filterLayoutItems">
         <label for="filterCardNumber" class="col-form-label d-block"><i class="far fa-address-card"></i> Nº tarjeta:</label>
-        <input type="text" maxlength="6" name="filterCardNumber" id="filterCardNumber" value = <?php echo $filterCardNumber?>>
+        <input type="text" class="form-control" maxlength="6" name="filterCardNumber" id="filterCardNumber" value = <?php echo $filterCardNumber?>>
       </div>
      
       <div class="filterLayoutItems">

@@ -19,6 +19,7 @@ if ($zoneNameChoosen == "Vía R1" || ($zoneNameChoosen == "Vía R2" && $reservat
     $reservationStatusRopeTeam = "W";
 } else {
     $insertReservation = "";
+    $numberOfInserts = 1;
     $reservationStatus = "A";
 }
 
