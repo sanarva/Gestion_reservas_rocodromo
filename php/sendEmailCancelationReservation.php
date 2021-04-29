@@ -37,7 +37,7 @@ try {
                 $emailTo = $result->user_email;
                 $names   = $result->user_name;
                 $ids     = $result->id_user;
-            } else {
+            } else if ($result->user_email != $emailTo){
                 $emailTo = $emailTo . ", " . $result->user_email;
                 $names   = $names   . ", " . $result->user_name;
                 $ids     = $ids     . ", " . $result->id_user; 
