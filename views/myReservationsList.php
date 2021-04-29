@@ -78,7 +78,7 @@
            <!--Botones Actualizar y Eliminar -->
           <td data-label="" class="d-flex justify-content-center" >
           <?php if ($reservation->reservation_status == "C") {?>
-            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $_SESSION['sessionUserName']?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
+            <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>&confirmReservation"> 
               <i title="Confirmar" class="far fa-check-circle fa-lg cursorHand text-primary mr-4"></i>
             </a> 
           <?php }else {?>

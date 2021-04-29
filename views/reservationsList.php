@@ -158,8 +158,8 @@
       </div>
 
       <div class="filterLayoutItems">
-        <input class="form-check-input" type="checkbox" name="filterAllStatusReservation" id="filterAllStatusReservation" <?php if ($filterAllStatusReservation == "on") {?> checked <?php } ?>>
-        <label class="form-check-label" for="filterAllStatusReservation" class="col-form-label">Mostrar reservas inactivas</label>
+        <input  type="checkbox" name="filterAllStatusReservation" id="filterAllStatusReservation" <?php if ($filterAllStatusReservation == "on") {?> checked <?php } ?>>
+        <label class="col-form-label" for="filterAllStatusReservation" class="col-form-label">Mostrar reservas inactivas</label>
       </div>
 
       <div class="row mt-2">
@@ -219,13 +219,13 @@
           <td  data-label="" class="d-flex justify-content-center">
             <!--Se inhabilita el botón de actualizar si el estado de la reserva en inactiva, pendiente de confirmar o de autoasegurador -->
             <?php if ($reservation->reservation_status == "I") {?>
-              <i title="No se puede modificar una reserva inactiva, pendiente de confirmar o de auto asegurador" class="far fa-edit fa-lg textPrimaryDisabled mr-4"></i>
+              <i title="No se puede modificar una reserva inactiva" class="far fa-edit fa-lg textPrimaryDisabled mr-4"></i>
             <?php }else if ($reservation->reservation_status == "A" || $reservation->reservation_status == "P"  || $reservation->reservation_status == "W"){?>  
             <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $reservation->user_name?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
             </a> 
             <?php }else if ($reservation->reservation_status == "C"){?>  
-            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $reservation->user_name?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
+              <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>&userId=<?php echo $reservation->user_id?>&userName=<?php echo $reservation->user_name?>&confirmReservation&reservationDate=<?php echo $date->format("d/m/Y")?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
               <i title="Confirmar" class="far fa-check-circle fa-lg cursorHand text-primary mr-4"></i>
             </a> 
             <?php }?>
