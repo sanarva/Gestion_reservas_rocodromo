@@ -50,8 +50,8 @@ try {
         $emailBody = "
         <html>
         <body>
-          <p>Lo sentimos, pero la reserva que tenías para el día $reservationDate de $startHour a $endHour h en la zona $zoneName, ha sido cancelada.</p>
-          <p>Por favor, revisa tus reservas pendientes y si tienes alguna duda, ponte en contacto con nosotros contestando a este email.</p>
+          <p>La reserva que tenías para el día $reservationDate de $startHour a $endHour h en la zona $zoneName, ha sido cancelada.</p>
+          <p>Por favor, revisa siempre tus reservas pendientes antes de ir a entrenar.</p>
         </body>
         </html>
         ";

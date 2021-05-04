@@ -88,6 +88,8 @@
           <?php }?>
 
             <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>&idRelatedReservation=<?php echo $reservation->id_related_reservation?>&cancelReservation"> 
+            <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>&idRelatedReservation=<?php echo $reservation->id_related_reservation?>&userId=<?php echo $reservation->user_id?>&userName=<?php echo $reservation->user_name?>&cancelReservation&reservationDate=<?php echo $date->format("d/m/Y")?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
+
               <i title="Cancelar" class="far fa-times-circle fa-lg text-danger "></i>
             </a> 
           </td>
