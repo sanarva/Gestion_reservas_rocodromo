@@ -123,6 +123,7 @@ if (isset($_POST["filterAllStatusReservation"])) {
 //*********************************************************************************************//
 try {
     $sql = "SELECT id_reservation
+                 , id_related_reservation
                  , reservation_date
                  , start_hour
                  , end_hour

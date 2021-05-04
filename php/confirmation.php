@@ -40,7 +40,7 @@
                     <?php ; 
                         break; 
                     case "reservation":?>
-                        <a href="../php/deleteReservation.php?Id=<?php echo $_SESSION['idReservation']?>&delete=yes" class="btn btn-danger">Eliminar</a>
+                        <a href="../php/deleteReservation.php?Id=<?php echo $_SESSION['idReservation']?>&idRelatedReservation=<?php echo $_SESSION['idRelatedReservation']?>&delete=yes" class="btn btn-danger">Eliminar</a>
                     <?php ; 
                         break; 
                     }    ?>    
