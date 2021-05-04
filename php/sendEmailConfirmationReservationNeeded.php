@@ -18,7 +18,7 @@ $emailBody = "
   <p>Hola $userNameTeamRope2,</p>
   <p>Este mensaje es para informate que el usuario $userNameTeamRope1 quiere crear una reserva contigo como compañero/a de cordada en la $zoneNameChoosen para el día $dateOk de $startHourChoosen a $endHourChoosen h.</p>
   <p>La reserva ha quedado pendiente y no se hará efectiva hasta que tú la confirmes, por lo que es necesario que entres en tu lista de reservas y le des al botón confirmar, antes de 24h o la reserva será cancelada.</p>
-  <p>Si no te va bien la reserva, o has sido elegido como compañero/a de cordada por error, no te preocupes porque también puedes cancelarla desde tu lista de reservas.</p>
+  <p>Si no te va bien la reserva o has sido elegido como compañero/a de cordada por error, no te preocupes porque también puedes cancelarla desde tu lista de reservas.</p>
 </body>
 </html>
 ";
