@@ -5,11 +5,11 @@ $path = "../views/hoursList.php";
 require "database.php";
  
 
-//*********************************************************************************************//
-// Esta parte se encarga de comprobar si existen reservas activas para la zona que se quiere   //
-// eliminar. Si las hay, se enviará un mensaje al administrador para avisarle de ello y no     //
-// se eliminará la zona hasta que no se hayan cancelado manualmente las reservas activas.      //
-//*********************************************************************************************//
+//*************************************************************************************************//
+// Esta parte se encarga de comprobar si existen reservas activas para la franja horaria  que se   //
+// quiere eliminar. Si las hay, se enviará un mensaje al administrador para avisarle de ello y no  //
+// se eliminará la franja horaria hasta que no se hayan cancelado manualmente las reservas activas.//
+//*************************************************************************************************//
 $idHour = $_GET["Id"];
 $startHour = $_GET["startHour"];
 $endHour = $_GET["endHour"];
@@ -22,7 +22,7 @@ if (isset($_GET["delete"]) ){
 
 
 try {
-    $sql = "SELECT id_reservation  FROM reservations WHERE zone_id = :idhour AND reservation_status IN ('A', 'P', 'C', 'W')";
+    $sql = "SELECT id_reservation  FROM reservations WHERE hour_id = :idhour AND reservation_status IN ('A', 'P', 'C', 'W')";
     $query = $conn->prepare($sql); 
     $query->execute(array(":idhour"=>$idHour));  
     $result = $query->fetch(PDO::FETCH_ASSOC);
