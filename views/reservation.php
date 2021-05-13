@@ -21,16 +21,24 @@
 
     <?php
         // Recuperamos la información de la lista de reservas
-        $idReservation          = $_GET["idReservation"];
-        $userName               = $_GET["userName"];
-        $reservationDateChoosen = $_GET["reservationDate"];
-        $filterStartHour        = $_GET["startHour"];
-        $filterEndHour          = $_GET["endHour"];
-        $filterZoneName         = $_GET["zoneName"];
-        
+        $idReservation                 = $_GET["idReservation"];
+        $userName                      = $_GET["userName"];
+        $reservationDateChoosen        = $_GET["reservationDate"];
+        $filterStartHour               = $_GET["startHour"];
+        $filterEndHour                 = $_GET["endHour"];
+        $filterZoneName                = $_GET["zoneName"];
+
         // Recuperamos las fechas en las que se puede hacer reservas, el número máximo de reservas por usuario y el total de usuarios en la zona de vías
         include("../php/readReservationConfig.php");
-   ?>
+
+        //En caso de que llamemos desde el botón modificar de la reservationsList.php o myReservationList.php, guardaremos los valores originales para el mail de cancelación 
+        if (isset($_GET['modifyReservation'])){
+            $_SESSION['reservationDateOriginal'] = $_GET["reservationDate"];
+            $_SESSION['startHourOriginal']       = $_GET["startHour"];
+            $_SESSION['endHourOriginal']         = $_GET["endHour"];
+            $_SESSION['zoneNameOriginal']        = $_GET["zoneName"];
+        }
+    ?>
    
     <p class="d-none" id="idReservation"><?php echo $idReservation ?></p>
     <header>
@@ -160,7 +168,7 @@
                     <div class="form-check">
                         <?php if (isset($_SESSION["sessionReservations"])) {
                             foreach($_SESSION["sessionReservations"] as $reservation):?>
-                            <input class="form-check-input" type="radio" onclick="checkZoneReservation()" id="reservationChoosen" name="reservationChoosenArray" value="<?php echo $reservation->idHourClass ?>, <?php echo $reservation->idZoneClass ?>, <?php echo $reservation->zoneNameClass?>, <?php echo $reservation->startHourClass?>, <?php echo $reservation->endHourClass?>"  data-toggle="modal" data-target="#exampleModal">
+                            <input class="form-check-input" type="radio" onclick="checkZoneReservation()" id="reservationChoosen" name="reservationChoosenArray" value="<?php echo $reservation->idHourClass ?>, <?php echo $reservation->idZoneClass ?>, <?php echo $reservation->zoneNameClass?>, <?php echo $reservation->startHourClass?>, <?php echo $reservation->endHourClass?>, <?php echo $reservation->freeReservationsClass?>"  data-toggle="modal" data-target="#exampleModal">
                             <label  class="form-check-label d-block" for="reservationChoosen" >
                                 <?php
                                     $date = new DateTime( $reservation->reservationDateChoosenClass); 
@@ -230,7 +238,7 @@
                                 <p> Estás a punto de modificar la reserva. ¿Deseas continuar?</p> </br>
                             <?php } ?> 
 
-                            <?php if (($idReservation == ' ' || $idReservation == '' ) && isset($_SESSION['userType']) && $_SESSION['userType'] == "M") {?>
+                            <?php if ( isset($_SESSION['userType']) && $_SESSION['userType'] == "M") {?>
                                 <input  type="checkbox" id="doubleReservationWithMinor" value="<?php echo $_SESSION['cardNumberDoubleReservationWithMinor']?>">
                                 <label  class="form-check-label " for="doubleReservationWithMinor">Marca la casilla si harás la reserva acompañado por un/a menor</label> 
                             <?php }?>
@@ -247,7 +255,7 @@
                     <?php if ($idReservation == " " || $idReservation == "" ) {?> 
                         <button type="submit" id= "btnInsertReservation" class="btn btn-primary" data-formAction="../php/insertReservation.php?idReservation=<?php echo $idReservation?>&userName=<?php echo $userName?>&reservationDate=<?php echo $reservationDateChoosen?>&startHour=<?php echo $filterStartHour?>&endHour=<?php echo $filterEndHour?>&zoneName=<?php echo $filterZoneName?>"> <i class="far fa-calendar-check"></i> Reservar </button>
                     <?php } else {?> 
-                        <button type="submit" id= "btnUpdateReservation" class="btn btn-primary" data-formAction="../php/updateReservation.php?idReservation=<?php echo $idReservation?>&userName=<?php echo $userName?>&reservationDate=<?php echo $reservationDateChoosen?>&startHour=<?php echo $filterStartHour?>&endHour=<?php echo $filterEndHour?>&zoneName=<?php echo $filterZoneName?>" > <i class="far fa-calendar-check"></i> Modificar reserva </button> 
+                        <button type="submit" id= "btnUpdateReservation" class="btn btn-primary" data-formAction="../php/updateReservation.php?idReservation=<?php echo $idReservation?>&userName=<?php echo $userName?>&reservationDate=<?php echo $reservationDateChoosen?>&startHour=<?php echo $filterStartHour?>&endHour=<?php echo $filterEndHour?>&zoneName=<?php echo $filterZoneName?>&reservationScreen=" > <i class="far fa-calendar-check"></i> Modificar reserva </button> 
                     <?php }?>>
                   </div>
                 </div>

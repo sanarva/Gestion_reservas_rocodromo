@@ -82,14 +82,11 @@
               <i title="Confirmar" class="far fa-check-circle fa-lg cursorHand text-primary mr-4"></i>
             </a> 
           <?php }else {?>
-            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&idRelatedReservation=<?php echo $reservation->id_related_reservation?>&userName=<?php echo $_SESSION['sessionUserName']?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
+            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&userName=<?php echo $_SESSION['sessionUserName']?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>&modifyReservation=">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
             </a>
           <?php }?>
-
-            <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>&idRelatedReservation=<?php echo $reservation->id_related_reservation?>&cancelReservation"> 
             <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>&idRelatedReservation=<?php echo $reservation->id_related_reservation?>&userId=<?php echo $reservation->user_id?>&userName=<?php echo $reservation->user_name?>&cancelReservation&reservationDate=<?php echo $date->format("d/m/Y")?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
-
               <i title="Cancelar" class="far fa-times-circle fa-lg text-danger "></i>
             </a> 
           </td>

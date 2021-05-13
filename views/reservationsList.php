@@ -221,7 +221,7 @@
             <?php if ($reservation->reservation_status == "I") {?>
               <i title="No se puede modificar una reserva inactiva" class="far fa-edit fa-lg textPrimaryDisabled mr-4"></i>
             <?php }else if ($reservation->reservation_status == "A" || $reservation->reservation_status == "P"  || $reservation->reservation_status == "W"){?>  
-            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&idRelatedReservation=<?php echo $reservation->id_related_reservation?>&userName=<?php echo $reservation->user_name?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>">
+            <a href="reservation.php?idReservation=<?php echo $reservation->id_reservation?>&idRelatedReservation=<?php echo $reservation->id_related_reservation?>&userName=<?php echo $reservation->user_name?>&reservationDate=<?php echo $reservation->reservation_date?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>&modifyReservation=">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
             </a> 
             <?php }else if ($reservation->reservation_status == "C"){?>  
