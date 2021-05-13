@@ -23,7 +23,7 @@ if ($zoneNameChoosen == "Vía R1" || ($zoneNameChoosen == "Vía R2" && $reservat
     $reservationStatus = "A";
 }
 
-//Independientemente de la zona, si estamos ante una reserva doble con menor, pondremos a 2 el número de inserts
+//Independientemente de la zona, si estamos ante una reserva doble con menor, pondremos a 2 el número de inserts y comprobaremos de nuevo que hay suficientes plazas para hacer la reserva
 if ($reservationType == "doubleReservationWithMinor"){
     $doubleReservationWithMinor = "Y";
     $numberOfInserts = 2;

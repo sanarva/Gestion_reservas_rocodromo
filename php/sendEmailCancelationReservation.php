@@ -1,11 +1,21 @@
 <?php
 
-$userName        = $_GET['userName'];
-$userId          = $_GET["userId"];
-$reservationDate = $_GET["reservationDate"];
-$startHour       = $_GET["startHour"];
-$endHour         = $_GET["endHour"];
-$zoneName        = $_GET["zoneName"];
+$sessionUserName  = $_SESSION['sessionUserName'];
+$userName         = $_GET['userName'];
+if (isset($_GET["userId"])){
+    $userId           = $_GET["userId"];
+}
+
+if (!isset($cancelationFromModification)){
+    $dateOk    = $_GET["reservationDate"];
+    $startHour = $_GET["startHour"];
+    $endHour   = $_GET["endHour"];
+    $zoneName  = $_GET["zoneName"];
+} else {
+    //Con esto cambiamos el formato de la fecha a día, mes y año (dd/mm/aaaa)
+    $date   = new DateTime($reservationDate);
+    $dateOk = $date->format("d/m/Y");
+}
 
 //Recuperamos el email del usuario al que se le va a cancelar la reserva:
 try { 
@@ -50,8 +60,8 @@ try {
         $emailBody = "
         <html>
         <body>
-          <p>Lo sentimos, pero la reserva que tenías para el día $reservationDate de $startHour a $endHour h en la zona $zoneName, ha sido cancelada.</p>
-          <p>Por favor, revisa tus reservas pendientes y si tienes alguna duda, ponte en contacto con nosotros contestando a este email.</p>
+          <p>La reserva que tenías para el día $dateOk de $startHour a $endHour h en la zona $zoneName, ha sido cancelada por $sessionUserName.</p>
+          <p>Por favor, revisa siempre tus reservas pendientes antes de ir a entrenar.</p>
         </body>
         </html>
         ";

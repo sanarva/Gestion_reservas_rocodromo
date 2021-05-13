@@ -6,6 +6,7 @@ require "database.php";
  
 //Recuperamos los valores que nos llegan a través del GET
 $idReservation = $_GET["Id"];
+$idRelatedReservation = $_GET["idRelatedReservation"];
 
 //Recuperamos los valores del filtro que nos llegan desde reservationsList.php cuando damos a eliminar una reserva
 $filterDateFrom             = $_SESSION['filterDateFromShow'];
@@ -31,7 +32,12 @@ if (isset($_GET["delete"]) ){
 //*********************************************************************************************//
 if ($delete == "yes") {
     try {
-        $sql   = "DELETE FROM reservations WHERE id_reservation = $idReservation";
+        $sql   = "DELETE 
+                    FROM reservations 
+                   WHERE  id_reservation = $idReservation
+                      OR (id_related_reservation = $idRelatedReservation
+                     AND  id_related_reservation <> 0 
+                     AND  reservation_status     = 'I')";
         $count = $conn->exec($sql);
         if ($count == 0) {
             $_SESSION['successFlag'] = "N"; 
@@ -49,12 +55,15 @@ if ($delete == "yes") {
     } finally { 
         //Limpiamos la memoria 
         $conn = null;   
+        unset ($_SESSION['idReservation']);
+        unset ($_SESSION['idRelatedReservation']);
            
     }
 } else {
     $_SESSION['confirmation']  = "";
     $_SESSION["page"]          = "reservation";
     $_SESSION['idReservation'] = $idReservation;
+    $_SESSION['idRelatedReservation'] = $idRelatedReservation;
     $_SESSION['message']       = "Estás a punto de eliminar una reserva. Esto hará que no esté nunca más disponible para ser consultada." ;
           
 }

@@ -536,12 +536,12 @@ function reservate(btnClicked){
     let reservationChoosenArray = reservationChoosen.split(", ");  
     
     //Obtenemos los datos del array para el id de las horas, el id de la zona y el nombre de la zona
-    let idHour    = reservationChoosenArray[0];
-    let idZone    = reservationChoosenArray[1];
-    let zoneName  = reservationChoosenArray[2];
-    let startHour = reservationChoosenArray[3];
-    let endHour   = reservationChoosenArray[4];
-
+    let idHour             = reservationChoosenArray[0];
+    let idZone             = reservationChoosenArray[1];
+    let zoneName           = reservationChoosenArray[2];
+    let startHour          = reservationChoosenArray[3];
+    let endHour            = reservationChoosenArray[4];
+    let freeReservations   = reservationChoosenArray[5];
 
     //Si se trata de una vía con autoasegurador y se va a escalar sin cordada
     if ((zoneName == "Vía R2" && document.getElementById("conAutoasegurador").checked) || (zoneName == "Vía R3" && document.getElementById("conAutoasegurador").checked)) {
@@ -590,7 +590,7 @@ function reservate(btnClicked){
     } else {
         
         let path = document.getElementById(btnClicked).dataset.formaction;
-        reservationForm.action = path + "&idHour=" + idHour + "&idZone=" + idZone + "&cardNumberRopeTeam=" + cardNumberRopeTeamValue + "&zoneNameChoosen=" + zoneName + "&reservationType=" + reservationType + "&startHourChoosen=" + startHour + "&endHourChoosen=" + endHour; 
+        reservationForm.action = path + "&idHour=" + idHour + "&idZone=" + idZone + "&cardNumberRopeTeam=" + cardNumberRopeTeamValue + "&zoneNameChoosen=" + zoneName + "&reservationType=" + reservationType + "&startHourChoosen=" + startHour + "&endHourChoosen=" + endHour + "&freeReservations=" + freeReservations; 
     }
 }  
 

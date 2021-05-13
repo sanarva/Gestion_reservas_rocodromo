@@ -37,7 +37,7 @@ if (isset($checkReservationsNumberUser) && $checkReservationsNumberUser == "Y") 
                 $_SESSION['userTypeRopeTeam']                  = $userResult["user_type"];
             }
 
-            //Creamos un indicador para saber que el usuario genérico con menor está haciendo una reserva doble con el menor
+            //Creamos un indicador para saber que el usuario genérico con menor está haciendo una reserva doble con el menor y volvemos a comprobar la disponibilidad de la zona
             if ($cardNumberRopeTeam != "" && $_SESSION['userType'] == "M" && $_SESSION['sessionIdUserReservation'] == $userResult["id_user"]){
                 $doubleReservationWithMinor = "Y";
             } 
@@ -63,7 +63,7 @@ if (isset($checkReservationsNumberUser) && $checkReservationsNumberUser == "Y") 
                     $query->execute();
                     $reservations = $query->fetch(PDO::FETCH_ASSOC);
                     //Si el usuario es genérico y tiene el número máximo de reservas, mostramos un error y no dejamos hacer otra reserva...
-                    if ($reservations['counter'] >= $_SESSION['sessionMaxReservationByUser'] && $userResult['user_type'] != 'A' && ($idReservation == "" || $idReservation == " ")) {
+                    if ($reservations['counter'] >= $_SESSION['sessionMaxReservationByUser'] && $userResult['user_type'] != 'A' && (($idReservation == "" || $idReservation == " ") || ($idReservation != "" && $idReservation != " " && isset($backToUpdate))  )       ) {
                         $maxReservationByUser = $_SESSION['sessionMaxReservationByUser']; 
                         $_SESSION['successFlag'] = "N";
                         $_SESSION['message'] = "El usuario $userName $cardNumberRopeTeam ha alcanzado el máximo número de reservas activas por usuario que es de $maxReservationByUser, por lo que no se puede crear otra reserva." ; 
@@ -110,40 +110,46 @@ if (isset($checkReservationsNumberUser) && $checkReservationsNumberUser == "Y") 
 
 if (isset($checkSameReservation) && $checkSameReservation == "Y") {
 
-    try {
-        $sql = "SELECT start_hour 
-                  FROM reservations, users, hours
-                 WHERE hour_id            = id_hour
-                   AND user_id            = id_user
-                   AND user_id            = :iduser
-                   AND reservation_Date   = :filterreservationdate
-                   AND user_type          <> 'A'
-                   AND reservation_status IN ('A', 'P', 'C')";
-        $query = $conn->prepare($sql); 
-        $query->execute(array(":iduser"=>$_SESSION['sessionIdUserSameReservationControl'], ":filterreservationdate"=>$filterReservationDate));  
-        $resultCheckSameReservation = $query->fetchAll(PDO::FETCH_OBJ);
+    if ($reservationType == "doubleReservationWithMinor" && $freeReservations < 2){
+        $_SESSION['successFlag'] = "N";
+        $_SESSION['message'] = "No se puede hacer la reserva en la zona $zoneNameChoosen porque se superaría el máximo del aforo de la misma. Prueba a seleccionar otra zona." ; 
     
-        //Si existe, comprobaremos las franjas horarias
-        if ($resultCheckSameReservation != [] ) {
-           $checkTimeZone ="Y";      
-        }
+    } else {
 
-        //Si no existe, y no estamos haciendo los controles del compañero/a de cordada, continuaremos con los controles y miraremos en qué zona se está intentando hacer la reserva
-        if ($resultCheckSameReservation == [] && !isset($checkTeamRope)) {
-            $checkZone = "Y";
-        }
+        try {
+            $sql = "SELECT start_hour 
+                      FROM reservations, users, hours
+                     WHERE hour_id            = id_hour
+                       AND user_id            = id_user
+                       AND user_id            = :iduser
+                       AND reservation_Date   = :filterreservationdate
+                       AND user_type          <> 'A'
+                       AND reservation_status IN ('A', 'P', 'C')";
+            $query = $conn->prepare($sql); 
+            $query->execute(array(":iduser"=>$_SESSION['sessionIdUserSameReservationControl'], ":filterreservationdate"=>$filterReservationDate));  
+            $resultCheckSameReservation = $query->fetchAll(PDO::FETCH_OBJ);
+        
+            //Si existe, comprobaremos las franjas horarias
+            if ($resultCheckSameReservation != [] ) {
+               $checkTimeZone ="Y";      
+            }
 
-        //Si no existe, y estamos haciendo los controles del compañero/a de cordada, daremos por finalizados los controles e insertaremos los registros
-        if ($resultCheckSameReservation == [] && isset($checkTeamRope)) {
-            $insertReservation = "";
-        }
+            //Si no existe, y no estamos haciendo los controles del compañero/a de cordada, continuaremos con los controles y miraremos en qué zona se está intentando hacer la reserva
+            if ($resultCheckSameReservation == [] && !isset($checkTeamRope)) {
+                $checkZone = "Y";
+            }
 
-    } catch(PDOException $e){
-        $_SESSION['successFlag'] = "C";
-        $queryError = $e->getMessage();  
-        $_SESSION['message'] = "Se ha detectado un problema al buscar reservas del mismo día. </br> Descripción del error: " . $queryError ;  
-    } 
+            //Si no existe, y estamos haciendo los controles del compañero/a de cordada, daremos por finalizados los controles e insertaremos los registros
+            if ($resultCheckSameReservation == [] && isset($checkTeamRope)) {
+                $insertReservation = "";
+            }
 
+        } catch(PDOException $e){
+            $_SESSION['successFlag'] = "C";
+            $queryError = $e->getMessage();  
+            $_SESSION['message'] = "Se ha detectado un problema al buscar reservas del mismo día. </br> Descripción del error: " . $queryError ;  
+        } 
+    }
 }
 
 //*******************************************************************************************//

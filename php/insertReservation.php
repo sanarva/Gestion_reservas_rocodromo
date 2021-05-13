@@ -24,7 +24,7 @@ $zoneNameChoosen       = $_GET["zoneNameChoosen"];
 $reservationType       = $_GET["reservationType"];
 $startHourChoosen      = $_GET["startHourChoosen"];
 $endHourChoosen        = $_GET["endHourChoosen"];
-
+$freeReservations      = $_GET["freeReservations"]; 
 
 //Control de reservas duplicadas o en horas consecutivas para el usuario que hace la reserva (Se irá haciendo el resto de controles)
 $checkSameReservation = "Y";
@@ -179,6 +179,22 @@ if (isset($insertReservation)){
             $results = $query->fetch(PDO::FETCH_ASSOC);
             //Si se han insertado y se trata de una reserva en cordada, enviaremos un email al usuario que debe confirmar y mostraremos un mensaje avisando 
             if ($results['counterInsertedReservations'] == 2) {
+                //Si no ha habido ningún error al insertar las reservas de la modificación, ponemos el indicador a OK
+                $modificationOk = "Y";
+                //Recuperamos los datos anteriores por si fuera necesario para el mail de cancelación 
+                $sql = "SELECT start_hour, end_hour, zone_name
+                          FROM hours, zones 
+                         WHERE id_hour = $idHour
+                           AND id_zone =  $idZone";   
+                $query = $conn->prepare($sql);              
+                $query->execute();
+                $originalResults = $query->fetch(PDO::FETCH_ASSOC);
+
+                $_SESSION['reservationDateOriginal'] = $filterReservationDate;
+                $_SESSION['startHourOriginal']       = $originalResults['start_hour'];
+                $_SESSION['endHourOriginal']         = $originalResults['end_hour'];
+                $_SESSION['zoneNameOriginal']        = $originalResults['zone_name'];
+
                 if ($cardNumberRopeTeam != "") {
                     //Si se trata de una reserva en cordada de dos usuarios administradores, no se enviará mail porque las reservas no quedarán pendientes de confirmar (A/A)
                     //Si se trata de una reserva doble con menor, tampoco se enviará email porque las reservas no quedarán pendintes de confirmar (A/W)
@@ -187,6 +203,7 @@ if (isset($insertReservation)){
                         $_SESSION['message'] = "La reserva ha sido creada correctamente";
                     } else {
                         include('sendEmailConfirmationReservationNeeded.php');
+                        $messageModification = "Y";
                     }
                 } else {
                     $_SESSION['successFlag'] = "Y";
@@ -215,10 +232,16 @@ if (isset($insertReservation)){
     }
 }
 
+
 //Si estamos entrando desde mi lista de reservas, guardaremos el nombre del usuario
 if ($reservationsList == "") {
     header("Location: ../views/reservation.php?idReservation= &userName=$filterUserName&reservationDate=&startHour=&endHour=&zoneName=");
 } else {
     header("Location: ../views/reservation.php?idReservation= &userName=&reservationDate=&startHour=&endHour=&zoneName=");   
+}
+
+//Si estamos entrando desde la modificación de reservas (updateReservation.php)
+if(isset($backToUpdate)){
+    header("Location: ../views/reservation.php?idReservation=$idReservation&userName=$filterUserName&reservationDate=$filterReservationDate&startHour=$filterStartHour&endHour=$filterEndHour&zoneName=$filterZoneName");
 }
 ?>
