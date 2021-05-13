@@ -100,7 +100,7 @@
                         <button type="submit" formaction="../php/insertHour.php?Id=<?php echo $idHour?>&startHour=<?php echo $startHour?>&endHour=<?php echo $endHour?>&weekDay=<?php echo $weekDay?>" id="btnInsertHour" class="btn btn-primary">Crear</button>
                     <?php } else {?>
                         <button type="submit" formaction="../php/updateHour.php?Id=<?php echo $idHour?>&startHour=<?php echo $startHour?>&endHour=<?php echo $endHour?>&weekDay=<?php echo $weekDay?>" id="btnUpdateHour" class="btn btn-primary">Modificar</button>
-                        <button type="submit" formmethod="post" formaction="../php/deleteHour.php?Id=<?php echo $idHour?>" class="btn btn-danger ml-3">Eliminar</button>
+                        <button type="submit" formmethod="post" formaction="../php/deleteHour.php?Id=<?php echo $idHour?>&startHour=<?php echo $startHour?>&endHour=<?php echo $endHour?>" class="btn btn-danger ml-3">Eliminar</button>
                     <?php }?>     
                 </div>
             </div>
