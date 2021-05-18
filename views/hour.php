@@ -20,10 +20,10 @@
 <body>
     <!-- Recuperamos la información de la lista de horas-->
     <?php
-        $idHour = $_GET["Id"];
+        $idHour    = $_GET["Id"];
         $startHour = $_GET["startHour"];
-        $endHour = $_GET["endHour"];
-        $weekDay = $_GET["weekDay"];  
+        $endHour   = $_GET["endHour"];
+        $weekDay   = $_GET["weekDay"];  
    ?>
 
     <header>
@@ -100,7 +100,6 @@
                         <button type="submit" formaction="../php/insertHour.php?Id=<?php echo $idHour?>&startHour=<?php echo $startHour?>&endHour=<?php echo $endHour?>&weekDay=<?php echo $weekDay?>" id="btnInsertHour" class="btn btn-primary">Crear</button>
                     <?php } else {?>
                         <button type="submit" formaction="../php/updateHour.php?Id=<?php echo $idHour?>&startHour=<?php echo $startHour?>&endHour=<?php echo $endHour?>&weekDay=<?php echo $weekDay?>" id="btnUpdateHour" class="btn btn-primary">Modificar</button>
-                        <button type="submit" formmethod="post" formaction="../php/deleteHour.php?Id=<?php echo $idHour?>&startHour=<?php echo $startHour?>&endHour=<?php echo $endHour?>" class="btn btn-danger ml-3">Eliminar</button>
                     <?php }?>     
                 </div>
             </div>
@@ -123,9 +122,13 @@
             $_SESSION["button2"] = "Crear otro horario";
             $_SESSION["formaction2"]  = "hour.php?Id= &startHour=&endHour=&weekDay=";
             $_SESSION["colorbutton2"] = "btn-primary";
-        } 
+        } else {
+            $_SESSION["button2"] = "Modificar de nuevo";
+            $_SESSION["formaction2"]  = "hour.php?Id= &startHour=&endHour=&weekDay=";
+            $_SESSION["colorbutton2"] = "btn-primary";
+        }
         include "../php/message.php";
-      }
+        }
     ?>
     <!-- Scripts para Bootstrap 4-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

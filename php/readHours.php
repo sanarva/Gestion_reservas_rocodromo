@@ -14,16 +14,10 @@ try {
     $query = $conn->query($sql);
     $hours = $query->fetchAll(PDO::FETCH_OBJ);
 
-    //Si no existen horas, mostramos un aviso
-    if ($hours == [] ){
-        $_SESSION['successFlag'] = "W";
-        $_SESSION['message'] = "Todavía no se ha creado ningún horario.";
-    }
-
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "C";
     $queryError = $e->getMessage();  
-    $_SESSION['message'] = "Se ha detectado un problema a la hora de mostrar los horarios. </br> Descripción del error: " . $queryError ; 
+    $_SESSION['message'] = "Se ha detectado un problema a la hora de mostrar las franjas horarias. </br> Descripción del error: " . $queryError ; 
 
 } finally { 
     //Limpiamos la memoria 

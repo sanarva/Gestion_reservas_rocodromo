@@ -76,6 +76,15 @@
 
       </tbody>
     </table>
+
+    <div class="row">
+      <div class="col-12">
+      <?php 
+        if (count($hours) == 0) {?>
+          <p>No existen franjas horarias.</p>
+        <?php }?>
+      </div>
+    </div>
     
     <div class="row">
       <div class="col-12">
