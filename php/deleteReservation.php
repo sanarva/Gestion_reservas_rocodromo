@@ -54,9 +54,7 @@ if ($delete == "yes") {
         
     } finally { 
         //Limpiamos la memoria 
-        $conn = null;   
-        unset ($_SESSION['idReservation']);
-        unset ($_SESSION['idRelatedReservation']);
+        $conn = null;  
            
     }
 } else {

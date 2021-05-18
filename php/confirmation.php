@@ -24,7 +24,7 @@
             </div>
  
             <div class="modal-footer">
-                <button type="button" data-dismiss="alert" class="btn btn-dark">Cancelar</button>
+                <button type="button" data-dismiss="alert" class="btn btn-dark">Volver</button>
                 <?php 
                 switch ($_SESSION["page"]){ 
                     case "zone": ?>
@@ -43,6 +43,10 @@
                         <a href="../php/deleteReservation.php?Id=<?php echo $_SESSION['idReservation']?>&idRelatedReservation=<?php echo $_SESSION['idRelatedReservation']?>&delete=yes" class="btn btn-danger">Eliminar</a>
                     <?php ; 
                         break; 
+                    case "cancelReservation":?>
+                        <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>&idRelatedReservation=<?php echo $reservation->id_related_reservation?>&userId=<?php echo $reservation->user_id?>&userName=<?php echo $reservation->user_name?>&cancelReservation&cancel=yes&reservationDate=<?php echo $date->format("d/m/Y")?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>" class="btn btn-danger">Cancelar</a>
+                    <?php ; 
+                        break; 
                     }    ?>    
                 
             </div>
@@ -54,5 +58,7 @@
 <?php
     $_SESSION["message"] = ""; 
     unset ($_SESSION["page"]);
-
+    unset ($_SESSION['idReservation']);
+    unset ($_SESSION['idRelatedReservation']);
 ?>
+
