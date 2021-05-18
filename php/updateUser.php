@@ -6,7 +6,6 @@ require "database.php";
  
 
 $idUser = $_GET["Id"];
-$currentUserName   = $_GET["currentUserName"];
 
 $userName   = $_POST["inputUserName"];
 $userType   = $_POST["userType"];
@@ -32,18 +31,18 @@ try {
     if (($query->rowCount() > 0 )) {
         $_SESSION['successFlag'] = "N";
         if (strtolower($result['user_name']) == strtolower($userName)){
-            $_SESSION['message'] = "No se puede modificar el usuario con nombre $userName, número de tarjeta $cardNumber e email $userEmail porque existe otro con el mismo nombre. Por favor, modifica el existente." ; 
+            $_SESSION['message'] = "No se puede modificar el usuario porque existe otro con el mismo nombre. Por favor, modifica el existente." ; 
         } else if ($result['card_number'] == $cardNumber){
-            $_SESSION['message'] = "No se puede modificar el usuario con nombre $userName, número de tarjeta $cardNumber e email $userEmail porque existe otro con el mismo número de tarjeta. Por favor, modifica el existente." ; 
+            $_SESSION['message'] = "No se puede modificar el usuario porque existe otro con el mismo número de tarjeta. Por favor, modifica el existente." ; 
         } else if (strtolower($result['user_email']) == strtolower($userEmail)){
-            $_SESSION['message'] = "No se puede modificar el usuario con nombre $userName, número de tarjeta $cardNumber e email $userEmail porque existe otro con el mismo email. Por favor, modifica el existente." ; 
+            $_SESSION['message'] = "No se puede modificar el usuario porque existe otro con el mismo email. Por favor, modifica el existente." ; 
         }
     } else
         $duplicatedUserControl = "";
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "C";
     $queryError = $e->getMessage();  
-    $_SESSION['message'] = "Se ha detectado un problema en la modificación del usuario con nombre $userName, número de tarjeta $cardNumber e email $userEmail, al buscar posibles usuarios duplicados. </br> Descripción del error: " . $queryError ;  
+    $_SESSION['message'] = "Se ha detectado un problema en la modificación del usuario, al buscar posibles usuarios duplicados. </br> Descripción del error: " . $queryError ;  
 }        
 
 if (isset($duplicatedUserControl)){
@@ -60,7 +59,7 @@ if (isset($duplicatedUserControl)){
             // Si el administrador intenta desactivar al usuario, se mostrará un aviso y no se permitirá la desactivación hasta que no haya cancelado las reservas pendiente de ese usuario
             if ($userStatus == "I") {
                 $_SESSION['successFlag'] = "N";
-                $_SESSION['message'] = "No se puede desactivar al usuario $currentUserName ya que existen reservas activas asociadas a este usuario. Cancela antes las reservas activas y vuelve a intentarlo." ;  
+                $_SESSION['message'] = "No se puede desactivar al usuario ya que existen reservas activas asociadas a este usuario. Cancela antes las reservas activas y vuelve a intentarlo." ;  
             } else {
                 try {
                 $sql = "UPDATE users 
@@ -85,16 +84,16 @@ if (isset($duplicatedUserControl)){
             
                 if ($query->rowCount() > 0 ){
                     $_SESSION['successFlag'] = "Y";
-                    $_SESSION['message'] = "El usuario $currentUserName ha sido modificado correctamente"  ;
+                    $_SESSION['message'] = "El usuario ha sido modificado correctamente"  ;
                 } else {
                     $_SESSION['successFlag'] = "N";
-                    $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar el usuario $currentUserName." ; 
+                    $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar el usuario." ; 
                 }
             
                 } catch(PDOException $e){
                     $_SESSION['successFlag'] = "N";
                     $queryError = $e->getMessage();  
-                    $_SESSION['message'] = "Se ha detectado un problema a la hora de modificar al usuario $userName con número de tarjeta $cardNumber e email $userEmail. </br> Descripción del error: " . $queryError ; 
+                    $_SESSION['message'] = "Se ha detectado un problema a la hora de modificar el usuario. </br> Descripción del error: " . $queryError ; 
                 
                 }
             }
@@ -123,10 +122,10 @@ if (isset($duplicatedUserControl)){
                 
                 if ($query->rowCount() > 0 ){
                     $_SESSION['successFlag'] = "Y";
-                    $_SESSION['message'] = "El usuario $currentUserName ha sido modificado correctamente"  ;
+                    $_SESSION['message'] = "El usuario ha sido modificado correctamente"  ;
                 } else {
                     $_SESSION['successFlag'] = "N";
-                    $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar el usuario $currentUserName." ; 
+                    $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar el usuario." ; 
                 }
             
             } catch(PDOException $e){
@@ -141,7 +140,7 @@ if (isset($duplicatedUserControl)){
     } catch(PDOException $e){
         $_SESSION['successFlag'] = "N";
         $queryError = $e->getMessage();  
-        $_SESSION['message'] = "Se ha detectado un problema al buscar reservas activas del usuario $currentUserName en la ventana de modificación de usuarios. </br> Descripción del error: " . $queryError ;  
+        $_SESSION['message'] = "Se ha detectado un problema al buscar reservas activas del usuario en la ventana de modificación de usuarios. </br> Descripción del error: " . $queryError ;  
         
     } finally { 
         //Limpiamos la memoria 

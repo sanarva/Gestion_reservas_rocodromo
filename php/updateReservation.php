@@ -4,7 +4,7 @@ require "database.php";
  
 $idReservation = $_GET["idReservation"];
 
-if (isset($idRelatedReservation)){
+if (isset($_GET["idRelatedReservation"])){
     $idRelatedReservation = $_GET["idRelatedReservation"];
 }
 
@@ -48,44 +48,58 @@ try{
 }
 
 
-//Si el usuario está intentando cancelar una reserva...
-if (isset($_GET["cancelReservation"]) && $relatedReservationControlOk == "Y") {
-    try {
-        $sql = "UPDATE reservations
-                   SET reservation_status = 'I'
-                     , user_modification = :userModification
-                     , timestamp = current_timestamp
-                 WHERE (id_reservation         = :idreservation
-                    OR (id_related_reservation = :idrelatedreservation) AND (id_related_reservation <> 0))
-                   AND  reservation_status   <> 'I'";
-        $queryCancel = $conn->prepare($sql);
-        $queryCancel->bindParam(":userModification",$_SESSION["sessionIdUser"]);
-        $queryCancel->bindParam(":idreservation",$idReservation);
-        $queryCancel->bindParam(":idrelatedreservation",$idRelatedReservation);
-        $queryCancel->execute();
-        
-        if ($queryCancel->rowCount() > 0 ){
-            //Enviamos un email al usuario para avisarle que se ha cancelado una de sus reservas
-            include("../php/sendEmailCancelationReservation.php");
-           
-        } else {
-            $_SESSION['successFlag'] = "N";
-            $_SESSION['message'] = "Ha habido un problema y no se ha podido cancelar la reserva." ; 
-        }
-    
-    } catch(PDOException $e){
-        $_SESSION['successFlag'] = "N";
-        $queryError = $e->getMessage();  
-        $_SESSION['message'] = "Se ha detectado un problema a la hora de cancelar la reserva. </br> Descripción del error: " . $queryError ; 
-       
-    } finally {
-        if ($reservationsList != "") {
-            header("Location: ../views/reservationsList.php?dateFrom&dateTo&userName&cardNumber&startHour&endHour&zoneName&allStatusReservation");
-        } else {
-            header("Location: ../views/myReservationsList.php");
-        }
-    }
+if (isset($_GET["cancel"]) ){
+    $cancel = $_GET["cancel"];
+} else {
+    $cancel = "";
+}
 
+
+//Si el usuario está intentando cancelar una reserva...
+if (isset($_GET["cancelReservation"]) && $relatedReservationControlOk == "Y" ) {
+    if ($cancel == "yes"){
+        try {
+            $sql = "UPDATE reservations
+                       SET reservation_status = 'I'
+                         , user_modification = :userModification
+                         , timestamp = current_timestamp
+                     WHERE (id_reservation         = :idreservation
+                        OR (id_related_reservation = :idrelatedreservation) AND (id_related_reservation <> 0))
+                       AND  reservation_status   <> 'I'";
+            $queryCancel = $conn->prepare($sql);
+            $queryCancel->bindParam(":userModification",$_SESSION["sessionIdUser"]);
+            $queryCancel->bindParam(":idreservation",$idReservation);
+            $queryCancel->bindParam(":idrelatedreservation",$idRelatedReservation);
+            $queryCancel->execute();
+
+            if ($queryCancel->rowCount() > 0 ){
+                //Enviamos un email al usuario para avisarle que se ha cancelado una de sus reservas
+                include("../php/sendEmailCancelationReservation.php");
+            
+            } else {
+                $_SESSION['successFlag'] = "N";
+                $_SESSION['message'] = "Ha habido un problema y no se ha podido cancelar la reserva." ; 
+            }
+        
+        } catch(PDOException $e){
+            $_SESSION['successFlag'] = "N";
+            $queryError = $e->getMessage();  
+            $_SESSION['message'] = "Se ha detectado un problema a la hora de cancelar la reserva. </br> Descripción del error: " . $queryError ; 
+        
+        } finally {
+            if ($reservationsList != "") {
+                header("Location: ../views/reservationsList.php?dateFrom&dateTo&userName&cardNumber&startHour&endHour&zoneName&allStatusReservation");
+            } else {
+                header("Location: ../views/myReservationsList.php");
+            }
+        }
+    } else {
+        $_SESSION['confirmation'] = "";
+        $_SESSION["page"] = "cancelReservation";
+        $_SESSION['idReservation'] = $idReservation;
+        $_SESSION['idRelatedReservation'] = $idRelatedReservation;
+        $_SESSION['message']  = "Estás a punto de cancelar la reserva. ¿Deseas continuar?" ;
+    }
 } else if (isset($_GET["confirmReservation"]) && $relatedReservationControlOk == "Y"){//Si el usuario está intentado confirmar una reserva
     try {
         $sql = "UPDATE reservations
