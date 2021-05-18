@@ -5,12 +5,12 @@ $path = "../views/hour.php?Id= &startHour=&endHour=&weekDay=";
 require "database.php";
 
 $startHour = $_POST["startHour"];
-$endHour  = $_POST["endHour"];
+$endHour   = $_POST["endHour"];
 $weekDay   = $_POST["weekDay"];
 
 try {
-    //Buscamos si existe alguna franja horaria que empiece y acabe a la misma hora 
-    $sql = "SELECT start_hour, end_hour  FROM hours WHERE start_hour = :starthour";
+    //Buscamos si existe alguna franja horaria que empiece a la misma hora 
+    $sql = "SELECT start_hour, end_hour FROM hours WHERE start_hour = :starthour";
     $query = $conn->prepare($sql);
     //Estamos usando un array asociativo para los parámetros
     $query->execute(array(":starthour"=>$startHour));  
@@ -19,7 +19,7 @@ try {
     //Si existe, avisamos al usuario de que no se va a crear esa nueva hora porque ya existe una.
     if (($query->rowCount() > 0 )) {
         $_SESSION['successFlag'] = "N";
-        $_SESSION['message'] = "No se puede crear la franja horaria de $startHour a $endHour porque ya existe una con la misma hora de inicio. Por favor, modifica la existente." ; 
+        $_SESSION['message'] = "No se puede crear la franja horaria de $startHour a $endHour h porque ya existe una con la misma hora de inicio. Por favor, modifica la existente." ; 
 
     } else {
         try {
@@ -47,24 +47,24 @@ try {
                     
             if ($query->rowCount() > 0 ){
                 $_SESSION['successFlag'] = "Y";
-                $_SESSION['message'] = "El horario de $startHour a $endHour ha sido creado correctamente"  ;
+                $_SESSION['message'] = "La franja horaria de $startHour a $endHour h ha sido creada correctamente.";
             } else {
                 $_SESSION['successFlag'] = "N";
-                $_SESSION['message'] = "Ha habido un problema y no se ha podido crear la franja horaria de $startHour a $endHour." ; 
+                $_SESSION['message'] = "Ha habido un problema y no se ha podido crear la franja horaria de $startHour a $endHour h." ; 
             }
         
             
         } catch(PDOException $e){
             $_SESSION['successFlag'] = "C";
             $queryError = $e->getMessage();  
-            $_SESSION['message'] = "Se ha detectado un problema al crear la franja horaria de $startHour a $endHour. </br> Descripción del error: " . $queryError ; 
+            $_SESSION['message'] = "Se ha detectado un problema al crear la franja horaria de $startHour a $endHour h. </br> Descripción del error: " . $queryError ; 
         }
     }
 
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "C";
     $queryError = $e->getMessage();  
-    $_SESSION['message'] = "Se ha detectado un problema en la creación de horarios, al buscar si la franja horaria ya existe. </br> Descripción del error: " . $queryError ;  
+    $_SESSION['message'] = "Se ha detectado un problema en la creación de franjas horarias, al buscar posibles duplicados. </br> Descripción del error: " . $queryError ;  
      
 } finally { 
     //Limpiamos la memoria 

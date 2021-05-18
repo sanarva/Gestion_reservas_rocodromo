@@ -218,7 +218,7 @@ function validateHourForm(btnClicked){
     }
 
     //Comprobamos que la hora de finalización sea mayor que la hora de inicio
-    if (startHour.value > endHour.value ) {
+    if (startHour.value > endHour.value || startHour.value == endHour.value) {
         endHour.classList.add("is-invalid");
         errorEndHour.textContent = "La hora de finalización debe ser mayor a la de inicio";
         totalErrors++;
