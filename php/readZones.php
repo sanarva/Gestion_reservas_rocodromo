@@ -14,12 +14,6 @@ try {
     $query = $conn->query($sql);
     $zones = $query->fetchAll(PDO::FETCH_OBJ);
 
-    //Si no existen zonas, mostramos un aviso
-    if ($zones == [] ){
-        $_SESSION['successFlag'] = "W";
-        $_SESSION['message'] = "Todavía no se ha creado ninguna zona.";
-    }
-
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "C";
     $queryError = $e->getMessage();  

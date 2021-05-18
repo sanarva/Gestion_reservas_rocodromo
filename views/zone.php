@@ -20,10 +20,10 @@
 <body>
     <!-- Recuperamos la información de la lista de zonas-->
     <?php
-        $idZone = $_GET["Id"];
-        $zoneName = $_GET["zoneName"];
+        $idZone        = $_GET["Id"];
+        $zoneName      = $_GET["zoneName"];
         $maxUserNumber = $_GET["maxUserNumber"];
-        $zoneStatus = $_GET["zoneStatus"];
+        $zoneStatus    = $_GET["zoneStatus"];
    ?>
 
     <header>
@@ -70,8 +70,7 @@
                     <?php if ($idZone == " ") {?>
                         <button type="submit" formaction="../php/insertZone.php?Id=<?php echo $idZone?>&currentMaxUserNumber=<?php echo $maxUserNumber?>&CurrentZoneStatus=<?php echo $zoneStatus?>" id="btnInsertZone" class="btn btn-primary">Crear</button>
                     <?php } else {?>
-                        <button type="submit" formaction="../php/updateZone.php?Id=<?php echo $idZone?>&currentMaxUserNumber=<?php echo $maxUserNumber?>&CurrentZoneStatus=<?php echo $zoneStatus?>" id="btnUpdateZone" class="btn btn-primary">Modificar</button>
-                        <button type="submit" formmethod="post" formaction="../php/deleteZone.php?Id=<?php echo $idZone?>&zoneName=<?php echo $zoneName?>" class="btn btn-danger ml-3">Eliminar</button>
+                        <button type="submit" formaction="../php/updateZone.php?Id=<?php echo $idZone?>&zoneName=<?php echo $zoneName?>&maxUserNumber=<?php echo $maxUserNumber?>&zoneStatus=<?php echo $zoneStatus?>" id="btnUpdateZone" class="btn btn-primary">Modificar</button>
                     <?php }?>     
                 </div>
             </div>
@@ -89,14 +88,19 @@
             $_SESSION["button1"] = "Lista zonas";
             $_SESSION["formaction1"]  = "zonesList.php";
             $_SESSION["colorbutton1"] = "btn-dark";
-        //Solo permitimos volver a la pantalla Zona en la creación de zonas
-        if ($idZone == " ") {
-            $_SESSION["button2"] = "Crear otra zona";
-            $_SESSION["formaction2"]  = "zone.php?Id= &zoneName=&maxUserNumber=&zoneStatus=";
-            $_SESSION["colorbutton2"] = "btn-primary";
-        } 
-        include "../php/message.php";
-      }
+            
+            if ($idZone == " ") {
+                $_SESSION["button2"] = "Crear otra zona";
+                $_SESSION["formaction2"]  = "zone.php?Id= &zoneName=&maxUserNumber=&zoneStatus=";
+                $_SESSION["colorbutton2"] = "btn-primary";
+            } else {
+                $_SESSION["button2"] = "Modificar de nuevo";
+                $_SESSION["formaction2"]  = "zone.php?Id= &zoneName=&maxUserNumber=&zoneStatus=";
+                $_SESSION["colorbutton2"] = "btn-primary";
+            }
+
+            include "../php/message.php";
+        }
     ?>
     <!-- Scripts para Bootstrap 4-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

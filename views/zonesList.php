@@ -66,7 +66,16 @@
 
     <div class="row">
       <div class="col-12">
-        <a href="zone.php?Id= &zoneName=&maxUserNumber=&zoneStatus=" class="btn btn-primary" >Crear zona</a>
+      <?php 
+        if (count($zones) == 0) {?>
+          <p>No existen zonas.</p>
+        <?php }?>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <a href="zone.php?Id= &zoneName=&maxUserNumber=&zoneStatus=" class="btn btn-primary">Crear zona</a>
       </div>
     </div>
   </div>
