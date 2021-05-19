@@ -7,7 +7,7 @@ require "database.php";
 
 //Comprobamos si viene información del formulario de buscar usuario
 if (isset($_POST["filterUserName"])) {
-    $filterUserName                 = $_POST["filterUserName"] . "%";
+    $filterUserName                 = "%" . $_POST["filterUserName"] . "%";
     $filterUserNameShow             = $_POST["filterUserName"];
     $_SESSION['filterUserNameShow'] = $_POST["filterUserName"];
 } else if (!isset($filterUserName) || (isset($filterUserName) && $filterUserName == "")){
@@ -18,7 +18,7 @@ if (isset($_POST["filterUserName"])) {
     if (strpos($filterUserName, "%") > 0) {
         $filterUserName            = $filterUserName;
     } else {
-        $filterUserName            = $filterUserName . "%";
+        $filterUserName            = "%" . $filterUserName . "%";
     }
     $filterUserNameShow             = $filterUserName;
     $_SESSION['filterUserNameShow'] = $filterUserName;
@@ -74,13 +74,7 @@ try {
     $query->bindParam(":cardnumber",$filterCardNumber);
     $query->execute();
     $users = $query->fetchAll(PDO::FETCH_OBJ);
-    //Si no existen usuarios, mostramos un aviso
-    if ($users == [] ){
-        if ($_SESSION['successFlag'] != "Y"){ //Si en la lista solo hay un registro y se elimina, en lugar de dar el error de que se ha eliminado correctamente, aparece el warning de que no se ha encontrado ningún usuario. Así que ponemos este if para solucionar el problema
-            $_SESSION['successFlag'] = "W";
-            $_SESSION['message'] = "No se ha encontrado ningún usuario.";
-        }
-    }
+
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "C";
     $queryError = $e->getMessage();  

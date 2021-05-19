@@ -14,7 +14,8 @@ try {
     //Buscamos si existe algún usuario con el mismo nombre o número de tarjeta o email, activo o inactivo
     $sql = "SELECT user_name
                  , card_number
-                 , user_email  
+                 , user_email
+                 , user_status  
               FROM users
              WHERE user_name   = :username 
                 OR card_number = :cardnumber
@@ -25,13 +26,19 @@ try {
    
     //Si existe, avisamos al usuario administrador de que no se va a crear ese nuevo usuario porque ya existe uno con el mismo nombre o número de tarjeta o email
     if (($query->rowCount() > 0 )) {
+        if ($result['user_status'] == 'A'){
+            $status = "activo";
+        } else {
+            $status = "inactivo";
+        }
+
         $_SESSION['successFlag'] = "N";
         if (strtolower($result['user_name']) == strtolower($userName)){
-            $_SESSION['message'] = "No se puede crear el usuario con nombre $userName, número de tarjeta $cardNumber e email $userEmail porque existe otro con el mismo nombre. Por favor, modifica el existente." ; 
+            $_SESSION['message'] = "No se puede crear el usuario con nombre $userName, número de tarjeta $cardNumber e email $userEmail porque existe un usuario $status con el mismo nombre. Por favor, modifica el existente." ; 
         } else if ($result['card_number'] == $cardNumber){
-            $_SESSION['message'] = "No se puede crear el usuario con nombre $userName, número de tarjeta $cardNumber e email $userEmail porque existe otro con el mismo número de tarjeta. Por favor, modifica el existente." ; 
+            $_SESSION['message'] = "No se puede crear el usuario con nombre $userName, número de tarjeta $cardNumber e email $userEmail porque existe un usuario $status con el mismo número de tarjeta. Por favor, modifica el existente." ; 
         } else if (strtolower($result['user_email']) == strtolower($userEmail)){
-            $_SESSION['message'] = "No se puede crear el usuario con nombre $userName, número de tarjeta $cardNumber e email $userEmail porque existe otro con el mismo email. Por favor, modifica el existente." ; 
+            $_SESSION['message'] = "No se puede crear el usuario con nombre $userName, número de tarjeta $cardNumber e email $userEmail porque existe un usuario $status con el mismo email. Por favor, modifica el existente." ; 
         }
     } else {
         try {
@@ -65,7 +72,7 @@ try {
                     
             if ($query->rowCount() > 0 ){
                 $_SESSION['successFlag'] = "Y";
-                $_SESSION['message'] = "El usuario $userName ha sido creado correctamente"  ;
+                $_SESSION['message'] = "El usuario $userName ha sido creado correctamente."  ;
             } else {
                 $_SESSION['successFlag'] = "N";
                 $_SESSION['message'] = "Ha habido un problema y no se ha podido crear el usuario $userName." ; 
@@ -82,16 +89,14 @@ try {
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "C";
     $queryError = $e->getMessage();  
-    $_SESSION['message'] = "Se ha detectado un problema en la creación del usuario, al buscar posibles usuarios duplicados. </br> Descripción del error: " . $queryError ;  
+    $_SESSION['message'] = "Se ha detectado un problema en la creación del usuario $userName, al buscar posibles usuarios duplicados. </br> Descripción del error: " . $queryError ;  
      
 } finally { 
     //Limpiamos la memoria 
     $conn = null;
-    if ($_SESSION['successFlag'] == "Y"){
-        header("Location: ../views/user.php?Id= &userName=&userType=&cardNumber=&userEmail=&userStatus=");
-    } else {
-        header("Location: ../views/user.php?Id= &userName=$userName&userType=$userType&cardNumber=$cardNumber&userEmail=$userEmail&userStatus=$userStatus");
-    }
+    
+    header("Location: ../views/user.php?Id= &userName=&userType=&cardNumber=&userEmail=&userStatus=");
+    
     
 }
 

@@ -110,6 +110,15 @@
       <?php endforeach; ?> <?php }?>
       </tbody>
     </table>
+
+    <div class="row">
+      <div class="col-12">
+      <?php 
+        if (count($users) == 0) {?>
+          <p>No se han encontrado coincidencias.</p>
+        <?php }?>
+      </div>
+    </div>
     
     <div class="row">
       <div class="col-12">

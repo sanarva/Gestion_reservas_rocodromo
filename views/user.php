@@ -91,8 +91,7 @@
                     <?php if ($idUser == " ") {?>
                         <button type="submit" formaction="../php/insertUser.php?Id=<?php echo $idUser?>&currentUserName=<?php echo $userName?>&currentUserType=<?php echo $userType?>&currentCardNumber=<?php echo $cardNumber?>&currentUserEmail=<?php echo $userEmail?>&currentUserStatus=<?php echo $userStatus?>" id="btnInsertUser" class="btn btn-primary">Crear</button>
                     <?php } else {?>
-                        <button type="submit" formaction="../php/updateUser.php?Id=<?php echo $idUser?>&currentUserName=<?php echo $userName?>&currentUserType=<?php echo $userType?>&currentCardNumber=<?php echo $cardNumber?>&currentUserEmail=<?php echo $userEmail?>&currentUserStatus=<?php echo $userStatus?>" id="btnUpdateUser" class="btn btn-primary">Modificar</button>
-                        <button type="submit" formmethod="post" formaction="../php/deleteUser.php?Id=<?php echo $idUser?>&userName=<?php echo $userName?>" class="btn btn-danger ml-3">Eliminar</button>
+                        <button type="submit" formaction="../php/updateUser.php?Id=<?php echo $idUser?>&userName=<?php echo $userName?>&userType=<?php echo $userType?>&cardNumber=<?php echo $cardNumber?>&userEmail=<?php echo $userEmail?>&userStatus=<?php echo $userStatus?>" id="btnUpdateUser" class="btn btn-primary">Modificar</button>
                     <?php }?>     
                 </div>
             </div>
@@ -114,7 +113,11 @@
             $_SESSION["button2"] = "Crear otro usuario";
             $_SESSION["formaction2"]  = "user.php?Id= &userName=&userType=&cardNumber=&userEmail=&userStatus=";
             $_SESSION["colorbutton2"] = "btn-primary";
-        } 
+        } else {
+            $_SESSION["button2"] = "Modificar de nuevo";
+            $_SESSION["formaction2"]  = "user.php?Id= &userName=&userType=&cardNumber=&userEmail=&userStatus=";
+            $_SESSION["colorbutton2"] = "btn-primary";
+        }
         include "../php/message.php";
       }
     ?>
