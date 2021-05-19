@@ -10,7 +10,7 @@ require "database.php";
 // eliminar. Si las hay, se enviará un mensaje al administrador para avisarle de ello y no     //
 // se eliminará el usuario hasta que no se hayan cancelado manualmente las reservas activas.   //
 //*********************************************************************************************//
-$idUser = $_GET["Id"];
+$idUser          = $_GET["Id"];
 $userNameMessage = $_GET["userName"];
 
 $filterUserName      = $_SESSION['filterUserNameShow'];
@@ -68,7 +68,7 @@ try {
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "N";
     $queryError = $e->getMessage();  
-    $_SESSION['message'] = "Se ha detectado un problema al buscar el usuario a eliminar. </br> Descripción del error: " . $queryError ; 
+    $_SESSION['message'] = "Se ha detectado un problema al buscar el usuario $userNameMessage. </br> Descripción del error: " . $queryError ; 
    
 } finally { 
     //Limpiamos la memoria 

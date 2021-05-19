@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-05-2021 a las 01:39:03
+-- Tiempo de generación: 19-05-2021 a las 18:04:55
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 7.4.16
 
@@ -210,10 +210,10 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id_user`, `user_type`, `card_number`, `user_status`, `user_email`, `user_password`, `user_name`, `user_modification`, `timestamp`) VALUES
 (1, 'A', 100, 'A', 'plosky21@hotmail.com', '$2y$10$KN53byzg.0fjivHRR4x8Yud47gbuN7VtVvVZdFCaWSR95z4qeZHXK', 'Escuela escalada', 1, '2021-04-27 07:24:35'),
 (2, 'G', 200, 'I', 'email1@hotmail.com', 'Passwor1', 'Joan Espinosa', 1, '2021-04-27 07:37:26'),
-(3, 'G', 300, 'A', 'guaubisabi@gmail.com', '$2y$10$NXyIGrmwzipqI5FpIJpR9eLdWVenNY9WgWE4K/qVVeIB79LSRgxhy', 'Felip Solsona', 1, '2021-04-27 07:31:53'),
+(3, 'M', 300, 'A', 'guaubisabi@gmail.com', '$2y$10$NXyIGrmwzipqI5FpIJpR9eLdWVenNY9WgWE4K/qVVeIB79LSRgxhy', 'Felip Solsona', 1, '2021-05-19 15:56:23'),
 (4, 'G', 400, 'A', 'ssaannddrruuss@gmail.com', '$2y$10$NeGc9aJbavkmCNHhBp9KGO9nI8Cbbmuzy5pbeqODrBnxKKyILoVkS', 'Sandra Ruiz', 1, '2021-05-13 16:09:35'),
 (5, 'M', 500, 'A', 'sandra.arcas.valero@gmail.com', '$2y$10$6FLYWBqZUfL8fes/1a0eGOs3gNVvMRSs6gIZyC/NPN81IZ00HT7XS', 'Nuria Crespo', 1, '2021-04-27 08:07:03'),
-(6, 'G', 600, 'A', 'info@guaubisabi.com', '$2y$10$dw5.l9NuOpOWRiHdkJFm5.9k7rc.9YREx0i0CtODLI2J0NWl5.SXi', 'Javier Maroto', 6, '2021-04-27 07:48:17');
+(6, 'G', 600, 'A', 'info@guaubisabi.com', '$2y$10$dw5.l9NuOpOWRiHdkJFm5.9k7rc.9YREx0i0CtODLI2J0NWl5.SXi', 'Javier Maroto', 1, '2021-05-19 15:56:35');
 
 -- --------------------------------------------------------
 
@@ -240,7 +240,7 @@ INSERT INTO `zones` (`id_zone`, `zone_name`, `max_users_zone`, `zone_status`, `u
 (3, 'Placa desplomada', 2, 'A', 999999, '2021-05-18 23:35:01'),
 (4, 'Moonboard', 2, 'A', 999999, '2021-05-18 23:35:01'),
 (5, 'Plafón', 2, 'A', 999999, '2021-05-18 23:35:01'),
-(6, 'Vía R1', 2, 'A', 999999, '2021-05-18 23:35:01'),
+(6, 'Vía R1', 2, 'A', 1, '2021-05-19 11:16:20'),
 (7, 'Vía R2', 2, 'A', 999999, '2021-05-18 23:35:01'),
 (8, 'Vía R3', 2, 'A', 999999, '2021-05-18 23:35:01'),
 (9, 'Vía R4', 2, 'A', 999999, '2021-05-18 23:35:01'),
@@ -300,7 +300,7 @@ ALTER TABLE `hours`
 -- AUTO_INCREMENT de la tabla `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id_reservation` int(12) NOT NULL AUTO_INCREMENT COMMENT 'ID of reservation', AUTO_INCREMENT=264;
+  MODIFY `id_reservation` int(12) NOT NULL AUTO_INCREMENT COMMENT 'ID of reservation', AUTO_INCREMENT=265;
 
 --
 -- AUTO_INCREMENT de la tabla `reservationsconfig`
@@ -312,7 +312,7 @@ ALTER TABLE `reservationsconfig`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID of the user', AUTO_INCREMENT=12;
+  MODIFY `id_user` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID of the user', AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `zones`
@@ -328,9 +328,9 @@ ALTER TABLE `zones`
 -- Filtros para la tabla `reservations`
 --
 ALTER TABLE `reservations`
-  ADD CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`),
   ADD CONSTRAINT `reservations_ibfk_4` FOREIGN KEY (`zone_id`) REFERENCES `zones` (`id_zone`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `reservations_ibfk_5` FOREIGN KEY (`hour_id`) REFERENCES `hours` (`id_hour`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `reservations_ibfk_5` FOREIGN KEY (`hour_id`) REFERENCES `hours` (`id_hour`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservations_ibfk_6` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

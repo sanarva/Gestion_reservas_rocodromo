@@ -34,8 +34,8 @@
             <a href="mailto:escolaescaladacornella@gmail.com?subject=Contacto%20desde%20la%20web%20de%20reservas" target="blank" class="itemOption"><p class="itemOptionText">CONTACTAR CON EL ROCO <i class="fas fa-envelope d-block"></i></p></a>
             <!-- Items específicos para usuarios usuarios administradores --> 
             <?php if ((isset($_SESSION['sessionUserType'])) && $_SESSION['sessionUserType']=="A") { ?>
-            <a href="usersList.php?userName=&cardNumber=&allStatusUser=" class="itemOption"><p class="itemOptionText">GESTIONAR USUARIOS<i class="fas fa-users-cog d-block"></i></p></a>
             <a href="reservationsList.php?dateFrom=&dateTo=&userName=&cardNumber=&startHour=&endHour=&zoneName=&allStatusReservation" class="itemOption"><p class="itemOptionText">GESTIONAR RESERVAS<i class="fas fa-clipboard-list d-block"></i></p></a>
+            <a href="usersList.php?userName=&cardNumber=&allStatusUser=" class="itemOption"><p class="itemOptionText">GESTIONAR USUARIOS<i class="fas fa-users-cog d-block"></i></p></a>
             <a href="zonesList.php" class="itemOption"><p class="itemOptionText">GESTIONAR ZONAS<i class="fas fa-map-signs d-block"></i></p></a>
             <a href="hoursList.php" class="itemOption"><p class="itemOptionText">GESTIONAR HORARIOS<i class="fas fa-clock d-block"></i></p></a> 
             <?php } ?>

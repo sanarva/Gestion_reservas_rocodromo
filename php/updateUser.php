@@ -5,7 +5,12 @@ $path = "../views/usersList.php";
 require "database.php";
  
 
-$idUser = $_GET["Id"];
+$idUser            = $_GET["Id"];
+$currentUserName   = $_GET["userName"];
+$currentUserType   = $_GET["userType"];
+$currentCardNumber = $_GET["cardNumber"];
+$currentUserEmail  = $_GET["userEmail"];
+$currentUserStatus = $_GET["userStatus"];
 
 $userName   = $_POST["inputUserName"];
 $userType   = $_POST["userType"];
@@ -17,7 +22,8 @@ $userStatus = $_POST["userStatus"];
 try {
     $sql = "SELECT user_name
                  , card_number
-                 , user_email  
+                 , user_email
+                 , user_status
               FROM users
              WHERE id_user <> :iduser
                 AND (user_name  = :username 
@@ -29,21 +35,35 @@ try {
    
     //Si existe, avisamos al usuario administrador de que no se va a crear ese nuevo usuario porque ya existe uno con el mismo nombre o número de tarjeta o email
     if (($query->rowCount() > 0 )) {
+        if ($result['user_status'] == 'A'){
+            $status = "activo";
+        } else {
+            $status = "inactivo";
+        }
+
         $_SESSION['successFlag'] = "N";
         if (strtolower($result['user_name']) == strtolower($userName)){
-            $_SESSION['message'] = "No se puede modificar el usuario porque existe otro con el mismo nombre. Por favor, modifica el existente." ; 
+            $_SESSION['message'] = "No se puede modificar el usuario $currentUserName porque existe un usuario $status con el mismo nombre que el que estás intentando poner ($userName). Por favor, modifica el existente." ; 
         } else if ($result['card_number'] == $cardNumber){
-            $_SESSION['message'] = "No se puede modificar el usuario porque existe otro con el mismo número de tarjeta. Por favor, modifica el existente." ; 
+            $_SESSION['message'] = "No se puede modificar el usuario $currentUserName con número de tarjeta $currentCardNumber porque existe un usuario $status con el mismo número de tarjeta que el que estás intentando poner ($cardNumber). Por favor, modifica el existente." ; 
         } else if (strtolower($result['user_email']) == strtolower($userEmail)){
-            $_SESSION['message'] = "No se puede modificar el usuario porque existe otro con el mismo email. Por favor, modifica el existente." ; 
+            $_SESSION['message'] = "No se puede modificar el usuario $currentUserName con email $currentUserEmail porque existe un usuario $status con el mismo email que el que estás intentando poner ($userEmail). Por favor, modifica el existente." ; 
         }
     } else
         $duplicatedUserControl = "";
 } catch(PDOException $e){
     $_SESSION['successFlag'] = "C";
     $queryError = $e->getMessage();  
-    $_SESSION['message'] = "Se ha detectado un problema en la modificación del usuario, al buscar posibles usuarios duplicados. </br> Descripción del error: " . $queryError ;  
-}        
+    $_SESSION['message'] = "Se ha detectado un problema en la modificación del usuario $currentUserName, al buscar posibles usuarios duplicados. </br> Descripción del error: " . $queryError ;  
+} finally { 
+
+    if ($_SESSION['successFlag'] == "Y") {
+        header("Location: ../views/user.php?Id=$idUser&userName=$userName&userType=$userType&cardNumber=$cardNumber&userEmail=$userEmail&userStatus=$userStatus");
+    } else {
+        header("Location: ../views/user.php?Id=$idUser&userName=$currentUserName&userType=$currentUserType&cardNumber=$currentCardNumber&userEmail=$currentUserEmail&userStatus=$CurrentUserStatus");
+    }
+
+}       
 
 if (isset($duplicatedUserControl)){
 
@@ -59,10 +79,10 @@ if (isset($duplicatedUserControl)){
             // Si el administrador intenta desactivar al usuario, se mostrará un aviso y no se permitirá la desactivación hasta que no haya cancelado las reservas pendiente de ese usuario
             if ($userStatus == "I") {
                 $_SESSION['successFlag'] = "N";
-                $_SESSION['message'] = "No se puede desactivar al usuario ya que existen reservas activas asociadas a este usuario. Cancela antes las reservas activas y vuelve a intentarlo." ;  
+                $_SESSION['message'] = "No se puede desactivar al usuario $currentUserName ya que existen reservas activas asociadas al mismo. Cancela antes las reservas activas y vuelve a intentarlo." ;  
             } else {
                 try {
-                $sql = "UPDATE users 
+                $sql = "UPDATE users
                            SET user_name         = :username
                              , user_type         = :usertype
                              , card_number       = :cardnumber
@@ -84,21 +104,21 @@ if (isset($duplicatedUserControl)){
             
                 if ($query->rowCount() > 0 ){
                     $_SESSION['successFlag'] = "Y";
-                    $_SESSION['message'] = "El usuario ha sido modificado correctamente"  ;
+                    $_SESSION['message'] = "El usuario $currentUserName ha sido modificado correctamente."  ;
                 } else {
                     $_SESSION['successFlag'] = "N";
-                    $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar el usuario." ; 
+                    $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar el usuario $currentUserName." ; 
                 }
             
                 } catch(PDOException $e){
                     $_SESSION['successFlag'] = "N";
                     $queryError = $e->getMessage();  
-                    $_SESSION['message'] = "Se ha detectado un problema a la hora de modificar el usuario. </br> Descripción del error: " . $queryError ; 
+                    $_SESSION['message'] = "Se ha detectado un problema a la hora de modificar el usuario $currentUserName. </br> Descripción del error: " . $queryError ; 
                 
                 }
             }
             
-        //Si no existen reservas activas, modificamos la zona    
+        //Si no existen reservas activas, modificamos el usuario    
         } else {
             try {
                 $sql = "UPDATE users
@@ -122,16 +142,16 @@ if (isset($duplicatedUserControl)){
                 
                 if ($query->rowCount() > 0 ){
                     $_SESSION['successFlag'] = "Y";
-                    $_SESSION['message'] = "El usuario ha sido modificado correctamente"  ;
+                    $_SESSION['message'] = "El usuario $currentUserName ha sido modificado correctamente."  ;
                 } else {
                     $_SESSION['successFlag'] = "N";
-                    $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar el usuario." ; 
+                    $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar el usuario $currentUserName." ; 
                 }
             
             } catch(PDOException $e){
                 $_SESSION['successFlag'] = "N";
                 $queryError = $e->getMessage();  
-                $_SESSION['message'] = "Se ha detectado un problema a la hora de modificar un usuario. </br> Descripción del error: " . $queryError ; 
+                $_SESSION['message'] = "Se ha detectado un problema a la hora de modificar el usuario $currentUserName. </br> Descripción del error: " . $queryError ; 
             
             }
         }
@@ -140,22 +160,20 @@ if (isset($duplicatedUserControl)){
     } catch(PDOException $e){
         $_SESSION['successFlag'] = "N";
         $queryError = $e->getMessage();  
-        $_SESSION['message'] = "Se ha detectado un problema al buscar reservas activas del usuario en la ventana de modificación de usuarios. </br> Descripción del error: " . $queryError ;  
+        $_SESSION['message'] = "Se ha detectado un problema al buscar reservas activas del usuario $currentUserName en la ventana de modificación de usuarios. </br> Descripción del error: " . $queryError ;  
         
     } finally { 
-        //Limpiamos la memoria 
-        $conn = null;
-     
+        if ($_SESSION['successFlag'] == "Y") {
+            header("Location: ../views/user.php?Id=$idUser&userName=$userName&userType=$userType&cardNumber=$cardNumber&userEmail=$userEmail&userStatus=$userStatus");
+        } else {
+            header("Location: ../views/user.php?Id=$idUser&userName=$currentUserName&userType=$currentUserType&cardNumber=$currentCardNumber&userEmail=$currentUserEmail&userStatus=$CurrentUserStatus");
+        }
+
     }
 }
 
-   if ($_SESSION['successFlag'] == "Y"){
-        header("Location: ../views/usersList.php?userName=&cardNumber=&allStatusUser=");
-    } else {
-        $_SESSION["button2"] = "Modificar de nuevo";
-        $_SESSION["formaction2"]  = "../views/user.php?Id=$idUser&userName=$userName&userType=$userType&cardNumber=$cardNumber&userEmail=$userEmail&userStatus=$userStatus";
-        $_SESSION["colorbutton2"] = "btn-primary";
-        header("Location: ../views/user.php?Id=$idUser&userName=$userName&userType=$userType&cardNumber=$cardNumber&userEmail=$userEmail&userStatus=$userStatus");
-    }
+//Limpiamos la memoria 
+$conn = null;
+ 
 
 ?>
