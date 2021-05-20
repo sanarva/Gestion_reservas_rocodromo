@@ -105,10 +105,22 @@
       }
 
         if (isset($_SESSION['successFlag'])) { 
+
+            //Recuperamos la info de los filtros cuando hacemos creamos o modificamos un usuario
+            if (isset($_SESSION['filterUserNameShow'])){
+                $filterUserName = $_SESSION['filterUserNameShow'];
+            }    
+            if (isset($_SESSION['filterCardNumberShow'])){
+                $filterCardNumber = $_SESSION['filterCardNumberShow'];
+            }    
+            if (isset($_SESSION['filterAllStatusUserShow'])){
+                $filterAllStatusUser = $_SESSION['filterAllStatusUserShow'];
+            }    
+
             $_SESSION["button1"] = "Lista usuarios";
-            $_SESSION["formaction1"]  = "usersList.php?userName=&cardNumber=&allStatusUser=";
+            $_SESSION["formaction1"]  = "usersList.php?userName=$filterUserName&cardNumber=$filterCardNumber&allStatusUser=$filterAllStatusUser";
             $_SESSION["colorbutton1"] = "btn-dark";
-        //Solo permitimos volver a la pantalla Usuario en la creación de usuarios
+        
         if ($idUser == " ") {
             $_SESSION["button2"] = "Crear otro usuario";
             $_SESSION["formaction2"]  = "user.php?Id= &userName=&userType=&cardNumber=&userEmail=&userStatus=";
