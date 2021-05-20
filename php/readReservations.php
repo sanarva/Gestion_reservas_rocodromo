@@ -143,7 +143,7 @@ try {
                AND start_hour       >= :starthour
                AND end_hour         <= :endhour
                AND zone_name        LIKE :zonename
-          ORDER BY reservation_date ASC, start_hour ASC, end_hour ASC, zone_name ASC, card_number ASC";
+          ORDER BY reservation_date DESC, start_hour ASC, end_hour ASC, zone_name ASC, card_number ASC";
     $query = $conn->prepare($sql);
     $query->bindParam(":reservationstatus1",$filterAllStatusReservation1);
     $query->bindParam(":reservationstatus2",$filterAllStatusReservation2);

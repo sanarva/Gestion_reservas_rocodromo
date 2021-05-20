@@ -16,14 +16,15 @@ if (isset($_POST["filterUserName"])) {
     $_SESSION['filterUserNameShow'] = "";
 } else if (isset($filterUserName) && $filterUserName != ""){
     if (strpos($filterUserName, "%") > 0) {
-        $filterUserName            = $filterUserName;
+        $filterUserName                 = $filterUserName;
+        $filterUserNameShow             = $filterUserName;
+        $_SESSION['filterUserNameShow'] = $filterUserName;
     } else {
-        $filterUserName            = "%" . $filterUserName . "%";
+        $filterUserNameShow             = $filterUserName;
+        $_SESSION['filterUserNameShow'] = $filterUserName;
+        $filterUserName                 = "%" . $filterUserName . "%";
     }
-    $filterUserNameShow             = $filterUserName;
-    $_SESSION['filterUserNameShow'] = $filterUserName;
 }
-
 
 if (isset($_POST["filterCardNumber"]) && $_POST["filterCardNumber"] != "") {
     $filterCardNumber                 = $_POST["filterCardNumber"];
@@ -35,12 +36,14 @@ if (isset($_POST["filterCardNumber"]) && $_POST["filterCardNumber"] != "") {
     $_SESSION['filterCardNumberShow'] = "";
 } else if (isset($filterCardNumber) && $filterCardNumber != ""){
     if (strpos($filterCardNumber, "%") > 0) {
-        $filterCardNumber            = $filterCardNumber;
+        $filterCardNumber                 = $filterCardNumber;
+        $filterCardNumberShow             = $filterCardNumber;
+        $_SESSION['filterCardNumberShow'] = $filterCardNumber;
     } else {
-        $filterCardNumber            = $filterCardNumber;
+        $filterCardNumberShow             = $filterCardNumber;
+        $_SESSION['filterCardNumberShow'] = $filterCardNumber;
+        $filterCardNumber                 = $filterCardNumber;
     }
-    $filterCardNumberShow             = $filterCardNumber;
-    $_SESSION['filterCardNumberShow'] = $filterCardNumber;
 }
 
 if (isset($_POST["filterAllStatusUser"])) {
