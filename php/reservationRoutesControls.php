@@ -50,8 +50,8 @@ if (isset($userCounterRoutes)) {
         $_SESSION['message'] = "Se ha detectado un problema al buscar el número total de reservas en la zona de vías. </br> Descripción del error: " . $queryError ; 
     } 
 
-    //Comprobamos que no se supere el número máximo de reservas en la zona de vías
-    if (($routes['reservationsNumberInRoutes'] + $userCounterRoutes) > $_SESSION['sessionMaxUsersInRouteZone']){
+    //Comprobamos que no se supere el número máximo de reservas en la zona de vías (No afecta a usuarios administradores para que puedan reservar toda la zona de vías para la escuela)
+    if (($routes['reservationsNumberInRoutes'] + $userCounterRoutes) > $_SESSION['sessionMaxUsersInRouteZone'] && $_SESSION['sessionUserType'] !="A"){
         $maxNumUsersRoute = $_SESSION['sessionMaxUsersInRouteZone'];
         $_SESSION['successFlag'] = "N";
         $_SESSION['message'] = "No se puede hacer una reserva en la zona de vías porque se superaría el máximo número de usuarios totales de la zona, que es de $maxNumUsersRoute personas.";   

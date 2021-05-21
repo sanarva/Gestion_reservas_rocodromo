@@ -95,9 +95,17 @@ if (isset($_GET["cancelReservation"]) && $relatedReservationControlOk == "Y" ) {
         }
     } else {
         $_SESSION['confirmation'] = "";
-        $_SESSION["page"] = "cancelReservation";
-        $_SESSION['idReservation'] = $idReservation;
-        $_SESSION['idRelatedReservation'] = $idRelatedReservation;
+        $_SESSION["page"]         = "cancelReservation";
+
+        $_SESSION['cancelIdReservation']        = $idReservation;
+        $_SESSION['cancelIdRelatedReservation'] = $idRelatedReservation;
+        $_SESSION['cancelUserId']               = $_GET["userId"];
+        $_SESSION['cancelUserName']             = $_GET["userName"];
+        $_SESSION['cancelReservationDate']      = $_GET["reservationDate"];
+        $_SESSION['cancelStartHour']            = $_GET["startHour"];
+        $_SESSION['cancelEndHour']              = $_GET["endHour"];
+        $_SESSION['cancelZoneName']             = $_GET["zoneName"];
+
         $_SESSION['message']  = "Estás a punto de cancelar la reserva. ¿Deseas continuar?" ;
     }
 } else if (isset($_GET["confirmReservation"]) && $relatedReservationControlOk == "Y"){//Si el usuario está intentado confirmar una reserva
