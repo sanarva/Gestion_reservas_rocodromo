@@ -218,6 +218,40 @@ ul li, ul li i {
     color: black;
 }
 
+.legend {
+    border: 2px solid white;
+    padding: 2em;
+    margin: 1em;
+}
+.legend p {
+    font-size: 1.2em;
+    font-weight: 500;
+    border-bottom: 1px solid white;
+}
+
+ol li {
+    list-style: none;
+    margin-bottom: 0.5em;    
+}
+
+ol li i {
+    margin-right: 0.5em;    
+}
+
+ol li a { 
+    color: white;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0% 100%; 
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size .5s; 
+}
+ol li a:hover {
+    background-size: 100% 1px;
+    text-decoration: none; 
+    color: white;   
+
+}
 
 /*Tablas en dispositivos móviles*/
 @media screen and (max-width: 600px) {

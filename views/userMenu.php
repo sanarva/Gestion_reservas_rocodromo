@@ -31,7 +31,7 @@
             <a href="myReservationsList.php" class="itemOption"><p class="itemOptionText">MIS RESERVAS<i class="fas fa-calendar-check d-block"></i></p></a>
             <a href="modifyPsw.php" class="itemOption"><p class="itemOptionText">CAMBIAR CONTRASEÑA<i class="fas fa-unlock-alt d-block"></i></p></a>  
             <a href="http://www.escolamuntanya.org/rocodrom-usuaris" target="blank" class="itemOption"><p class="itemOptionText">NORMATIVA ROCÓDROMO<i class="fas fa-book-reader d-block"></i></p></a>
-            <a href="mailto:escolaescaladacornella@gmail.com?subject=Contacto%20desde%20la%20web%20de%20reservas" target="blank" class="itemOption"><p class="itemOptionText">CONTACTAR CON EL ROCO <i class="fas fa-envelope d-block"></i></p></a>
+            <a href="help.php" class="itemOption"><p class="itemOptionText">¿NECESITAS AYUDA?<i class="fas fa-info-circle d-block"></i></p></a>  
             <!-- Items específicos para usuarios usuarios administradores --> 
             <?php if ((isset($_SESSION['sessionUserType'])) && $_SESSION['sessionUserType']=="A") { ?>
             <a href="reservationsList.php?dateFrom=&dateTo=&userName=&cardNumber=&startHour=&endHour=&zoneName=&allStatusReservation" class="itemOption"><p class="itemOptionText">GESTIONAR RESERVAS<i class="fas fa-clipboard-list d-block"></i></p></a>
