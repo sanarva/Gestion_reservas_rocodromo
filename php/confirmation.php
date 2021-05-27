@@ -44,7 +44,7 @@
                     <?php ; 
                         break; 
                     case "cancelReservation":?>
-                        <a href="../php/updateReservation.php?idReservation=<?php echo $reservation->id_reservation?>&idRelatedReservation=<?php echo $reservation->id_related_reservation?>&userId=<?php echo $reservation->user_id?>&userName=<?php echo $reservation->user_name?>&cancelReservation&cancel=yes&reservationDate=<?php echo $date->format("d/m/Y")?>&startHour=<?php echo $reservation->start_hour?>&endHour=<?php echo $reservation->end_hour?>&zoneName=<?php echo $reservation->zone_name?>" class="btn btn-danger">Cancelar</a>
+                        <a href="../php/updateReservation.php?idReservation=<?php echo $_SESSION['cancelIdReservation']?>&idRelatedReservation=<?php echo $_SESSION['cancelIdRelatedReservation']?>&userId=<?php echo $_SESSION['cancelUserId']?>&userName=<?php echo $_SESSION['cancelUserName']?>&cancelReservation&cancel=yes&reservationDate=<?php echo $_SESSION['cancelReservationDate']?>&startHour=<?php echo $_SESSION['cancelStartHour']?>&endHour=<?php echo $_SESSION['cancelEndHour']?>&zoneName=<?php echo $_SESSION['cancelZoneName']?>" class="btn btn-danger">Cancelar</a>
                     <?php ; 
                         break; 
                     }    ?>    
@@ -58,7 +58,45 @@
 <?php
     $_SESSION["message"] = ""; 
     unset ($_SESSION["page"]);
-    unset ($_SESSION['idReservation']);
-    unset ($_SESSION['idRelatedReservation']);
+
+    if (isset($_SESSION['idReservation'])){
+        unset ($_SESSION['idReservation']);
+    }
+    
+    if (isset($_SESSION['idRelatedReservation'])){
+        unset ($_SESSION['idRelatedReservation']);
+    }
+
+    if (isset($_SESSION['cancelIdReservation'])){
+        unset ($_SESSION['cancelIdReservation']);
+    }
+
+    if (isset($_SESSION['cancelIdRelatedReservation'])){
+        unset ($_SESSION['cancelIdRelatedReservation']);
+    }
+
+    if (isset($_SESSION['cancelUserId'])){
+        unset ($_SESSION['cancelUserId']);
+    }
+
+    if (isset($_SESSION['cancelUserName'])){
+        unset ($_SESSION['cancelUserName']);
+    }
+
+    if (isset($_SESSION['cancelReservationDate'])){
+        unset ($_SESSION['cancelReservationDate']);
+    }
+
+    if (isset($_SESSION['cancelStartHour'])){
+        unset ($_SESSION['cancelStartHour']);
+    }
+
+    if (isset($_SESSION['cancelEndHour'])){
+        unset ($_SESSION['cancelEndHour']);
+    }
+
+    if (isset($_SESSION['cancelZoneName'])){
+        unset ($_SESSION['cancelZoneName']);
+    }
 ?>
 

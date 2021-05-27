@@ -95,9 +95,17 @@ if (isset($_GET["cancelReservation"]) && $relatedReservationControlOk == "Y" ) {
         }
     } else {
         $_SESSION['confirmation'] = "";
-        $_SESSION["page"] = "cancelReservation";
-        $_SESSION['idReservation'] = $idReservation;
-        $_SESSION['idRelatedReservation'] = $idRelatedReservation;
+        $_SESSION["page"]         = "cancelReservation";
+
+        $_SESSION['cancelIdReservation']        = $idReservation;
+        $_SESSION['cancelIdRelatedReservation'] = $idRelatedReservation;
+        $_SESSION['cancelUserId']               = $_GET["userId"];
+        $_SESSION['cancelUserName']             = $_GET["userName"];
+        $_SESSION['cancelReservationDate']      = $_GET["reservationDate"];
+        $_SESSION['cancelStartHour']            = $_GET["startHour"];
+        $_SESSION['cancelEndHour']              = $_GET["endHour"];
+        $_SESSION['cancelZoneName']             = $_GET["zoneName"];
+
         $_SESSION['message']  = "Estás a punto de cancelar la reserva. ¿Deseas continuar?" ;
     }
 } else if (isset($_GET["confirmReservation"]) && $relatedReservationControlOk == "Y"){//Si el usuario está intentado confirmar una reserva
@@ -154,7 +162,6 @@ if (isset($_GET["cancelReservation"]) && $relatedReservationControlOk == "Y" ) {
     $cardNumberRopeTeam    = $_GET["cardNumberRopeTeam"];
     $zoneNameChoosen       = $_GET["zoneNameChoosen"];
     $reservationType       = $_GET["reservationType"];
-    $reservationType       = $_GET["reservationType"];
     $startHourChoosen      = $_GET["startHourChoosen"];
     $endHourChoosen        = $_GET["endHourChoosen"];   
     $freeReservations      = $_GET["freeReservations"]; 
@@ -168,49 +175,57 @@ if (isset($_GET["cancelReservation"]) && $relatedReservationControlOk == "Y" ) {
 
     //Si se trata de la modificación de una reserva simple a otra reserva simple, modificamos la existente
     if ($idRelatedReservation == "nonexistent" && $cardNumberRopeTeam == "" && $reservationType != "autoInsurer"){
-        try {
-        $sql = "UPDATE reservations 
-                   SET reservation_date = :filterreservationdate
-                     , hour_id = :idhour
-                     , zone_id = :idzone
-                     , user_modification = :userModification
-                     , timestamp = current_timestamp
-                 WHERE id_reservation = :idreservation";
-        $query = $conn->prepare($sql);
-        $query->bindParam(":filterreservationdate",$filterReservationDate);
-        $query->bindParam(":idhour",$idHour);
-        $query->bindParam(":idzone",$idZone);
-        $query->bindParam(":userModification",$_SESSION["sessionIdUser"]);
-        $query->bindParam(":idreservation",$idReservation);
-        $query->execute();
-        
-        
-        if ($query->rowCount() > 0 ){
-            $_SESSION['successFlag'] = "Y";
-            $_SESSION['message'] = "La reserva ha sido modificada correctamente.";
-            if ($reservationsList != "") {
-                $_SESSION['button1'] = 'Volver a la lista';
-                $_SESSION['formaction1']  = '../views/ReservationsList.php?&dateFrom=&dateTo=&userName=&cardNumber=&startHour=&endHour=&zoneName=&allStatusReservation'; 
-            } else {
-                $_SESSION['button1'] = 'Volver a mis reservas';
-                $_SESSION['formaction1']  = '../views/myReservationsList.php';
-            }
-            $_SESSION['colorbutton1'] = 'btn-dark';
-            $_SESSION['button2'] = 'Modificar de nuevo';
-            $_SESSION['formaction2']  = '#';
-            $_SESSION['colorbutton2'] = 'btn-primary';
-            $_SESSION["datadismiss"]  = "Yes";
-        } else {
-            $_SESSION['successFlag'] = "N";
-            $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar la reserva" ; 
-        }
+        //Antes de modificar la reserva, controlamos que no hay ninguna el mismo día a la misma hora o franja horaria sucesiva
+        $checkSameReservation = "Y";
+        include('reservationGeneralControls.php');
+        $checkSameReservation = "";
+        if (!isset($_SESSION['successFlag']) || (isset($_SESSION['successFlag']) &&  $_SESSION['successFlag'] != "C" && $_SESSION['successFlag'] != "N")){
+            try {
+                $sql = "UPDATE reservations
+                           SET reservation_date = :filterreservationdate
+                             , hour_id = :idhour
+                             , zone_id = :idzone
+                             , user_modification = :userModification
+                             , timestamp = current_timestamp
+                         WHERE id_reservation = :idreservation";
+                $query = $conn->prepare($sql);
+                $query->bindParam(":filterreservationdate",$filterReservationDate);
+                $query->bindParam(":idhour",$idHour);
+                $query->bindParam(":idzone",$idZone);
+                $query->bindParam(":userModification",$_SESSION["sessionIdUser"]);
+                $query->bindParam(":idreservation",$idReservation);
+                $query->execute();
 
-        } catch(PDOException $e){
-            $_SESSION['successFlag'] = "N";
-            $queryError = $e->getMessage();  
-            $_SESSION['message'] = "Se ha detectado un problema a la hora de modificar la reserva. </br> Descripción del error: " . $queryError ; 
-        
-        } finally {
+
+                if ($query->rowCount() > 0 ){
+                    $_SESSION['successFlag'] = "Y";
+                    $_SESSION['message'] = "La reserva ha sido modificada correctamente.";
+                    if ($reservationsList != "") {
+                        $_SESSION['button1'] = 'Volver a la lista';
+                        $_SESSION['formaction1']  = '../views/ReservationsList.php?&dateFrom=&dateTo=&userName=&cardNumber=&startHour=&endHour=&zoneName=&allStatusReservation'; 
+                    } else {
+                        $_SESSION['button1'] = 'Volver a mis reservas';
+                        $_SESSION['formaction1']  = '../views/myReservationsList.php';
+                    }
+                    $_SESSION['colorbutton1'] = 'btn-dark';
+                    $_SESSION['button2'] = 'Modificar de nuevo';
+                    $_SESSION['formaction2']  = '#';
+                    $_SESSION['colorbutton2'] = 'btn-primary';
+                    $_SESSION["datadismiss"]  = "Yes";
+                } else {
+                    $_SESSION['successFlag'] = "N";
+                    $_SESSION['message'] = "Ha habido un problema y no se ha podido modificar la reserva" ; 
+                }
+
+            } catch(PDOException $e){
+                $_SESSION['successFlag'] = "N";
+                $queryError = $e->getMessage();  
+                $_SESSION['message'] = "Se ha detectado un problema a la hora de modificar la reserva. </br> Descripción del error: " . $queryError ; 
+            
+            } finally {
+                header("Location: ../views/reservation.php?idReservation=$idReservation&userName=$filterUserName&reservationDate=$filterReservationDate&startHour=$filterStartHour&endHour=$filterEndHour&zoneName=$filterZoneName");
+            }
+        } else {
             header("Location: ../views/reservation.php?idReservation=$idReservation&userName=$filterUserName&reservationDate=$filterReservationDate&startHour=$filterStartHour&endHour=$filterEndHour&zoneName=$filterZoneName");
         }
         

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-05-2021 a las 18:04:55
+-- Tiempo de generación: 21-05-2021 a las 13:11:47
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 7.4.16
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `hours` (
-  `id_hour` int(2) NOT NULL COMMENT 'ID of the time zone',
+  `id_hour` int(3) NOT NULL COMMENT 'ID of the time zone',
   `start_hour` varchar(5) NOT NULL COMMENT 'Hour when reservation starts',
   `end_hour` varchar(5) NOT NULL COMMENT 'Hour when reservation finishes',
   `week_day` varchar(7) NOT NULL COMMENT 'Array with active week day ([LMXJVSD] for all week days)',
@@ -56,11 +56,11 @@ INSERT INTO `hours` (`id_hour`, `start_hour`, `end_hour`, `week_day`, `user_modi
 --
 
 CREATE TABLE `reservations` (
-  `id_reservation` int(12) NOT NULL COMMENT 'ID of reservation',
-  `id_related_reservation` int(12) NOT NULL COMMENT 'ID which links double reservations in routes zone',
+  `id_reservation` int(7) NOT NULL COMMENT 'ID of reservation',
+  `id_related_reservation` int(7) NOT NULL COMMENT 'ID which links double reservations in routes zone',
   `reservation_date` date NOT NULL COMMENT 'Date when reservation has been done',
-  `hour_id` int(2) NOT NULL COMMENT 'ID of the time zone when reservation has been done',
-  `zone_id` int(2) NOT NULL COMMENT 'ID of the zone where reservations has been done',
+  `hour_id` int(3) NOT NULL COMMENT 'ID of the time zone when reservation has been done',
+  `zone_id` int(3) NOT NULL COMMENT 'ID of the zone where reservations has been done',
   `user_id` int(6) NOT NULL COMMENT 'ID of the reservation user',
   `reservation_status` varchar(1) NOT NULL COMMENT 'Status of the reservation (Active = A) (Inactive = "I") (Pending confirmation = "P" or "C" [C is who should confirm]) (Without rope team = "W")',
   `user_modification` int(6) NOT NULL COMMENT 'ID of the user who has done last transaction',
@@ -104,7 +104,6 @@ INSERT INTO `reservations` (`id_reservation`, `id_related_reservation`, `reserva
 (90, 0, '2021-04-30', 7, 11, 1, 'I', 1, '2021-05-13 09:34:23'),
 (91, 0, '2021-04-29', 7, 7, 3, 'I', 1, '2021-05-13 09:34:23'),
 (92, 0, '2021-04-22', 4, 75, 3, 'I', 1, '2021-05-13 09:34:23'),
-(93, 0, '2021-04-27', 2, 4, 3, 'I', 1, '2021-05-13 09:34:23'),
 (99, 0, '2021-04-27', 7, 4, 3, 'I', 1, '2021-05-13 09:34:23'),
 (101, 0, '2021-04-30', 2, 4, 3, 'I', 1, '2021-05-13 09:34:23'),
 (102, 10, '2021-04-28', 2, 4, 3, 'I', 999999, '2021-05-13 09:27:34'),
@@ -154,13 +153,50 @@ INSERT INTO `reservations` (`id_reservation`, `id_related_reservation`, `reserva
 (253, 42, '2021-05-16', 2, 7, 4, 'I', 999999, '2021-05-18 06:57:43'),
 (254, 42, '2021-05-16', 2, 7, 4, 'I', 999999, '2021-05-18 06:57:43'),
 (256, 0, '2021-05-19', 6, 11, 4, 'I', 1, '2021-05-18 16:26:07'),
-(257, 43, '2021-05-19', 6, 6, 4, 'I', 1, '2021-05-18 22:06:14'),
-(258, 43, '2021-05-19', 6, 6, 3, 'I', 1, '2021-05-18 22:06:14'),
-(259, 44, '2021-05-20', 2, 6, 1, 'I', 1, '2021-05-18 22:04:37'),
-(260, 44, '2021-05-20', 2, 6, 1, 'I', 1, '2021-05-18 22:04:37'),
-(261, 0, '2021-05-20', 1, 11, 1, 'A', 1, '2021-05-18 22:36:34'),
-(262, 45, '2021-05-19', 7, 6, 4, 'P', 1, '2021-05-18 23:37:44'),
-(263, 45, '2021-05-19', 7, 6, 3, 'C', 1, '2021-05-18 23:37:44');
+(261, 0, '2021-05-20', 1, 11, 1, 'I', 999999, '2021-05-21 07:04:09'),
+(262, 45, '2021-05-19', 7, 6, 4, 'I', 999999, '2021-05-20 09:19:04'),
+(263, 45, '2021-05-19', 7, 6, 3, 'I', 999999, '2021-05-20 09:19:04'),
+(265, 46, '2021-05-25', 7, 8, 3, 'A', 1, '2021-05-20 16:57:04'),
+(266, 46, '2021-05-25', 7, 8, 3, 'W', 1, '2021-05-20 16:57:04'),
+(267, 0, '2021-05-22', 6, 4, 3, 'A', 1, '2021-05-20 17:17:32'),
+(268, 47, '2021-05-27', 5, 6, 1, 'A', 1, '2021-05-21 07:12:40'),
+(269, 47, '2021-05-27', 5, 6, 1, 'A', 1, '2021-05-21 07:12:40'),
+(270, 48, '2021-05-27', 6, 6, 1, 'A', 1, '2021-05-21 07:13:39'),
+(271, 48, '2021-05-27', 6, 6, 1, 'A', 1, '2021-05-21 07:13:39'),
+(272, 49, '2021-05-27', 7, 6, 1, 'A', 1, '2021-05-21 07:14:01'),
+(273, 49, '2021-05-27', 7, 6, 1, 'A', 1, '2021-05-21 07:14:01'),
+(274, 50, '2021-05-27', 5, 7, 1, 'A', 1, '2021-05-21 07:14:50'),
+(275, 50, '2021-05-27', 5, 7, 1, 'A', 1, '2021-05-21 07:14:50'),
+(276, 51, '2021-05-27', 6, 7, 1, 'A', 1, '2021-05-21 07:15:19'),
+(277, 51, '2021-05-27', 6, 7, 1, 'A', 1, '2021-05-21 07:15:19'),
+(278, 52, '2021-05-27', 7, 7, 1, 'I', 1, '2021-05-21 07:24:43'),
+(279, 52, '2021-05-27', 7, 7, 1, 'I', 1, '2021-05-21 07:24:43'),
+(280, 53, '2021-05-27', 5, 8, 1, 'I', 1, '2021-05-21 09:33:43'),
+(281, 53, '2021-05-27', 5, 8, 1, 'I', 1, '2021-05-21 09:33:43'),
+(282, 54, '2021-05-27', 6, 8, 1, 'I', 1, '2021-05-21 10:07:10'),
+(283, 54, '2021-05-27', 6, 8, 1, 'I', 1, '2021-05-21 10:07:10'),
+(284, 55, '2021-05-27', 7, 8, 1, 'I', 1, '2021-05-21 07:23:14'),
+(285, 55, '2021-05-27', 7, 8, 1, 'I', 1, '2021-05-21 07:23:14'),
+(286, 56, '2021-05-27', 5, 8, 1, 'A', 1, '2021-05-21 10:13:36'),
+(287, 56, '2021-05-27', 5, 8, 1, 'A', 1, '2021-05-21 10:13:36'),
+(288, 57, '2021-05-27', 5, 9, 1, 'A', 1, '2021-05-21 10:18:05'),
+(289, 57, '2021-05-27', 5, 9, 1, 'A', 1, '2021-05-21 10:18:05'),
+(290, 58, '2021-05-27', 5, 10, 1, 'A', 1, '2021-05-21 10:18:24'),
+(291, 58, '2021-05-27', 5, 10, 1, 'A', 1, '2021-05-21 10:18:24'),
+(292, 59, '2021-05-27', 6, 8, 1, 'A', 1, '2021-05-21 10:19:19'),
+(293, 59, '2021-05-27', 6, 8, 1, 'A', 1, '2021-05-21 10:19:19'),
+(294, 60, '2021-05-27', 6, 9, 1, 'A', 1, '2021-05-21 10:19:34'),
+(295, 60, '2021-05-27', 6, 9, 1, 'A', 1, '2021-05-21 10:19:35'),
+(296, 61, '2021-05-27', 6, 10, 1, 'A', 1, '2021-05-21 10:19:52'),
+(297, 61, '2021-05-27', 6, 10, 1, 'A', 1, '2021-05-21 10:19:52'),
+(298, 62, '2021-05-27', 7, 7, 1, 'A', 1, '2021-05-21 10:20:11'),
+(299, 62, '2021-05-27', 7, 7, 1, 'W', 1, '2021-05-21 10:20:11'),
+(300, 63, '2021-05-27', 7, 8, 1, 'A', 1, '2021-05-21 10:20:53'),
+(301, 63, '2021-05-27', 7, 8, 1, 'W', 1, '2021-05-21 10:20:53'),
+(302, 64, '2021-05-27', 7, 9, 1, 'A', 1, '2021-05-21 10:21:07'),
+(303, 64, '2021-05-27', 7, 9, 1, 'A', 1, '2021-05-21 10:21:07'),
+(304, 65, '2021-05-27', 7, 10, 1, 'A', 1, '2021-05-21 10:21:21'),
+(305, 65, '2021-05-27', 7, 10, 1, 'A', 1, '2021-05-21 10:21:21');
 
 -- --------------------------------------------------------
 
@@ -169,8 +205,8 @@ INSERT INTO `reservations` (`id_reservation`, `id_related_reservation`, `reserva
 --
 
 CREATE TABLE `reservationsconfig` (
-  `id_config` int(11) NOT NULL COMMENT 'ID of the configuration',
-  `max_reservation` int(11) NOT NULL COMMENT 'Maximun number of reservations by user',
+  `id_config` int(3) NOT NULL COMMENT 'ID of the configuration',
+  `max_reservation` int(2) NOT NULL COMMENT 'Maximun number of reservations by user',
   `max_users_route` int(2) NOT NULL COMMENT 'Número máximo de usuarios totales en la zona de vías',
   `start_free_date` date NOT NULL COMMENT 'Start free date for  reservations',
   `end_free_date` date NOT NULL COMMENT 'End free date for  reservations',
@@ -183,7 +219,7 @@ CREATE TABLE `reservationsconfig` (
 --
 
 INSERT INTO `reservationsconfig` (`id_config`, `max_reservation`, `max_users_route`, `start_free_date`, `end_free_date`, `user_modification`, `timestamp`) VALUES
-(1, 2, 6, '2021-05-01', '2021-05-30', 1, '2021-05-13 09:27:45');
+(1, 2, 6, '2021-05-01', '2021-05-30', 1, '2021-05-21 07:10:39');
 
 -- --------------------------------------------------------
 
@@ -209,11 +245,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id_user`, `user_type`, `card_number`, `user_status`, `user_email`, `user_password`, `user_name`, `user_modification`, `timestamp`) VALUES
 (1, 'A', 100, 'A', 'plosky21@hotmail.com', '$2y$10$KN53byzg.0fjivHRR4x8Yud47gbuN7VtVvVZdFCaWSR95z4qeZHXK', 'Escuela escalada', 1, '2021-04-27 07:24:35'),
-(2, 'G', 200, 'I', 'email1@hotmail.com', 'Passwor1', 'Joan Espinosa', 1, '2021-04-27 07:37:26'),
-(3, 'M', 300, 'A', 'guaubisabi@gmail.com', '$2y$10$NXyIGrmwzipqI5FpIJpR9eLdWVenNY9WgWE4K/qVVeIB79LSRgxhy', 'Felip Solsona', 1, '2021-05-19 15:56:23'),
-(4, 'G', 400, 'A', 'ssaannddrruuss@gmail.com', '$2y$10$NeGc9aJbavkmCNHhBp9KGO9nI8Cbbmuzy5pbeqODrBnxKKyILoVkS', 'Sandra Ruiz', 1, '2021-05-13 16:09:35'),
-(5, 'M', 500, 'A', 'sandra.arcas.valero@gmail.com', '$2y$10$6FLYWBqZUfL8fes/1a0eGOs3gNVvMRSs6gIZyC/NPN81IZ00HT7XS', 'Nuria Crespo', 1, '2021-04-27 08:07:03'),
-(6, 'G', 600, 'A', 'info@guaubisabi.com', '$2y$10$dw5.l9NuOpOWRiHdkJFm5.9k7rc.9YREx0i0CtODLI2J0NWl5.SXi', 'Javier Maroto', 1, '2021-05-19 15:56:35');
+(2, 'G', 200, 'I', 'email1@hotmail.com', 'Passwor1', 'Joan Espinosa', 1, '2021-05-20 13:56:43'),
+(3, 'M', 300, 'A', 'guaubisabi@gmail.com', '$2y$10$NXyIGrmwzipqI5FpIJpR9eLdWVenNY9WgWE4K/qVVeIB79LSRgxhy', 'Felip Solsona', 1, '2021-05-21 07:02:52'),
+(4, 'G', 400, 'A', 'ssaannddrruuss@gmail.com', '$2y$10$NeGc9aJbavkmCNHhBp9KGO9nI8Cbbmuzy5pbeqODrBnxKKyILoVkS', 'Sandra Ruiz', 1, '2021-05-20 10:18:09'),
+(5, 'M', 500, 'A', 'sandra.arcas.valero@gmail.com', '$2y$10$6FLYWBqZUfL8fes/1a0eGOs3gNVvMRSs6gIZyC/NPN81IZ00HT7XS', 'Nuria Crespo', 1, '2021-05-20 16:10:32'),
+(6, 'G', 600, 'A', 'info@guaubisabi.com', '$2y$10$dw5.l9NuOpOWRiHdkJFm5.9k7rc.9YREx0i0CtODLI2J0NWl5.SXi', 'Javier Maroto', 1, '2021-05-19 15:56:35'),
+(13, 'G', 700, 'I', 'antonio@hotmail.com', '', 'Antonio Gonzalez', 1, '2021-05-20 16:04:22');
 
 -- --------------------------------------------------------
 
@@ -222,7 +259,7 @@ INSERT INTO `users` (`id_user`, `user_type`, `card_number`, `user_status`, `user
 --
 
 CREATE TABLE `zones` (
-  `id_zone` int(2) NOT NULL COMMENT 'ID of the zone',
+  `id_zone` int(3) NOT NULL COMMENT 'ID of the zone',
   `zone_name` varchar(30) NOT NULL COMMENT 'Name of the zone',
   `max_users_zone` int(2) NOT NULL COMMENT 'Maximun users number in an specific zone',
   `zone_status` varchar(1) NOT NULL COMMENT 'Status of the zone (Active = "A") (Inactive = "I"',
@@ -235,7 +272,7 @@ CREATE TABLE `zones` (
 --
 
 INSERT INTO `zones` (`id_zone`, `zone_name`, `max_users_zone`, `zone_status`, `user_modification`, `timestamp`) VALUES
-(1, 'Caballo', 2, 'A', 999999, '2021-05-18 23:35:01'),
+(1, 'Caballo', 2, 'A', 1, '2021-05-21 11:06:44'),
 (2, 'Volúmenes', 3, 'A', 999999, '2021-05-18 23:35:01'),
 (3, 'Placa desplomada', 2, 'A', 999999, '2021-05-18 23:35:01'),
 (4, 'Moonboard', 2, 'A', 999999, '2021-05-18 23:35:01'),
@@ -294,31 +331,31 @@ ALTER TABLE `zones`
 -- AUTO_INCREMENT de la tabla `hours`
 --
 ALTER TABLE `hours`
-  MODIFY `id_hour` int(2) NOT NULL AUTO_INCREMENT COMMENT 'ID of the time zone', AUTO_INCREMENT=8;
+  MODIFY `id_hour` int(3) NOT NULL AUTO_INCREMENT COMMENT 'ID of the time zone', AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id_reservation` int(12) NOT NULL AUTO_INCREMENT COMMENT 'ID of reservation', AUTO_INCREMENT=265;
+  MODIFY `id_reservation` int(7) NOT NULL AUTO_INCREMENT COMMENT 'ID of reservation', AUTO_INCREMENT=306;
 
 --
 -- AUTO_INCREMENT de la tabla `reservationsconfig`
 --
 ALTER TABLE `reservationsconfig`
-  MODIFY `id_config` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID of the configuration', AUTO_INCREMENT=3;
+  MODIFY `id_config` int(3) NOT NULL AUTO_INCREMENT COMMENT 'ID of the configuration', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID of the user', AUTO_INCREMENT=13;
+  MODIFY `id_user` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID of the user', AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `zones`
 --
 ALTER TABLE `zones`
-  MODIFY `id_zone` int(2) NOT NULL AUTO_INCREMENT COMMENT 'ID of the zone', AUTO_INCREMENT=11;
+  MODIFY `id_zone` int(3) NOT NULL AUTO_INCREMENT COMMENT 'ID of the zone', AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas

@@ -115,7 +115,9 @@ if (isset($checkSameReservation) && $checkSameReservation == "Y") {
         $_SESSION['message'] = "No se puede hacer la reserva en la zona $zoneNameChoosen porque se superaría el máximo del aforo de la misma. Prueba a seleccionar otra zona." ; 
     
     } else {
-
+        if (!isset($idReservation)){
+            $idReservation = 'withoutIdReservation';
+        }
         try {
             $sql = "SELECT start_hour 
                       FROM reservations, users, hours
@@ -124,7 +126,8 @@ if (isset($checkSameReservation) && $checkSameReservation == "Y") {
                        AND user_id            = :iduser
                        AND reservation_Date   = :filterreservationdate
                        AND user_type          <> 'A'
-                       AND reservation_status IN ('A', 'P', 'C')";
+                       AND reservation_status IN ('A', 'P', 'C')
+                       AND id_reservation     <> '$idReservation'";
             $query = $conn->prepare($sql); 
             $query->execute(array(":iduser"=>$_SESSION['sessionIdUserSameReservationControl'], ":filterreservationdate"=>$filterReservationDate));  
             $resultCheckSameReservation = $query->fetchAll(PDO::FETCH_OBJ);
