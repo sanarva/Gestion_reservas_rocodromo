@@ -5,7 +5,10 @@ let userConfirmNewPassword;
 
 let date = new Date();
 let currentDate = (date.toISOString()).substring(0,10);
-let currentHour = date.getHours() + ":" + date.getMinutes();
+let hour = date.getHours();
+let minute = date.getMinutes();
+//Pongo un cero delante en caso de que la hora o el minuto sean menores a 10 (ej. hora 8 pondré 08.)
+let currentHour =  ("0" + hour).slice(-2) + ":" +  ("0" + minute).slice(-2);
 
 
 //Variable necesaria para determinar si existe o no formulario de login 
