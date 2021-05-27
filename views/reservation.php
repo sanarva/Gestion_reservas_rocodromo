@@ -222,8 +222,8 @@
                         </div>
                         <div id="textPlafonCaballo" class="ad-none">
                             <p>Por motivos de seguridad (COVID), en esta zona sólo puede haber reservas simultáneas de personas del mismo núcleo familiar. 
-                            <p>Como esta aplicación es incapaz de conocer esa información, la escuela de escala confía en que serás responsable y solo reservarás en esta zona en caso de que no exista ninguna reserva ya hecha o si la reserva hecha, pertenece a una personas de tu mismo nucleo familiar.</p> 
-                            <p>Para saber si ya se ha hecho una reserva, fíjate en los motigotillos que aparecen al lado de cada una de las reservas disponibles: </p>
+                            <p>Como esta aplicación es incapaz de conocer esa información, la escuela de escalada confía en que serás responsable y solo reservarás en esta zona en caso de que no exista ninguna reserva ya hecha o si la reserva hecha, pertenece a una personas de tu mismo nucleo familiar.</p> 
+                            <p>Para saber si ya se ha hecho una reserva, fíjate en los monigotillos que aparecen al lado de cada una de las reservas disponibles: </p>
                             <ul>
                                 <li><i title="Libre"   class="fas fa-user pr-2"></i> Significa reserva libre  </li>
                                 <li><i title="Ocupado" class="fas fa-user-slash pr-2"></i>Significa que ya existe una reserva hecha</li>
