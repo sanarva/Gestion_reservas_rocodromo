@@ -23,27 +23,29 @@
       <header>
 
     <div class="container ">
-    <div class="legend">
+        <div class="legend">
             <p>CONTACTO ROCÓDROMO:</p>
             <ol>
-                <li><a href="mailto:escolaescaladacornella@gmail.com?subject=Contacto%20desde%20la%20web%20de%20reservas" target="blank" ><i class="fas fa-envelope"></i> escolaescaladacornella@gmail.com</a></li>
+                <li><a href="mailto:escolaescaladacornella@gmail.com?subject=Contacto%20desde%20la%20web%20de%20reservas" target="blank" ><i class="fas fa-envelope"></i> Enviar mail</a></li>
             </ol>
         </div>
-    <div class="legend">
+
+        <div class="legend">
             <p>DESCRIPCIÓN ZONAS:</p>
             <ol>
-                <li><i class="fas fa-sort-down fa-rotate-270"></i> Caballo: Bloque de fibra</li>
-                <li><i class="fas fa-sort-down fa-rotate-270"></i> Moonboard: Plafón blanco 25º de leds</li> 
-                <li><i class="fas fa-sort-down fa-rotate-270"></i> Placa desplomada: Pared de piezas rojas, plafón curvado y pared de pirámide invertida</li> 
-                <li><i class="fas fa-sort-down fa-rotate-270"></i> Plafón: Pared de fibra y pared de pirámide invertida de delante</li> 
-                <li><i class="fas fa-sort-down fa-rotate-270"></i> Vía R1: Vía de escalada situada más a la izquierda </li> 
-                <li><i class="fas fa-sort-down fa-rotate-270"></i> Vía R2: Vía de escalada (tiene autoasegurador)</li> 
-                <li><i class="fas fa-sort-down fa-rotate-270"></i> Vía R3: Vía de escalada (tiene autoasegurador)</li> 
-                <li><i class="fas fa-sort-down fa-rotate-270"></i> Vía R4: Vía de escalada</li> 
-                <li><i class="fas fa-sort-down fa-rotate-270"></i> Vía R5: Vía de escalada situada más a la derecha</li> 
-                <li><i class="fas fa-sort-down fa-rotate-270"></i> Volúmenes: Volúmentes y placa 10º</li> 
+                <li><i class="fas fa-sort-down fa-rotate-270"></i> Caballo: Bloque de fibra.</li>
+                <li><i class="fas fa-sort-down fa-rotate-270"></i> Moonboard: Plafón blanco 25º de leds.</li> 
+                <li><i class="fas fa-sort-down fa-rotate-270"></i> Placa desplomada: Pared de piezas rojas, plafón curvado y pared de pirámide invertida.</li> 
+                <li><i class="fas fa-sort-down fa-rotate-270"></i> Plafón: Pared de fibra y pared de pirámide invertida de delante.</li> 
+                <li><i class="fas fa-sort-down fa-rotate-270"></i> Vía R1: Vía de escalada situada más a la izquierda.</li> 
+                <li><i class="fas fa-sort-down fa-rotate-270"></i> Vía R2: Vía de escalada (tiene autoasegurador).</li> 
+                <li><i class="fas fa-sort-down fa-rotate-270"></i> Vía R3: Vía de escalada (tiene autoasegurador).</li> 
+                <li><i class="fas fa-sort-down fa-rotate-270"></i> Vía R4: Vía de escalada.</li> 
+                <li><i class="fas fa-sort-down fa-rotate-270"></i> Vía R5: Vía de escalada situada más a la derecha.</li> 
+                <li><i class="fas fa-sort-down fa-rotate-270"></i> Volúmenes: Volúmentes y placa 10º.</li> 
             </ol>
         </div>
+
         <div class="legend">
             <p>ESTADO RESERVAS:</p>
             <ol>
@@ -53,13 +55,14 @@
                 <li><i class="fas fa-hourglass-half text-warning"></i>Reserva pendiente de confirmación</li> 
             </ol>
         </div>
+
         <div class="legend">
             <p>BOTONES:</p>
             <ol> 
-                <li><i class="far fa-edit fa-lg text-primary"></i>Modificar</li>
-                <li><i class="far fa-check-circle fa-lg text-primary"></i>Confirmar reserva</li> 
-                <li><i class="far fa-times-circle fa-lg text-danger"></i>Cancelar reserva</li> 
-                <li><i class="far fa-trash-alt fa-lg text-danger"></i>Eliminar  </li> 
+                <li><i class="far fa-edit text-primary"></i>Modificar</li>
+                <li><i class="far fa-check-circle text-primary"></i>Confirmar reserva</li> 
+                <li><i class="far fa-times-circle text-danger"></i>Cancelar reserva</li> 
+                <li><i class="far fa-trash-alt text-danger"></i>Eliminar  </li> 
                 
             </ol>
         </div>

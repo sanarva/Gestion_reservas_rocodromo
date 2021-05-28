@@ -231,8 +231,11 @@ ul li, ul li i {
 
 ol li {
     list-style: none;
-    margin-bottom: 0.5em;    
+    margin-bottom: 0.5em;  
+    padding: 0px;  
 }
+
+ol { list-style-type: none; padding: 0; }
 
 ol li i {
     margin-right: 0.5em;    
