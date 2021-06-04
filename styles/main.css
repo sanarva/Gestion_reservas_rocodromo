@@ -1,0 +1,297 @@
+/* Fuentes que usaremos
+    font-family: 'Lilita One', cursive;
+    font-family: 'Montserrat', sans-serif;*/
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Montserrat:ital,wght@0,400;0,500;1,400&display=swap');
+
+
+
+* {
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+}
+
+/*Ponemos una imagen de fondo*/
+body {
+    background-image: url(../assets/img/fondo.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 0 0;  
+    padding-bottom: 4rem;
+}
+/*Oscurecemos la imagen*/
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+    z-index:-1;  
+}
+
+h1 {
+    font-family: 'Lilita One', cursive;  
+    padding-bottom: 4rem;
+    text-align: center; /*Ojo porque en modo movil parece que no funciona cuando hay tablas*/    
+}
+
+h2 {
+    font-family: 'Lilita One', cursive;  
+    padding-bottom: 1rem;
+    text-align: center; /*Ojo porque en modo movil parece que no funciona cuando hay tablas*/    
+}
+
+
+.cursorHand {
+    cursor: pointer;
+}
+
+select, select option, input {
+    color: rgb(0,0,0);
+}
+
+/*Para poner en negro la x de cerrar los mensajes modales*/ 
+span {
+    color: rgb(0, 0, 0);
+}
+
+
+.closeSession {
+    margin-top: 1rem;
+    color: #f56371;
+    font-weight:500;
+    border: 1px solid #f56371;
+    padding: .5rem;
+}
+.closeSessionIcon {
+    color: #f56371;
+}
+.closeSession:hover{
+    border-color: rgb(255,255,255);
+    color: rgb(255,255,255);
+ }
+
+
+.goMenu{
+    margin-top: 1rem;
+    color: #4b9df5;
+    font-weight:500; 
+    border: 1px solid #4b9df5;
+    padding: .5rem;
+} 
+.goMenuIcon{
+    color: #4b9df5;
+}
+.goMenu:hover{
+    border-color:rgb(255,255,255);
+    color:rgb(255,255,255);
+}
+
+.divOptions{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+
+.itemOption {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 1rem;
+    width: 200px;
+    height: 200px;
+    border: 2px solid rgb(255, 255, 255); 
+    border-radius: 10px;
+    cursor: pointer;    
+}
+
+
+.itemOption:hover{
+   text-decoration: none;
+   transform: translateY(-3px);
+   box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+}
+
+
+.itemOptionText {
+    font-family: 'Lilita One', cursive; 
+    font-size: 1.5rem;
+    color: white;
+    text-align: center;
+    padding:1.5rem;
+}
+
+
+.filterLayoutItems {
+    display: inline-block;
+    margin-bottom: 1rem;
+    margin-right: 2rem;   
+}
+
+
+/*Clase usada para oscurecer la pantalla al dar un mensaje modal*/
+.customModalMessage{
+    width: 100%;
+    height: 100vh;
+    background:rgba(0,0,0,0.6);
+    position:fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.customModalMessage p, .customModalMessage h5{
+    color: black;
+}
+
+.modalIcon{ 
+    font-size: 1.5rem;
+    margin-right: 1.1rem; 
+}
+
+
+.fa-eye{
+    color:black;
+}
+
+
+h5, .modal-body, .modal-body div p, .modal-body div label {
+    color: black;
+}
+
+
+/*Clase usada para los mensajes de Error*/
+.modalIconError{
+    color:#DC3545;
+}
+
+
+/*Clase usada para los mensajes de OK*/
+.modalIconCorrect{
+    color:#3D9900;
+}
+
+
+/*Clase usada para los mensajes de warning*/
+.modalIconWarning{
+    color:#F0AD4E;
+}
+
+
+.modal-footer{
+    display: flex;
+    justify-content: center;
+}  
+
+
+/*Clase usada para mostrar el icono del ojo dentro del campo contraseña*/
+.passwordIcon {
+    float: right;
+    position: relative;
+    margin: -25px 10px 0 0;
+    cursor: pointer;
+}
+
+
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+ 
+.textPrimaryDisabled {
+    color: rgba(0,123,255,0.5);
+}
+
+.textDangerDisabled {
+    color: rgba(220,53,69,0.5);
+}
+
+.textUserDisabled {
+    color: rgba(124,124,124,0.7);
+}
+
+
+ul li, ul li i {
+    list-style: none;
+    color: black;
+}
+
+.legend {
+    border: 2px solid white;
+    padding: 2em;
+    margin: 1em;
+}
+.legend p {
+    font-size: 1.2em;
+    font-weight: 500;
+    border-bottom: 1px solid white;
+}
+
+ol li {
+    list-style: none;
+    margin-bottom: 0.5em;  
+    padding: 0px;  
+}
+
+ol { 
+    list-style-type: none; 
+    padding: 0; 
+}
+
+ol li i {
+    margin-right: 0.5em;    
+}
+
+ol li a { 
+    color: white;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0% 100%; 
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size .5s; 
+}
+ol li a:hover {
+    background-size: 100% 1px;
+    text-decoration: none; 
+    color: white;   
+
+}
+
+/*Tablas en dispositivos móviles*/
+@media screen and (max-width: 600px) {
+
+    table { 
+        width: 100%;
+        font-size: 13px;
+    }
+
+    table thead{
+        display: none;
+    }
+
+    table tr{
+        display: flex;
+        flex-direction: column;
+        border: 1px solid white;
+        margin-bottom: 1em;
+    }
+
+    table td[data-label]{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        border: none;
+        
+    }
+
+    table td[data-label]::before{
+        content: attr(data-label);
+        
+    }
+
+    .fa-lg {
+        font-size: 1.75em;
+    }
+  }
