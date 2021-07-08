@@ -143,7 +143,7 @@ if (isset($insertReservation)){
                 $_SESSION['message'] = "La reserva ha sido creada correctamente" ;
                 if ($reservationsList != "") {
                     $_SESSION['button1'] = 'Volver a la lista';
-                    $_SESSION['formaction1']  = '../views/ReservationsList.php?&dateFrom=&dateTo=&userName=&cardNumber=&startHour=&endHour=&zoneName=&allStatusReservation'; 
+                    $_SESSION['formaction1']  = '../views/reservationsList.php?&dateFrom=&dateTo=&userName=&cardNumber=&startHour=&endHour=&zoneName=&allStatusReservation'; 
                 } else {
                     $_SESSION['button1'] = 'Volver a mis reservas';
                     $_SESSION['formaction1']  = '../views/myReservationsList.php';
