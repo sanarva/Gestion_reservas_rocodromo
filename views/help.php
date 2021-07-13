@@ -26,7 +26,7 @@
         <div class="legend">
             <p>CONTACTO ROCÓDROMO:</p>
             <ol>
-                <li><a href="mailto:escolaescaladacornella@gmail.com?subject=Contacto%20desde%20la%20web%20de%20reservas" target="blank" ><i class="fas fa-envelope"></i> Enviar mail</a></li>
+                <li><a href="mailto:escolaescaladacornella@gmail.com?cc=reservasrocodromocornella@gmail.com&subject=Contacto%20desde%20la%20web%20de%20reservas" target="blank" ><i class="fas fa-envelope"></i> Enviar mail</a></li>
             </ol>
         </div>
 
