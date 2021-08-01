@@ -20,7 +20,10 @@
 <body>
     
     <header>
-        <?php include("php/header.php")?>
+        <?php
+            $page = "index"; 
+            include("php/header.php")
+        ?>
     <header>
 
     <div class="container">
