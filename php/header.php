@@ -9,6 +9,10 @@ $invisibleClass = "";
 //En la pantalla de inicio de sesión, no mostraremos los botones de "Volver al menú" ni "Cerrar sesión"
 if (!isset($_SESSION["sessionIdUser"])){
     $invisibleClass = "invisible";
+    //Si no hay datos de sesión y además no estamos en la página de inicio, redireccionamos a la página de inicio
+    if ($page != "index") {
+        header("Location: ../index.php" );
+    }
 }    
 
 ?>
