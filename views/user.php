@@ -29,7 +29,14 @@
    ?>
 
     <header>
-        <?php include("../php/header.php");?>
+        <?php 
+            include("../php/header.php");
+
+            //Si algún usuario que no es administrador, intenta entrar en esta página que es de acceso único a administradores, se redirigirá al m
+            if (isset($_SESSION["sessionIdUser"]) && $_SESSION['sessionUserType'] != "A"){
+                header("Location: userMenu.php" );
+            }
+        ?>
     <header>
 
     <div class="container">
@@ -60,7 +67,7 @@
                 <div class="col-lg-1 "></div>
                 <label for="inputCardNumber" class="col-lg-3 col-form-label"><i class="fas fa-address-card"></i> Nº de tarjeta</label>
                 <div class="col-lg-7">
-                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Introduce el número de tarjeta" value ="<?php echo $cardNumber ?>">
+                    <input type="text" maxlength="6" class="form-control" id="cardNumber" name="cardNumber" placeholder="Introduce el número de tarjeta" value ="<?php echo $cardNumber ?>">
                     <div class="invalid-feedback" id="errorCardNumber"></div>
                 </div>
             </div>
