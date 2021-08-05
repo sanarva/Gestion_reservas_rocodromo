@@ -24,7 +24,14 @@
     $filterAllStatusUser    =  $_GET["allStatusUser"];
   ?>
   <header>
-    <?php include("../php/header.php");?>
+    <?php 
+      include("../php/header.php");
+
+      //Si algún usuario que no es administrador, intenta entrar en esta página que es de acceso único a administradores, se redirigirá al m
+      if (isset($_SESSION["sessionIdUser"]) && $_SESSION['sessionUserType'] != "A"){
+        header("Location: userMenu.php" );
+      }
+    ?>
   <header>
 
   <h2>GESTIÓN DE USUARIOS</h2>
