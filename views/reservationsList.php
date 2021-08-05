@@ -36,10 +36,15 @@
   <header>
     <?php 
       include("../php/header.php");
+
+      //Si algún usuario que no es administrador, intenta entrar en esta página que es de acceso único a administradores, se redirigirá al m
+      if (isset($_SESSION["sessionIdUser"]) && $_SESSION['sessionUserType'] != "A"){
+        header("Location: userMenu.php" );
+      }
+
       //Con esta variable de sesión indicamos que estamos accediendo a la creación/mantenimiento de reservas desde la lista general de reservas
       $_SESSION["reservationsList"] = "Y";
     ?>
-
   <header>  
 
   <div class="container">
