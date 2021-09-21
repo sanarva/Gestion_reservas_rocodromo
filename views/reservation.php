@@ -22,8 +22,16 @@
     <?php
         // Recuperamos la información de la lista de reservas
         $idReservation                 = $_GET["idReservation"];
+        if (isset($_GET["idRelatedReservation"])){
+            $idRelatedReservation      = $_GET["idRelatedReservation"];
+        } else {
+            $idRelatedReservation      = 0;
+        }
         $userName                      = $_GET["userName"];
         $reservationDateChoosen        = $_GET["reservationDate"];
+        if (isset ($_GET["reservationDateTo"])){
+            $reservationDateChoosenTo      = $_GET["reservationDateTo"];
+        }    
         $filterStartHour               = $_GET["startHour"];
         $filterEndHour                 = $_GET["endHour"];
         $filterZoneName                = $_GET["zoneName"];
@@ -41,6 +49,7 @@
     ?>
    
     <p class="d-none" id="idReservation"><?php echo $idReservation ?></p>
+    <p class="d-none" id="idRelatedReservation"><?php echo $idRelatedReservation ?></p>
     <header>
         <?php include("../php/header.php");?>
       <header>
@@ -48,28 +57,39 @@
     <div class="container">
         
         <h2><?php if ($idReservation == " " || $idReservation == "" ) {?> CREAR NUEVA RESERVA <?php } else {?> MODIFICACIÓN RESERVA <?php }?></h2>
+        
         <form method="post" action="#" autocomplete="off" id="searchReservationForm" name="searchReservationForm" onsubmit="return validateSearchReservation()">
             <div class="form-group row">
                 <div class="col-lg-1 "></div>
                 <label for="filterUserName" class="col-lg-3 col-form-label"><i class="fas fa-user"></i> Nombre usuario</label>
                 <div class="col-lg-7">
-                    <input type="text" class="form-control" id="filterUserName" name="filterUserName" placeholder="Introduce nombre y apellidos" value ="<?php echo $userName ?>" <?php if($userName != "" && !isset($_SESSION['sessionErrorLookingForUser'])){ ?> readonly <?php }?> >
+                    <input autofocus type="text" class="form-control" id="filterUserName" name="filterUserName" placeholder="Introduce nombre y apellidos" value ="<?php echo $userName ?>" <?php if($userName != "" && !isset($_SESSION['sessionErrorLookingForUser'])){ ?> readonly <?php }?> >
                     <?php if (isset($_SESSION['sessionErrorLookingForUser'])){ //Eliminamos el indicador de error al buscar el nombre por un admin
                         unset ($_SESSION['sessionErrorLookingForUser']);
                     } ?>
                     <div class="invalid-feedback" id="errorFilterUserName"></div>
                 </div>
             </div>
+            
 
             <div class="form-group row">
                 <div class="col-lg-1 "></div>
-                <label for="reservationDateChoosen" class="col-lg-3 col-form-label"><i class="fas fa-calendar-alt"></i> Fecha reserva</label>
+                <label id="dateText" for="reservationDateChoosen" class="col-lg-3 col-form-label"><i class="fas fa-calendar-alt"></i> Fecha reserva</label>
                 <div class="col-lg-7">
                     <input type="date" min="<?php echo $reservationsConfig[0]->start_free_date ?>" max="<?php echo $reservationsConfig[0]->end_free_date ?>" class="form-control" id="reservationDateChoosen" name="reservationDateChoosen" value ="<?php echo $reservationDateChoosen ?>">
                     <div class="invalid-feedback" id="errorReservationDateChoosen"></div>
                 </div>
             </div>
-
+            
+            <div id="dateToMult" class="form-group row d-none">
+                <div class="col-lg-1 "></div>
+                <label for="reservationDateChoosenTo" class="col-lg-3 col-form-label"><i class="fas fa-calendar-alt"></i> Fecha hasta</label>
+                <div class="col-lg-7">
+                    <input type="date" min="<?php echo $reservationsConfig[0]->start_free_date ?>" max="<?php echo $reservationsConfig[0]->end_free_date ?>" class="form-control" id="reservationDateChoosenTo" name="reservationDateChoosenTo" value ="<?php echo $reservationDateChoosenTo ?>">
+                    <div class="invalid-feedback" id="errorReservationDateChoosenTo"></div>
+                </div>
+            </div>
+            
             <?php include("../php/dropdowns.php");?>
             
             <div class="form-group row">
@@ -108,7 +128,7 @@
                 <div class="col-lg-1"></div>
                 <label for="filterZoneName" class="col-lg-3 col-form-label"><i class="fas fa-map-signs"></i> Elije zona</label>
                 <div class="col-lg-7 input-group">
-                <select class="form-control" name="filterZoneName">
+                <select class="form-control" name="filterZoneName" id="filterZoneName">
                   <option value="">Todas las zonas</option>
                   <?php foreach($zones as $zone):?>
                    <option value="<?php echo $zone->zone_name?>" <?php if ($zone->zone_name == $filterZoneName) {?> selected <?php } ?> >
@@ -148,15 +168,15 @@
             
                 public function __construct($reservationDayClass, $reservationDateChoosenClass, $idHourClass, $startHourClass, $endHourClass, $idZoneClass, $zoneNameClass, $freeReservationsClass, $busyReservationsClass)
                 {
-                    $this->reservationDayClass         = $reservationDayClass;
-                    $this->reservationDateChoosenClass = $reservationDateChoosenClass;
-                    $this->idHourClass                 = $idHourClass;
-                    $this->startHourClass              = $startHourClass;
-                    $this->endHourClass                = $endHourClass;
-                    $this->idZoneClass                 = $idZoneClass;
-                    $this->zoneNameClass               = $zoneNameClass;
-                    $this->freeReservationsClass       = $freeReservationsClass;
-                    $this->busyReservationsClass       = $busyReservationsClass;
+                    $this->reservationDayClass           = $reservationDayClass;
+                    $this->reservationDateChoosenClass   = $reservationDateChoosenClass;
+                    $this->idHourClass                   = $idHourClass;
+                    $this->startHourClass                = $startHourClass;
+                    $this->endHourClass                  = $endHourClass;
+                    $this->idZoneClass                   = $idZoneClass;
+                    $this->zoneNameClass                 = $zoneNameClass;
+                    $this->freeReservationsClass         = $freeReservationsClass;
+                    $this->busyReservationsClass         = $busyReservationsClass;
                 }
             }    
         ?>
@@ -168,7 +188,7 @@
                     <div class="form-check">
                         <?php if (isset($_SESSION["sessionReservations"])) {
                             foreach($_SESSION["sessionReservations"] as $reservation):?>
-                            <input class="form-check-input" type="radio" onclick="checkZoneReservation()" id="reservationChoosen" name="reservationChoosenArray" value="<?php echo $reservation->idHourClass ?>, <?php echo $reservation->idZoneClass ?>, <?php echo $reservation->zoneNameClass?>, <?php echo $reservation->startHourClass?>, <?php echo $reservation->endHourClass?>, <?php echo $reservation->freeReservationsClass?>"  data-toggle="modal" data-target="#exampleModal">
+                            <input class="form-check-input reservationChoosen" type="radio" onclick="checkZoneReservation()" id="reservationChoosen" name="reservationChoosenArray" value="<?php echo $reservation->idHourClass ?>, <?php echo $reservation->idZoneClass ?>, <?php echo $reservation->zoneNameClass?>, <?php echo $reservation->startHourClass?>, <?php echo $reservation->endHourClass?>, <?php echo $reservation->freeReservationsClass?>, <?php echo $reservation->reservationDateChoosenClass?>"  data-toggle="modal" data-target="#exampleModal">
                             <label  class="form-check-label d-block" for="reservationChoosen" >
                                 <?php
                                     $date = new DateTime( $reservation->reservationDateChoosenClass); 
@@ -194,6 +214,13 @@
                 </div>
             </fildset>
             
+            <div class="form-group row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-8">
+                    <button id="massiveReservationBtn" type="submit" class="btn btn-primary d-none" data-formAction="../php/massiveReservation.php?idRelatedReservation=<?php echo $idRelatedReservation?>"> <i class="far fa-calendar-check"></i> Reservar escuela</button>
+                </div>
+            </div>                        
+
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg">
@@ -220,7 +247,7 @@
                                 <p> Por favor, indica el número de tarjeta de tu compañero/a de cordada.</p>
                             </div>
                         </div>
-                        <div id="textPlafonCaballo" class="ad-none">
+                        <div id="textPlafonCaballo" class="d-none">
                             <p>Por motivos de seguridad (COVID), en esta zona sólo puede haber reservas simultáneas de personas del mismo núcleo familiar. 
                             <p>Como esta aplicación es incapaz de conocer esa información, la escuela de escalada confía en que serás responsable y solo reservarás en esta zona en caso de que no exista ninguna reserva ya hecha o si la reserva hecha, pertenece a una personas de tu mismo nucleo familiar.</p> 
                             <p>Para saber si ya se ha hecho una reserva, fíjate en los monigotillos que aparecen al lado de cada una de las reservas disponibles: </p>
