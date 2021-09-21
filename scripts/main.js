@@ -381,6 +381,27 @@ function validateReservationsConfigForm(){
 }
 
 
+/* Este código tiene que ver con el formulario de buscar reservas (searchReservationForm) 
+   Si el nombre de usuario es escola, permitiremos hacer reservas múltiples: 
+        1 Mostramos el campo "Fecha hasta". 
+        2 Cambiamos el valor de la etiqueta de "Fecha reserva" a "Fecha desde"*/
+if (filterUserName){
+    if (filterUserName.value.toLowerCase() == "escola") {
+        document.getElementById("dateToMult").classList.remove("d-none");
+        document.getElementById("dateText").innerHTML = '<i class="fas fa-calendar-alt"></i> Fecha desde';
+    }
+    filterUserName.addEventListener("blur", (event) => { 
+        if (filterUserName.value.toLowerCase() == "escola") {
+            document.getElementById("dateToMult").classList.remove("d-none");
+            document.getElementById("dateText").innerHTML = '<i class="fas fa-calendar-alt"></i> Fecha desde';
+        }  else {
+            document.getElementById("dateToMult").classList.add("d-none");
+            document.getElementById("dateText").innerHTML = '<i class="fas fa-calendar-alt"></i> Fecha reserva';
+        }
+    }, true);
+}
+
+
 //Función usada para hacer las validaciones del formulario de búsqueda de reservas disponibles
 function validateSearchReservation(){
     //Inicializamos los errores
@@ -411,6 +432,33 @@ function validateSearchReservation(){
         totalErrors++;
     }
 
+    //Si se está haciendo una reserva múltiple para la escuela, recuperamos  la "Fecha hasta" elejida y la validamos 
+    if (filterUserName.value.toLowerCase() == "escola"){
+        let reservationDateChoosenTo = document.getElementById("reservationDateChoosenTo");
+        let errorReservationDateChoosenTo = document.getElementById("errorReservationDateChoosenTo");
+        if (reservationDateChoosenTo.value == "") {
+            let reservationDateChoosenToMin = formatDate(reservationDateChoosenTo.min);
+            let reservationDateChoosenToMax = formatDate(reservationDateChoosenTo.max);
+
+            reservationDateChoosenTo.classList.add("is-invalid");
+            errorReservationDateChoosenTo.textContent = "Por favor, selecciona una fecha del " + reservationDateChoosenToMin + " al " + reservationDateChoosenToMax;
+            totalErrors++;
+        } else if (reservationDateChoosenTo.value < currentDate){
+            reservationDateChoosenTo.classList.add("is-invalid");
+            errorReservationDateChoosenTo.textContent = "La fecha de la reserva no puede ser un día pasado";
+            totalErrors++;
+        }
+
+        if (reservationDateChoosenTo.value < reservationDateChoosen.value){
+            reservationDateChoosenTo.classList.add("is-invalid");
+            errorReservationDateChoosenTo.textContent = "La 'fecha hasta' debe ser mayor o igual a la 'fecha desde'";
+            totalErrors++;
+        }
+    } else {
+        reservationDateChoosenTo.value = reservationDateChoosen.value;
+    }
+   
+
     //Recuperamos las horas 
     let filterStartHour = document.getElementById("filterStartHour");
     let filterEndHour   = document.getElementById("filterEndHour");
@@ -438,67 +486,96 @@ function validateSearchReservation(){
 
     //Recuperamos el valor del idReservation para saber si tenemos que llamar en modo alta o modificación
     let idReservationRetrieved = document.getElementById("idReservation").innerHTML; 
+    let idRelatedReservationRetrieved = document.getElementById("idRelatedReservation").innerHTML; 
     
     if (totalErrors > 0) {
         return false;
     } else {
-        searchReservationForm.action = "../php/searchAvailableReservations.php?idReservation=" + idReservationRetrieved;
+        searchReservationForm.action = "../php/searchAvailableReservations.php?idReservation=" + idReservationRetrieved + "&idRelatedReservation=" + idRelatedReservationRetrieved;
     }
 }
 
 
 function checkZoneReservation() {
-    //Recuperamos la reserva elegida
-    let reservationChoosen = document.reservationForm.reservationChoosenArray.value;
-    
-    //La convertimos en array
-    let reservationChoosenArray = reservationChoosen.split(", ");  
-    
-    //Obtenemos los datos del array para el nombre de la zona
-    zoneName = reservationChoosenArray[2];
 
-    switch(zoneName) {
-        case 'Vía R1':
-        case 'Vía R4':
-        case 'Vía R5':
-            document.getElementById("textR1R4R5").classList.remove("d-none");
-            document.getElementById("textR2R3").classList.add("d-none");
-            document.getElementById("textPlafonCaballo").classList.add("d-none");
-            document.getElementById("textOthers").classList.add("d-none");
-            document.getElementById("idcardNumberRopeTeam").classList.remove("d-none");
-            document.getElementById("cardNumberRopeTeam").value = "";
-            document.getElementById("cardNumberRopeTeam").classList.remove("is-invalid");
-            errorCardNumberRopeTeam.textContent = "";
-            break;
-        case 'Vía R2':
-        case 'Vía R3':  
-            document.getElementById("textR1R4R5").classList.add("d-none");
-            document.getElementById("textR2R3").classList.remove("d-none");
-            document.getElementById("textPlafonCaballo").classList.add("d-none");
-            document.getElementById("textOthers").classList.add("d-none");
-            document.getElementById("conAutoasegurador").checked = true;
-            document.getElementById("divRopeTeam").classList.add("d-none");
-            document.getElementById("cardNumberRopeTeam").value = "";
-            document.getElementById("idcardNumberRopeTeam").classList.add("d-none");
-            document.getElementById("cardNumberRopeTeam").classList.remove("is-invalid");
-            errorCardNumberRopeTeam.textContent = "";
-            break;
-        case 'Caballo':
-        case 'Plafón':
-            document.getElementById("textR1R4R5").classList.add("d-none");
-            document.getElementById("textR2R3").classList.add("d-none");
-            document.getElementById("textPlafonCaballo").classList.remove("d-none");
-            document.getElementById("textOthers").classList.remove("d-none");
-            document.getElementById("idcardNumberRopeTeam").classList.add("d-none"); 
-            break;
-        default:
-            document.getElementById("textR1R4R5").classList.add("d-none");
-            document.getElementById("textR2R3").classList.add("d-none");
-            document.getElementById("textPlafonCaballo").classList.add("d-none");
-            document.getElementById("textOthers").classList.remove("d-none");
-            document.getElementById("idcardNumberRopeTeam").classList.add("d-none"); 
+    //Cuando selecionamos alguna reserva disponible, si es para el usuario escola
+    //   1. Se cambian los radio button por checkbox para poder seleccionar varias reservas
+    //   2. Se elimina el mensaje modal
+    //   3. Se añade el botón "Reservar escuela" que llamará a masiveReservation.php
+    if (filterUserName.value.toLowerCase() == "escola"){
+        let radios = document.getElementsByClassName("reservationChoosen");
+         
+        if (radios[0].getAttribute("type") == "radio"){
+            for (let i = 0; i < radios.length; i++){
+                radios[i].setAttribute("type", "checkbox"); //Cambiamos los radiobuttons por checkboxes
+                radios[i].removeAttribute("data-toggle"); //Eliminamos el mensaje modal
+            }
+        }
+        
+        //Con este bucle mostramos u ocultamos el botón de Reservas escuela dependiendo si se ha seleccionado alguna reserva o no
+        let x = 0;
+        while (x < radios.length && radios[x].checked == false){
+            x++;     
+        } 
+            if (x < radios.length ) {
+            document.getElementById("massiveReservationBtn").classList.remove("d-none");
+        } else {
+            document.getElementById("massiveReservationBtn").classList.add("d-none");
+        }
+            
+
+    } else {
+        //Recuperamos la reserva elegida
+        let reservationChoosen = document.reservationForm.reservationChoosenArray.value;
+
+        //La convertimos en array
+        let reservationChoosenArray = reservationChoosen.split(", ");  
+
+        //Obtenemos los datos del array para el nombre de la zona
+        zoneName = reservationChoosenArray[2];
+
+        switch(zoneName) {
+            case 'Vía R1':
+            case 'Vía R4':
+            case 'Vía R5':
+                document.getElementById("textR1R4R5").classList.remove("d-none");
+                document.getElementById("textR2R3").classList.add("d-none");
+                document.getElementById("textPlafonCaballo").classList.add("d-none");
+                document.getElementById("textOthers").classList.add("d-none");
+                document.getElementById("idcardNumberRopeTeam").classList.remove("d-none");
+                document.getElementById("cardNumberRopeTeam").value = "";
+                document.getElementById("cardNumberRopeTeam").classList.remove("is-invalid");
+                errorCardNumberRopeTeam.textContent = "";
+                break;
+            case 'Vía R2':
+            case 'Vía R3':  
+                document.getElementById("textR1R4R5").classList.add("d-none");
+                document.getElementById("textR2R3").classList.remove("d-none");
+                document.getElementById("textPlafonCaballo").classList.add("d-none");
+                document.getElementById("textOthers").classList.add("d-none");
+                document.getElementById("conAutoasegurador").checked = true;
+                document.getElementById("divRopeTeam").classList.add("d-none");
+                document.getElementById("cardNumberRopeTeam").value = "";
+                document.getElementById("idcardNumberRopeTeam").classList.add("d-none");
+                document.getElementById("cardNumberRopeTeam").classList.remove("is-invalid");
+                errorCardNumberRopeTeam.textContent = "";
+                break;
+            case 'Caballo':
+            case 'Plafón':
+                document.getElementById("textR1R4R5").classList.add("d-none");
+                document.getElementById("textR2R3").classList.add("d-none");
+                document.getElementById("textPlafonCaballo").classList.remove("d-none");
+                document.getElementById("textOthers").classList.remove("d-none");
+                document.getElementById("idcardNumberRopeTeam").classList.add("d-none"); 
+                break;
+            default:
+                document.getElementById("textR1R4R5").classList.add("d-none");
+                document.getElementById("textR2R3").classList.add("d-none");
+                document.getElementById("textPlafonCaballo").classList.add("d-none");
+                document.getElementById("textOthers").classList.remove("d-none");
+                document.getElementById("idcardNumberRopeTeam").classList.add("d-none"); 
+        }
     }
-
 }
 
 
@@ -519,81 +596,110 @@ function checkAutoasegurador() {
 //Función usada para hacer las reservas
 function reservate(btnClicked){
     
-    //Definimos la variable donde irá el número de tarjeta del compañero/a de cordada
-    let cardNumberRopeTeam = document.getElementById("cardNumberRopeTeam");
+    if (filterUserName.value.toLowerCase() != "escola"){
+        //Definimos la variable donde irá el número de tarjeta del compañero/a de cordada
+        let cardNumberRopeTeam = document.getElementById("cardNumberRopeTeam");
 
-    //Definimos la variable de error
-    let errorCardNumberRopeTeam;
+        //Definimos la variable de error
+        let errorCardNumberRopeTeam;
 
-    //Definimos la variable donde guardaremos el tipo de reserva (simple, ropeTeam o autoInsurer)
-    let reservationType = "simple";
+        //Definimos la variable donde guardaremos el tipo de reserva (simple, ropeTeam o autoInsurer)
+        let reservationType = "simple";
 
-    
-    //Inicializamos los errores
-    let totalErrors = 0;
+        //Inicializamos los errores
+        let totalErrors = 0;
 
-    //Recuperamos la reserva elegida
-    let reservationChoosen = document.reservationForm.reservationChoosenArray.value;
-    
-    //La convertimos en array
-    let reservationChoosenArray = reservationChoosen.split(", ");  
-    
-    //Obtenemos los datos del array para el id de las horas, el id de la zona y el nombre de la zona
-    let idHour             = reservationChoosenArray[0];
-    let idZone             = reservationChoosenArray[1];
-    let zoneName           = reservationChoosenArray[2];
-    let startHour          = reservationChoosenArray[3];
-    let endHour            = reservationChoosenArray[4];
-    let freeReservations   = reservationChoosenArray[5];
-
-    //Si se trata de una vía con autoasegurador y se va a escalar sin cordada
-    if ((zoneName == "Vía R2" && document.getElementById("conAutoasegurador").checked) || (zoneName == "Vía R3" && document.getElementById("conAutoasegurador").checked)) {
-        reservationType = "autoInsurer";
-    }
-
-    //Si el nombre de la zona es de los que requiere cordada, recuperaremos el número de tarjeta del compañero/a de cordada
-    if (zoneName == "Vía R1" || 
-       (zoneName == "Vía R2" && document.getElementById("sinAutoasegurador").checked) || 
-       (zoneName == "Vía R3" && document.getElementById("sinAutoasegurador").checked) || 
-        zoneName == "Vía R4" || 
-        zoneName == "Vía R5" ) {
-            
-        reservationType = "ropeTeam";
+        //Recuperamos la reserva elegida
+        let reservationChoosen = document.reservationForm.reservationChoosenArray.value;
         
-        errorCardNumberRopeTeam = document.getElementById("errorCardNumberRopeTeam");
-            
-        //Si no está informado, damos error
-        if (cardNumberRopeTeam.value == ""){
-            cardNumberRopeTeam.classList.add("is-invalid");
-            errorCardNumberRopeTeam.textContent = "Por favor, escribe el número de tarjeta de tu compañero/a.";
-            totalErrors++;
-        } else 
-        //Si no es numérico, damos error
-        if (isNaN(cardNumberRopeTeam.value)){
-            cardNumberRopeTeam.classList.add("is-invalid");
-            errorCardNumberRopeTeam.textContent = "El número de tarjeta de tu compañero/o debe ser un número.";
-            totalErrors++;
-        } 
+        //La convertimos en array
+        let reservationChoosenArray = reservationChoosen.split(", ");  
         
-    }  
-    
-    cardNumberRopeTeamValue = cardNumberRopeTeam.value;
-    
-    //Si se está haciendo una doble reserva con menor, informaremos el campo &cardNumberRopeTeam con el número de la tarjeta del usuario que hace la reserva 
-    let doubleReservationWithMinor = document.getElementById("doubleReservationWithMinor");
+        //Obtenemos los datos del array para el id de las horas, el id de la zona y el nombre de la zona
+        let idHour             = reservationChoosenArray[0];
+        let idZone             = reservationChoosenArray[1];
+        let zoneName           = reservationChoosenArray[2];
+        let startHour          = reservationChoosenArray[3];
+        let endHour            = reservationChoosenArray[4];
+        let freeReservations   = reservationChoosenArray[5];
 
-    if (doubleReservationWithMinor != null && doubleReservationWithMinor.checked){
-        cardNumberRopeTeamValue = doubleReservationWithMinor.value;
-        reservationType = "doubleReservationWithMinor";
-    }
+        //Si se trata de una vía con autoasegurador y se va a escalar sin cordada
+        if ((zoneName == "Vía R2" && document.getElementById("conAutoasegurador").checked) || (zoneName == "Vía R3" && document.getElementById("conAutoasegurador").checked)) {
+            reservationType = "autoInsurer";
+        }
 
+        //Si el nombre de la zona es de los que requiere cordada, recuperaremos el número de tarjeta del compañero/a de cordada
+        if (zoneName == "Vía R1" || 
+           (zoneName == "Vía R2" && document.getElementById("sinAutoasegurador").checked) || 
+           (zoneName == "Vía R3" && document.getElementById("sinAutoasegurador").checked) || 
+            zoneName == "Vía R4" || 
+            zoneName == "Vía R5" ) {
 
-    if (totalErrors > 0) {
-        return false;
+            reservationType = "ropeTeam";
+            
+            errorCardNumberRopeTeam = document.getElementById("errorCardNumberRopeTeam");
+
+            //Si no está informado, damos error
+            if (cardNumberRopeTeam.value == ""){
+                cardNumberRopeTeam.classList.add("is-invalid");
+                errorCardNumberRopeTeam.textContent = "Por favor, escribe el número de tarjeta de tu compañero/a.";
+                totalErrors++;
+            } else 
+            //Si no es numérico, damos error
+            if (isNaN(cardNumberRopeTeam.value)){
+                cardNumberRopeTeam.classList.add("is-invalid");
+                errorCardNumberRopeTeam.textContent = "El número de tarjeta de tu compañero/o debe ser un número.";
+                totalErrors++;
+            } 
+
+        }  
+
+        cardNumberRopeTeamValue = cardNumberRopeTeam.value;
+
+        //Si se está haciendo una doble reserva con menor, informaremos el campo &cardNumberRopeTeam con el número de la tarjeta del usuario que hace la reserva 
+        let doubleReservationWithMinor = document.getElementById("doubleReservationWithMinor");
+
+        if (doubleReservationWithMinor != null && doubleReservationWithMinor.checked){
+            cardNumberRopeTeamValue = doubleReservationWithMinor.value;
+            reservationType = "doubleReservationWithMinor";
+        }
+
+        if (totalErrors > 0) {
+            return false;
+
+        } else {
+            let path = document.getElementById(btnClicked).dataset.formaction;
+            reservationForm.action = path + "&idHour=" + idHour + "&idZone=" + idZone + "&cardNumberRopeTeam=" + cardNumberRopeTeamValue + "&zoneNameChoosen=" + zoneName + "&reservationType=" + reservationType + "&startHourChoosen=" + startHour + "&endHourChoosen=" + endHour + "&freeReservations=" + freeReservations; 
+        }
+
     } else {
         
-        let path = document.getElementById(btnClicked).dataset.formaction;
-        reservationForm.action = path + "&idHour=" + idHour + "&idZone=" + idZone + "&cardNumberRopeTeam=" + cardNumberRopeTeamValue + "&zoneNameChoosen=" + zoneName + "&reservationType=" + reservationType + "&startHourChoosen=" + startHour + "&endHourChoosen=" + endHour + "&freeReservations=" + freeReservations; 
+        //Recuperamos todas las posibles reservas elegidas
+        let allPosibleReservations = document.reservationForm.reservationChoosen;
+
+        let reservationsChoosen = [];
+
+        //Hacemos un bucle para guardar todas las reservas escogidas
+        for (let i = 0; i < allPosibleReservations.length; i++){
+            //Cambiamos el atributo name para que se pase un array en lugar de un único elemento
+            allPosibleReservations[i].setAttribute("name", "reservationChoosenArray[]");
+
+            if (allPosibleReservations[i].checked){
+
+                reservationsChoosen.push(allPosibleReservations[i].value.split(", "));
+            }
+        }
+
+        //Recuperamos los filtros de la pantalla
+        let userNameFilter  = document.getElementById("filterUserName").value;
+        let dateFromFilter  = document.getElementById("reservationDateChoosen").value;
+        let datetoFilter    = document.getElementById("reservationDateChoosenTo").value;
+        let startDateFilter = document.getElementById("filterStartHour").value;
+        let endDateFilter   = document.getElementById("filterEndHour").value;
+        let zoneFilter      = document.getElementById("filterZoneName").value;
+        
+        let pathMassive = document.getElementById("massiveReservationBtn").dataset.formaction;
+        reservationForm.action = pathMassive + "&userName=" + userNameFilter + "&dateFrom=" + dateFromFilter + "&dateto=" + datetoFilter + "&startDate=" + startDateFilter + "&endDate=" + endDateFilter + "&zone=" + zoneFilter;    
     }
 }  
 

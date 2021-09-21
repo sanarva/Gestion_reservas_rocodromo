@@ -46,9 +46,9 @@
             </div>
         </div>
     </div>
-                              
-    <!-- Inicializamos las variables de sesión relacionadas con el mensaje modal una vez que hemos mostrado el mensaje -->
-        
+<?php }?>
+
+<!-- Inicializamos las variables de sesión relacionadas con el mensaje modal -->      
 <?php 
     $_SESSION["successFlag"]  = "";
     $_SESSION["message"]      = "";
@@ -59,6 +59,6 @@
     $_SESSION["colorbutton2"] = "";
     $_SESSION["formaction2"]  = "";
     $_SESSION["datadismiss"]  = "";
-}?>
+?>
 
 
