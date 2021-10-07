@@ -48,6 +48,7 @@ try {
                           , user_type
                           , card_number
                           , user_email
+                          , user_password
                           , user_status
                           , user_modification
                         )
@@ -56,6 +57,7 @@ try {
                       , :usertype
                       , :cardnumber
                       , :useremail
+                      , ''
                       , :userstatus
                       , :userModification
                     )";
