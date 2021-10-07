@@ -73,7 +73,7 @@
             <a href="hour.php?Id=<?php echo $hour->id_hour?>&startHour=<?php echo $hour->start_hour?>&endHour=<?php echo $hour->end_hour?>&weekDay=<?php echo $hour->week_day?>">
               <i title="Modificar" class="far fa-edit fa-lg cursorHand text-primary mr-4"></i>
             </a>              
-            <a href="../php/deletehour.php?Id=<?php echo $hour->id_hour?>&startHour=<?php echo $hour->start_hour?>&endHour=<?php echo $hour->end_hour?>&weekDay=<?php echo $hour->week_day?>">
+            <a href="../php/deleteHour.php?Id=<?php echo $hour->id_hour?>&startHour=<?php echo $hour->start_hour?>&endHour=<?php echo $hour->end_hour?>&weekDay=<?php echo $hour->week_day?>">
               <i title="Eliminar" class="far fa-trash-alt fa-lg text-danger "></i>
             </a> 
           </td>
