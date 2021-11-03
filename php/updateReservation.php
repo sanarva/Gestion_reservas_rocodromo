@@ -58,6 +58,14 @@ if (isset($_GET["cancel"]) ){
 //Si el usuario está intentando cancelar una reserva...
 if (isset($_GET["cancelReservation"]) && $relatedReservationControlOk == "Y" ) {
     if ($cancel == "yes"){
+
+        //Si se trata de una reserva simple, el valor de idRelatedReservation vale "nonexistent" y en el siguiente update está dando error porque creo que espera un valor numérico, por lo que se cambia a 0
+        if ($idRelatedReservation == "nonexistent") {
+            $idRelatedReservationUpdated = 0;
+        } else {
+            $idRelatedReservationUpdated = $idRelatedReservation;
+        }
+
         try {
             $sql = "UPDATE reservations
                        SET reservation_status = 'I'
@@ -69,7 +77,7 @@ if (isset($_GET["cancelReservation"]) && $relatedReservationControlOk == "Y" ) {
             $queryCancel = $conn->prepare($sql);
             $queryCancel->bindParam(":userModification",$_SESSION["sessionIdUser"]);
             $queryCancel->bindParam(":idreservation",$idReservation);
-            $queryCancel->bindParam(":idrelatedreservation",$idRelatedReservation);
+            $queryCancel->bindParam(":idrelatedreservation",$idRelatedReservationUpdated);
             $queryCancel->execute();
 
             if ($queryCancel->rowCount() > 0 ){
